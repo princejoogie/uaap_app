@@ -7,64 +7,78 @@
     android:background="#F0AD68"
     tools:context=".LoginActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:gravity="center"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <EditText
-            android:textSize="14sp"
-            android:padding="5sp"
-            android:drawableStart="@drawable/login_username"
-            android:drawablePadding="8sp"
-            android:hint="Username"
-            android:background="@drawable/login_edit_text"
-            android:layout_gravity="center"
-            android:layout_width="350sp"
-            android:layout_height="wrap_content"/>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="10sp">
-        </View>
-
-        <EditText
-            android:textSize="14sp"
-            android:padding="5sp"
-            android:drawableStart="@drawable/login_password"
-            android:drawablePadding="8sp"
-            android:hint="Password"
-            android:background="@drawable/login_edit_text"
-            android:layout_gravity="center"
-            android:layout_width="350sp"
-            android:layout_height="wrap_content"/>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="20sp">
-        </View>
-
-        <androidx.cardview.widget.CardView
-            android:backgroundTint="#EC3D3D"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:layout_width="300sp"
+        <LinearLayout
+            android:id="@+id/login_box"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardElevation="5dp"
-            >
+            android:layout_gravity="center"
+            android:background="@drawable/login_border"
+            android:orientation="vertical"
+            android:padding="50sp">
 
-            <TextView
-                android:textSize="16sp"
-                android:textColor="#F2F2F2"
+
+            <EditText
+                android:layout_width="350sp"
+                android:layout_height="34sp"
+                android:layout_gravity="center"
+                android:background="@drawable/login_edit_text"
+                android:drawableStart="@drawable/login_username"
+                android:drawablePadding="8sp"
+                android:elevation="2sp"
+                android:hint="Username"
+                android:inputType="textEmailAddress"
                 android:padding="5sp"
-                android:textAlignment="center"
-                android:text="LOGIN"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:textSize="14sp" />
 
-        </androidx.cardview.widget.CardView>
-    </LinearLayout>
+            <View
+                android:layout_width="350sp"
+                android:layout_height="12sp"
+                android:layout_gravity="center"/>
 
+            <EditText
+                android:layout_width="350sp"
+                android:layout_height="34sp"
+                android:layout_gravity="center"
+                android:background="@drawable/login_edit_text"
+                android:drawableStart="@drawable/login_password"
+                android:drawablePadding="8sp"
+                android:elevation="2sp"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="5sp"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="350sp"
+                android:layout_height="20sp"
+                android:layout_gravity="center"/>
+
+            <androidx.cardview.widget.CardView
+                android:onClick="login_pressed"
+                android:layout_width="300sp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="#EC3D3D"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardElevation="6sp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5sp"
+                    android:text="LOGIN"
+                    android:textAlignment="center"
+                    android:textColor="#F2F2F2"
+                    android:textSize="16sp" />
+
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>
