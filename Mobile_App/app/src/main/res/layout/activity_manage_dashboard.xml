@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_admin"
-    tools:context=".DashboardActivity">
+    android:background="@drawable/bg_manage"
+    tools:context=".Manage.ManageDashboard">
 
     <RelativeLayout
         android:gravity="center"
@@ -26,8 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
                 <androidx.cardview.widget.CardView
-                    android:onClick="btn_manage"
-                    android:id="@+id/btn_manage"
+                    android:onClick="btn_teams"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -45,17 +44,16 @@
                         android:layout_height="match_parent">
                         <ImageView
                             android:padding="20dp"
-                            android:src="@drawable/ic_manage"
+                            android:src="@drawable/manage_teams"
                             android:layout_width="200sp"
                             android:layout_height="200sp"/>
 
                         <TextView
-                            android:gravity="center"
                             android:layout_gravity="center"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:padding="5sp"
-                            android:text="MANAGE"
+                            android:text="TEAMS"
                             android:textAlignment="center"
                             android:textColor="#F3AA4E"
                             android:textSize="24sp" />
@@ -71,8 +69,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
                 <androidx.cardview.widget.CardView
-                    android:onClick="btn_reports"
-                    android:id="@+id/btn_reports"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -90,17 +86,16 @@
                         android:layout_height="match_parent">
                         <ImageView
                             android:padding="20dp"
-                            android:src="@drawable/ic_reports"
+                            android:src="@drawable/manage_referees"
                             android:layout_width="200sp"
                             android:layout_height="200sp"/>
 
                         <TextView
-                            android:gravity="center"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:padding="5sp"
-                            android:text="REPORTS"
+                            android:text="REFEREES"
                             android:textAlignment="center"
                             android:textColor="#F3AA4E"
                             android:textSize="24sp" />
@@ -116,8 +111,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <androidx.cardview.widget.CardView
-                    android:onClick="btn_realtime"
-                    android:id="@+id/btn_realtime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -135,7 +128,7 @@
                         android:layout_height="wrap_content">
                         <ImageView
                             android:padding="20dp"
-                            android:src="@drawable/ic_realtime"
+                            android:src="@drawable/manage_accounts"
                             android:layout_width="200sp"
                             android:layout_height="200sp"/>
 
@@ -144,7 +137,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:padding="5sp"
-                            android:text="REALTIME\nVIEWING"
+                            android:text="ACCOUNTS"
                             android:textAlignment="center"
                             android:textColor="#F3AA4E"
                             android:textSize="24sp" />

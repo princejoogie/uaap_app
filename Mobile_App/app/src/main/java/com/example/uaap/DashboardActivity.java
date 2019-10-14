@@ -1,9 +1,11 @@
 package com.example.uaap;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
+import com.example.uaap.Manage.ManageDashboard;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -11,14 +13,15 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+    }
 
-        CardView manage = findViewById(R.id.btn_manage);
-        manage.setAlpha(0.75f);
+    public void btn_manage(View view) {
+        startActivity(new Intent(DashboardActivity.this, ManageDashboard.class));
+    }
 
-        CardView reports = findViewById(R.id.btn_reports);
-        reports.setAlpha(0.75f);
+    public void btn_reports(View view) {
+    }
 
-        CardView realtime = findViewById(R.id.btn_realtime);
-        realtime.setAlpha(0.75f);
+    public void btn_realtime(View view) {
     }
 }

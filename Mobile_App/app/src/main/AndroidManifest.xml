@@ -10,9 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".Manage.TeamsDashboard"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".Manage.ManageDashboard"
+            android:screenOrientation="landscape"/>
+        <activity
             android:name=".DashboardActivity"
-            android:screenOrientation="landscape">
-        </activity>
+            android:screenOrientation="landscape" />
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="landscape">
