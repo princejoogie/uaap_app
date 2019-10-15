@@ -20,8 +20,10 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     public void btn_reports(View view) {
+        startActivity(new Intent(DashboardActivity.this, EvaluatorActivity.class));
     }
 
     public void btn_realtime(View view) {
+        startActivity(new Intent(DashboardActivity.this, EvaluatorDetails.class));
     }
 }

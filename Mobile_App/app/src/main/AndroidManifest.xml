@@ -9,11 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".EvaluatorDetails"></activity>
+        <activity android:name=".EvaluatorActivity" />
         <activity
             android:name=".Manage.TeamsDashboard"
-            android:screenOrientation="landscape"/>
-        <activity android:name=".Manage.ManageDashboard"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".Manage.ManageDashboard"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".DashboardActivity"
             android:screenOrientation="landscape" />

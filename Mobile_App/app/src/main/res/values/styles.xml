@@ -9,4 +9,9 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="Spinner" parent="Widget.AppCompat.Light.DropDownItem.Spinner">
+        <item name="android:padding">5sp</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
 </resources>
