@@ -6,209 +6,400 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:clipToPadding="false"
     android:background="@drawable/bg_admin"
     tools:context=".EvaluatorDetails">
 
     <GridLayout
         android:columnCount="3"
-        android:layout_margin="20sp"
+        android:layout_margin="20dp"
         android:background="#F2F2F2"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_columnWeight="1"
+            android:layout_columnWeight="1.4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
 
         </LinearLayout>
 
-
-        <androidx.cardview.widget.CardView
+        <ScrollView
             android:layout_marginVertical="10dp"
-            android:layout_columnWeight="1"
+            android:background="#F2F2F2"
+            android:elevation="3dp"
+            android:scrollbars="none"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="#f2f2f2"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            app:cardElevation="6sp">
+            android:layout_height="match_parent">
 
-            <ScrollView
-                android:scrollbars="none"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <Button
-                        android:padding="10sp"
-                        android:background="#EC3D3D"
-                        android:layout_marginTop="10sp"
-                        android:text="Blocking"
-                        android:layout_marginVertical="5sp"
-                        android:layout_marginHorizontal="10sp"
-                        android:layout_width="match_parent"
+                        android:padding="10dp"
+                        android:background="@drawable/button_eval"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Foul"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_width="120dp"
                         android:layout_height="wrap_content"/>
 
                     <Button
-                        android:padding="10sp"
-                        android:background="#EC3D3D"
-                        android:text="Pushing"
-                        android:layout_marginVertical="5sp"
-                        android:layout_marginHorizontal="10sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <Button
-                        android:padding="10sp"
-                        android:background="#EC3D3D"
-                        android:text="Holding"
-                        android:layout_marginVertical="5sp"
-                        android:layout_marginHorizontal="10sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <Button
-                        android:padding="10sp"
-                        android:background="#EC3D3D"
-                        android:text="Hit to Head"
-                        android:layout_marginVertical="5sp"
-                        android:layout_marginHorizontal="10sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <Button
-                        android:padding="10sp"
-                        android:background="#EC3D3D"
-                        android:text="Illegal use of Hands"
-                        android:layout_marginVertical="5sp"
-                        android:layout_marginHorizontal="10sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <Button
-                        android:padding="10sp"
-                        android:background="#EC3D3D"
-                        android:text="Illegal Contact to the hand"
-                        android:layout_marginVertical="5sp"
-                        android:layout_marginHorizontal="10sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <Button
-                        android:padding="10sp"
-                        android:background="#EC3D3D"
-                        android:text="Handchecking"
-                        android:layout_marginVertical="5sp"
-                        android:layout_marginHorizontal="10sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <Button
-                        android:padding="10sp"
-                        android:background="#EC3D3D"
-                        android:text="Unsportsmanlike Foul"
-                        android:layout_marginVertical="5sp"
-                        android:layout_marginHorizontal="10sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <Button
-                        android:padding="10sp"
-                        android:background="#EC3D3D"
-                        android:text="Double"
-                        android:layout_marginVertical="5sp"
-                        android:layout_marginHorizontal="10sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <Button
-                        android:padding="10sp"
-                        android:background="#EC3D3D"
-                        android:text="Illegal Screen"
-                        android:layout_marginVertical="5sp"
-                        android:layout_marginHorizontal="10sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <Button
-                        android:padding="10sp"
-                        android:background="#EC3D3D"
-                        android:text="Offensive"
-                        android:layout_marginVertical="5sp"
-                        android:layout_marginHorizontal="10sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <Button
-                        android:padding="10sp"
-                        android:background="#EC3D3D"
-                        android:text="Fake a Foul"
-                        android:layout_marginVertical="5sp"
-                        android:layout_marginHorizontal="10sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <Button
-                        android:padding="10sp"
-                        android:background="#EC3D3D"
-                        android:text="Blocking"
-                        android:layout_marginVertical="5sp"
-                        android:layout_marginHorizontal="10sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <Button
-                        android:padding="10sp"
-                        android:background="#EC3D3D"
-                        android:text="Blocking"
-                        android:layout_marginVertical="5sp"
-                        android:layout_marginHorizontal="10sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <Button
-                        android:padding="10sp"
-                        android:background="#EC3D3D"
-                        android:text="Blocking"
-                        android:layout_marginVertical="5sp"
-                        android:layout_marginHorizontal="10sp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <Button
-                        android:padding="10sp"
-                        android:background="#EC3D3D"
-                        android:text="Blocking"
-                        android:layout_marginBottom="10sp"
-                        android:layout_marginVertical="5sp"
-                        android:layout_marginHorizontal="10sp"
-                        android:layout_width="match_parent"
+                        android:padding="10dp"
+                        android:background="@drawable/button_eval"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Voilation"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="120dp"
                         android:layout_height="wrap_content"/>
 
                 </LinearLayout>
 
-            </ScrollView>
+                <View
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="#C6C6C6"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"/>
 
-        </androidx.cardview.widget.CardView>
+                <Button
+                    android:padding="10dp"
+                    android:background="@drawable/button_eval"
+                    android:layout_marginTop="10dp"
+                    android:text="Blocking"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:padding="10dp"
+                    android:background="@drawable/button_eval"
+                    android:text="Pushing"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:padding="10dp"
+                    android:background="@drawable/button_eval"
+                    android:text="Holding"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:padding="10dp"
+                    android:background="@drawable/button_eval"
+                    android:text="Hit to the Head"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:padding="10dp"
+                    android:background="@drawable/button_eval"
+                    android:text="Illegal use of Hands"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:padding="10dp"
+                    android:background="@drawable/button_eval"
+                    android:text="Illegal Contact to hand"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:padding="10dp"
+                    android:background="@drawable/button_eval"
+                    android:text="Handchecking"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:padding="10dp"
+                    android:background="@drawable/button_eval"
+                    android:text="Unsportsmanlike Foul"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:padding="10dp"
+                    android:background="@drawable/button_eval"
+                    android:text="Double"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:padding="10dp"
+                    android:background="@drawable/button_eval"
+                    android:text="Illegal Screen"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:padding="10dp"
+                    android:background="@drawable/button_eval"
+                    android:text="Offensive"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:padding="10dp"
+                    android:background="@drawable/button_eval"
+                    android:text="Fake a Foul"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:padding="10dp"
+                    android:background="@drawable/button_eval"
+                    android:text="Prince"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_columnWeight="1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_margin="10dp"
+                android:elevation="3dp"
+                android:background="#F2F2F2"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
+                <Button
+                    android:padding="10dp"
+                    android:background="@drawable/button_eval"
+                    android:text="Referee 1"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:padding="10dp"
+                    android:background="@drawable/button_eval"
+                    android:text="Referee 2"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"/>
+
+                <Button
+                    android:padding="10dp"
+                    android:background="@drawable/button_eval"
+                    android:text="Referee 3"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:text="Area"
+                    android:textAlignment="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:padding="10dp"
+                        android:background="@drawable/button_eval"
+                        android:text="Lead"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="93dp"
+                        android:layout_height="wrap_content"/>
+
+                    <Button
+                        android:padding="10dp"
+                        android:background="@drawable/button_eval"
+                        android:text="Center"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_width="93dp"
+                        android:layout_height="wrap_content"/>
+
+                    <Button
+                        android:padding="10dp"
+                        android:background="@drawable/button_eval"
+                        android:text="Trail"
+                        android:layout_marginRight="10dp"
+                        android:layout_width="93dp"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:text="Area of Play"
+                    android:textAlignment="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:padding="10dp"
+                        android:background="@drawable/button_eval"
+                        android:text="Lead"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="93dp"
+                        android:layout_height="wrap_content"/>
+
+                    <Button
+                        android:padding="10dp"
+                        android:background="@drawable/button_eval"
+                        android:text="Center"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_width="93dp"
+                        android:layout_height="wrap_content"/>
+
+                    <Button
+                        android:padding="10dp"
+                        android:background="@drawable/button_eval"
+                        android:text="Trail"
+                        android:layout_marginRight="10dp"
+                        android:layout_width="93dp"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:text="Review Decision"
+                    android:textAlignment="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <GridLayout
+                    android:columnCount="2"
+                    android:rowCount="2"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:layout_margin="5dp"
+                        android:padding="10dp"
+                        android:background="@drawable/button_eval"
+                        android:text="CC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <Button
+                        android:layout_margin="5dp"
+                        android:padding="10dp"
+                        android:background="@drawable/button_eval"
+                        android:text="INC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <Button
+                        android:layout_margin="5dp"
+                        android:padding="10dp"
+                        android:background="@drawable/button_eval"
+                        android:text="CFR"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <Button
+                        android:layout_margin="5dp"
+                        android:padding="10dp"
+                        android:background="@drawable/button_eval"
+                        android:text="NCFR"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </GridLayout>
+
+                <TextView
+                    android:layout_marginTop="5dp"
+                    android:text="Comment"
+                    android:textAlignment="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <EditText
+                    android:padding="5dp"
+                    android:textSize="12sp"
+                    android:gravity=""
+                    android:background="#C6C6C6"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"/>
+            </LinearLayout>
+
+            <Button
+                android:textSize="20sp"
+                android:textColor="#F2F2F2"
+                android:text="SUBMIT"
+                android:background="#EC3D3D"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
         </LinearLayout>
-
 
     </GridLayout>
 
