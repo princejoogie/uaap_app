@@ -36,6 +36,7 @@
                 android:textSize="24sp" />
 
             <EditText
+                android:id="@+id/edtGameCode"
                 android:textSize="23sp"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
@@ -67,12 +68,11 @@
 
 
             <Spinner
+                android:id="@+id/spinLeague"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
-                android:background="#F2F2F2"
-                android:entries="@array/game_division"
-                android:padding="10sp" />
+                />
 
 
         </LinearLayout>
@@ -89,6 +89,7 @@
             android:orientation="horizontal">
 
             <Spinner
+                android:id="@+id/spinnerTeamA"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -107,6 +108,7 @@
                 android:textSize="24sp" />
 
             <Spinner
+                android:id="@+id/spinnerTeamB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -131,6 +133,19 @@
 
 
             <Spinner
+                android:id="@+id/spinnerRefereeA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:background="#F2F2F2"
+                android:padding="10sp" />
+
+            <View
+                android:layout_width="15sp"
+                android:layout_height="15sp"/>
+
+            <Spinner
+                android:id="@+id/spinnerRefereeB"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -143,18 +158,7 @@
                 android:layout_height="15sp"/>
 
             <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:background="#F2F2F2"
-                android:entries="@array/game_division"
-                android:padding="10sp" />
-
-            <View
-                android:layout_width="15sp"
-                android:layout_height="15sp"/>
-
-            <Spinner
+                android:id="@+id/spinnerRefereeC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -169,6 +173,7 @@
             android:layout_height="60sp" />
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/btnStartGame"
             android:layout_width="500sp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
