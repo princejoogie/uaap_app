@@ -301,7 +301,6 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="5dp"
                             android:background="#038500"
-                            android:text="32"
                             android:textColor="#FFFFFF" />
 
                         <Button
@@ -312,7 +311,6 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="5dp"
                             android:background="#820000"
-                            android:text="32"
                             android:textColor="#FFFFFF" />
 
                         <Button
@@ -323,7 +321,6 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="5dp"
                             android:background="#038500"
-                            android:text="32"
                             android:textColor="#FFFFFF" />
 
                         <Button
@@ -334,7 +331,6 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="5dp"
                             android:background="#820000"
-                            android:text="32"
                             android:textColor="#FFFFFF" />
 
                         <Button
@@ -345,7 +341,6 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="5dp"
                             android:background="#038500"
-                            android:text="32"
                             android:textColor="#FFFFFF" />
 
                         <Button
@@ -356,7 +351,6 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="5dp"
                             android:background="#820000"
-                            android:text="32"
                             android:textColor="#FFFFFF" />
 
                         <Button
@@ -367,7 +361,6 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="5dp"
                             android:background="#038500"
-                            android:text="32"
                             android:textColor="#FFFFFF" />
 
                         <Button
@@ -378,7 +371,6 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="5dp"
                             android:background="#820000"
-                            android:text="32"
                             android:textColor="#FFFFFF" />
 
                         <Button
@@ -389,7 +381,6 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="5dp"
                             android:background="#038500"
-                            android:text="32"
                             android:textColor="#FFFFFF" />
 
                         <Button
@@ -400,7 +391,6 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="5dp"
                             android:background="#820000"
-                            android:text="32"
                             android:textColor="#FFFFFF" />
 
                     </GridLayout>
@@ -440,7 +430,6 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="5dp"
                             android:background="#038500"
-                            android:text="32"
                             android:textColor="#FFFFFF" />
 
                         <Button
@@ -451,7 +440,6 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="5dp"
                             android:background="#820000"
-                            android:text="32"
                             android:textColor="#FFFFFF" />
 
                         <Button
@@ -462,7 +450,6 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="5dp"
                             android:background="#038500"
-                            android:text="32"
                             android:textColor="#FFFFFF" />
 
                         <Button
@@ -473,7 +460,6 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="5dp"
                             android:background="#820000"
-                            android:text="32"
                             android:textColor="#FFFFFF" />
 
                         <Button
@@ -484,7 +470,6 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="5dp"
                             android:background="#038500"
-                            android:text="32"
                             android:textColor="#FFFFFF" />
 
                         <Button
@@ -495,7 +480,6 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="5dp"
                             android:background="#820000"
-                            android:text="32"
                             android:textColor="#FFFFFF" />
 
                         <Button
@@ -506,7 +490,6 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="5dp"
                             android:background="#038500"
-                            android:text="32"
                             android:textColor="#FFFFFF" />
 
                         <Button
@@ -517,7 +500,6 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="5dp"
                             android:background="#820000"
-                            android:text="32"
                             android:textColor="#FFFFFF" />
 
                         <Button
@@ -528,7 +510,6 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="5dp"
                             android:background="#038500"
-                            android:text="32"
                             android:textColor="#FFFFFF" />
 
                         <Button
@@ -539,7 +520,6 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="5dp"
                             android:background="#820000"
-                            android:text="32"
                             android:textColor="#FFFFFF" />
 
                     </GridLayout>
