@@ -129,7 +129,7 @@ public class EvaluatorActivity extends AppCompatActivity {
                                     Erro1 + Erro2, Toast.LENGTH_LONG).show();
                         }
                     }else{
-                        checkGameCode(edtGameCode.getText().toString());
+                        checkGameCode(edtGameCode.getText().toString());////
                     }
                 }catch (Exception e){
                     Toast.makeText(EvaluatorActivity.this,
