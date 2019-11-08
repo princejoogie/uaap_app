@@ -10,7 +10,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -22,7 +26,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.uaap.Adapter.EvaluationListAdapter;
+import com.example.uaap.Adapter.FoulListAdapter;
+import com.example.uaap.Model.CallToIssue;
 import com.example.uaap.Model.CurrentGame;
+import com.example.uaap.Model.EvaluationDetails;
 import com.example.uaap.Model.Game;
 import com.example.uaap.Model.GameId;
 import com.example.uaap.Model.PlayersDetails;
@@ -32,10 +40,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class EvaluatorDetails extends AppCompatActivity {
+public class EvaluatorDetails extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private String gameId;
     private String gameCode;
@@ -67,6 +78,10 @@ public class EvaluatorDetails extends AppCompatActivity {
     private String disType;
     private String dis;
 
+    private CallToIssue callToIssue;
+
+    private ListView foulListView;
+    private FoulListAdapter listAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,7 +134,13 @@ public class EvaluatorDetails extends AppCompatActivity {
         btnStaffA = findViewById(R.id.btnStaffA);
         btnStaffB = findViewById(R.id.btnStaffB);
         btnSubmitEval = findViewById(R.id.btnSubmitEval);
+
+        foulListView = findViewById(R.id.foulVioList);
+        foulListView.setOnItemClickListener(this);
+        callToIssue = new CallToIssue();
         getThisGame();
+
+        genFoul();
 
         for (int i = 0; i < 5; i++) {
             final int finalI = i;
@@ -129,16 +150,16 @@ public class EvaluatorDetails extends AppCompatActivity {
                     buttonSelected(btnCommA, finalI, true);  //true if team A
                     clearCommStaff();
                     clearButtons(btnCommB, false);
-                    committingTeam = true;
-                    committingType = "player";
-                    committing = btnCommA[finalI].getText().toString();
+                    callToIssue.setCommittingTeam(true);
+                    callToIssue.setCommittingType("player");
+                    callToIssue.setCommitting(btnCommA[finalI].getText().toString());
                 }
             });
             btnCommA[i].setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     clearButtons(btnCommA, true);
-                    committing = null;
+                    callToIssue.setCommitting(null);
                     return true;
                 }
             });
@@ -148,16 +169,16 @@ public class EvaluatorDetails extends AppCompatActivity {
                     buttonSelected(btnCommB, finalI, false);  //true if team A
                     clearCommStaff();
                     clearButtons(btnCommA, true);
-                    committingTeam = false;
-                    committingType = "player";
-                    committing = btnCommB[finalI].getText().toString();
+                    callToIssue.setCommittingTeam(false);
+                    callToIssue.setCommittingType("player");
+                    callToIssue.setCommitting(btnCommB[finalI].getText().toString());
                 }
             });
             btnCommB[i].setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     clearButtons(btnCommB, false);
-                    committing = null;
+                    callToIssue.setCommitting(null);
                     return true;
                 }
             });
@@ -166,16 +187,17 @@ public class EvaluatorDetails extends AppCompatActivity {
                 public void onClick(View v) {
                     buttonSelected(btnDisA, finalI, true);
                     clearButtons(btnDisB, false);
-                    disTeam = true;
-                    disType = "player";
-                    dis = btnDisA[finalI].getText().toString();
+                    callToIssue.setDisTeam(true);
+                    callToIssue.setDisType("player");
+                    callToIssue.setDis(btnDisA[finalI].getText().toString());
+
                 }
             });
             btnDisA[i].setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     clearButtons(btnDisA, true);
-                    dis = null;
+                    callToIssue.setDis(null);
                     return true;
                 }
             });
@@ -184,16 +206,16 @@ public class EvaluatorDetails extends AppCompatActivity {
                 public void onClick(View v) {
                     buttonSelected(btnDisB, finalI, false);
                     clearButtons(btnDisA, true);
-                    disTeam = false;
-                    disType = "player";
-                    dis = btnDisB[finalI].getText().toString();
+                    callToIssue.setDisTeam(false);
+                    callToIssue.setDisType("player");
+                    callToIssue.setDis(btnDisB[finalI].getText().toString());
                 }
             });
             btnDisB[i].setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     clearButtons(btnDisB, false);
-                    dis = null;
+                    callToIssue.setDis(null);
                     return true;
                 }
             });
@@ -215,8 +237,8 @@ public class EvaluatorDetails extends AppCompatActivity {
             public boolean onLongClick(View v) {
                 btnStaffA.setBackgroundColor(Color.parseColor("#038500"));
                 btnStaffA.setTextColor(Color.parseColor("#FFFFFF"));
-                committing = null;
-                committingType = null;
+                callToIssue.setCommitting(null);
+                callToIssue.setCommittingType(null);
                 return true;
             }
         });
@@ -225,8 +247,8 @@ public class EvaluatorDetails extends AppCompatActivity {
             public boolean onLongClick(View v) {
                 btnStaffB.setBackgroundColor(Color.parseColor("#820000"));
                 btnStaffB.setTextColor(Color.parseColor("#FFFFFF"));
-                committing = null;
-                committingType = null;
+                callToIssue.setCommitting(null);
+                callToIssue.setCommittingType(null);
                 return true;
             }
         });
@@ -271,12 +293,14 @@ public class EvaluatorDetails extends AppCompatActivity {
         }
 
     }
-    private void clearCommStaff(){
+
+    private void clearCommStaff() {
         btnStaffB.setBackgroundColor(Color.parseColor("#820000"));
         btnStaffB.setTextColor(Color.parseColor("#FFFFFF"));
         btnStaffA.setBackgroundColor(Color.parseColor("#038500"));
         btnStaffA.setTextColor(Color.parseColor("#FFFFFF"));
     }
+
     private void getThisGame() {
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest putRequest = new StringRequest(Request.Method.POST, GetGameDetailsURL,
@@ -337,46 +361,42 @@ public class EvaluatorDetails extends AppCompatActivity {
 
         final RadioGroup rg = (RadioGroup) dialog.findViewById(R.id.radioGroup);
         Button btnSubmitStaff = (Button) dialog.findViewById(R.id.btnSubmitStaff);
-        if (team){
+        if (team) {
             for (int i = 0; i < game.staffA.size(); i++) {
                 RadioButton rb = new RadioButton(EvaluatorDetails.this); // dynamically creating RadioButton and adding to RadioGroup.
-                rb.setText(game.staffA.get(i).name+" ("+teamA+")");
+                rb.setText(game.staffA.get(i).name + " (" + teamA + ")");
                 rb.setId(Integer.parseInt(game.staffA.get(i).id));
                 rg.addView(rb);
             }
-        }
-        else{
+        } else {
             for (int i = 0; i < game.staffB.size(); i++) {
                 RadioButton rb = new RadioButton(EvaluatorDetails.this); // dynamically creating RadioButton and adding to RadioGroup.
-                rb.setText(game.staffB.get(i).name+" ("+teamB+")");
+                rb.setText(game.staffB.get(i).name + " (" + teamB + ")");
                 rb.setId(Integer.parseInt(game.staffB.get(i).id));
                 rg.addView(rb);
             }
         }
 
 
-
         btnSubmitStaff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(team){
+                if (team) {
                     clearButtons(btnCommA, true);
                     clearButtons(btnCommB, false);
                     clearCommStaff();
                     btnStaffA.setBackgroundColor(Color.parseColor("#FFFFFF"));
                     btnStaffA.setTextColor(Color.parseColor("#038500"));
-                    committingTeam = true;
+                    callToIssue.setCommittingTeam(false);
 
-
-                }
-                else{
+                } else {
                     clearButtons(btnCommA, true);
                     clearButtons(btnCommB, false);
                     clearCommStaff();
                     btnStaffB.setBackgroundColor(Color.parseColor("#FFFFFF"));
                     btnStaffB.setTextColor(Color.parseColor("#820000"));
 
-                    committingTeam=false;
+                    callToIssue.setCommittingTeam(true);
 
                 }
                 dialog.dismiss();
@@ -386,13 +406,24 @@ public class EvaluatorDetails extends AppCompatActivity {
 
         rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                committingType = "staff";
-                committing = String.valueOf(checkedId);
-//                rgb.clearCheck();
+                callToIssue.setCommittingType("staff");
+                callToIssue.setCommitting(String.valueOf(checkedId));
             }
         });
 
         dialog.show();
 
+    }
+
+    private void genFoul() {
+
+        List<String> fouls = Arrays.asList(getResources().getStringArray(R.array.foul));
+        listAdapter = new FoulListAdapter(getApplicationContext(), fouls);
+        foulListView.setAdapter(listAdapter);
+
+
+    }
+    public void onItemClick(AdapterView parent, View v, int position, long id) {
+        Toast.makeText(getApplicationContext(), "hello", Toast.LENGTH_SHORT).show();
     }
 }

@@ -11,7 +11,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="65b4b2e3-624d-4281-934b-ba92acbd2771" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/uaap/Adapter/FoulListAdapter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/uaap/Model/CallToIssue.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/uaap/Model/Foul.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/btn_eval_selected.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/res/layout/foul_item.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/uaap/EvaluatorActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/uaap/EvaluatorActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/uaap/EvaluatorDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/uaap/EvaluatorDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/uaap/Manage/AddTeamActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/uaap/Manage/AddTeamActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_evaluator_details.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_evaluator_details.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -44,8 +53,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/uaap/EvaluatorActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="434">
-              <caret line="131" column="76" selection-start-line="131" selection-start-column="76" selection-end-line="131" selection-end-column="76" />
+            <state relative-caret-position="400">
+              <caret line="132" column="28" selection-start-line="132" selection-start-column="28" selection-end-line="132" selection-end-column="28" />
               <folding>
                 <element signature="e#3768#5687#0" expanded="true" />
                 <element signature="e#5686#5687#0" expanded="true" />
@@ -57,7 +66,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/uaap/Evaluation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
+            <state relative-caret-position="-1667">
               <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
             </state>
           </provider>
@@ -72,8 +81,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/uaap/Model/Timer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1445">
-              <caret line="228" column="5" lean-forward="true" selection-start-line="228" selection-start-column="5" selection-end-line="228" selection-end-column="5" />
+            <state relative-caret-position="932">
+              <caret line="228" column="5" selection-start-line="228" selection-start-column="5" selection-end-line="228" selection-end-column="5" />
               <folding>
                 <element signature="e#3828#3975#0" expanded="true" />
                 <element signature="e#3974#3975#0" expanded="true" />
@@ -232,6 +241,13 @@
               <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="uaap" type="cbb59c9e:AndroidPsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="UAAP" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="uaap" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="Adapter" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="UAAP" type="1abcf292:AndroidViewProjectNode" />
@@ -410,13 +426,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/uaap/Evaluation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_evaluation.xml">
       <provider editor-type-id="text-editor" />
       <provider selected="true" editor-type-id="android-designer2" />
@@ -438,8 +447,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/example/uaap/Model/Timer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1445">
-          <caret line="228" column="5" lean-forward="true" selection-start-line="228" selection-start-column="5" selection-end-line="228" selection-end-column="5" />
+        <state relative-caret-position="932">
+          <caret line="228" column="5" selection-start-line="228" selection-start-column="5" selection-end-line="228" selection-end-column="5" />
           <folding>
             <element signature="e#3828#3975#0" expanded="true" />
             <element signature="e#3974#3975#0" expanded="true" />
@@ -458,10 +467,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/uaap/Evaluation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1667">
+          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/example/uaap/EvaluatorActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="131" column="76" selection-start-line="131" selection-start-column="76" selection-end-line="131" selection-end-column="76" />
+        <state relative-caret-position="400">
+          <caret line="132" column="28" selection-start-line="132" selection-start-column="28" selection-end-line="132" selection-end-column="28" />
           <folding>
             <element signature="e#3768#5687#0" expanded="true" />
             <element signature="e#5686#5687#0" expanded="true" />

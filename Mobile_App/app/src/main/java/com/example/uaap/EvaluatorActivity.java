@@ -130,6 +130,7 @@ public class EvaluatorActivity extends AppCompatActivity {
                         }
                     }else{
                         checkGameCode(edtGameCode.getText().toString());////
+                        ello
                     }
                 }catch (Exception e){
                     Toast.makeText(EvaluatorActivity.this,
