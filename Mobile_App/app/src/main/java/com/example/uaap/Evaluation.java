@@ -50,7 +50,7 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
     private TextView txtTeamA;
     private TextView txtTeamB;
     private TextView txtScoreA;
-    private TextView txtScoreB;
+    private TextView txtScoreB;q
     private Button btnAddScoreA;
     private Button btnSubScoreA;
     private Button btnAddScoreB;

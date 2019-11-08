@@ -3,356 +3,162 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingTop="100sp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:background="@drawable/bg_teams"
     tools:context=".Manage.TeamsDashboard">
 
+    <Button
+        android:layout_margin="5dp"
+        android:background="@drawable/ic_arrow_back_black"
+        android:layout_width="50dp"
+        android:layout_height="50dp"/>
+
+
     <GridLayout
-        android:columnCount="2"
-        android:rowCount="1"
+        android:columnCount="3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
+
 
         <LinearLayout
-            android:orientation="vertical"
-            android:paddingStart="20sp"
-            android:paddingEnd="5sp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
             android:gravity="center"
+            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="match_parent">
 
-            <RelativeLayout
-                android:paddingTop="5sp"
-                android:paddingBottom="5sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <Button
+                android:textSize="40sp"
+                android:text="Add Team"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"/>
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:cardCornerRadius="3sp">
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:padding="5sp"
-                            android:src="@mipmap/logo_adamson"
-                            android:layout_width="50sp"
-                            android:layout_height="50sp"/>
-
-                        <TextView
-                            android:paddingStart="10sp"
-                            android:layout_gravity="center"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="5sp"
-                            android:text="Adamson University"
-                            android:textColor="#000"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:paddingTop="5sp"
-                android:paddingBottom="5sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:cardCornerRadius="3sp">
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:padding="5sp"
-                            android:src="@mipmap/logo_ateneo"
-                            android:layout_width="50sp"
-                            android:layout_height="50sp"/>
-
-                        <TextView
-                            android:paddingStart="10sp"
-                            android:layout_gravity="center"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="5sp"
-                            android:text="Ateneo de Manila University"
-                            android:textColor="#000"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:paddingTop="5sp"
-                android:paddingBottom="5sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:cardCornerRadius="3sp">
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:padding="5sp"
-                            android:src="@mipmap/logo_lasalle"
-                            android:layout_width="50sp"
-                            android:layout_height="50sp"/>
-
-                        <TextView
-                            android:paddingStart="10sp"
-                            android:layout_gravity="center"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="5sp"
-                            android:text="De La Salle University"
-                            android:textColor="#000"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:paddingTop="5sp"
-                android:paddingBottom="5sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:cardCornerRadius="3sp">
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:padding="5sp"
-                            android:src="@mipmap/logo_feu"
-                            android:layout_width="50sp"
-                            android:layout_height="50sp"/>
-
-                        <TextView
-                            android:paddingStart="10sp"
-                            android:layout_gravity="center"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="5sp"
-                            android:text="Far Eastern University"
-                            android:textColor="#000"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            </RelativeLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:paddingStart="5sp"
-            android:paddingEnd="20sp"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:gravity="center"
+        <ScrollView
+            android:elevation="3dp"
+            android:scrollbars="none"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginLeft="50dp"
+            android:background="#F2F2F2"
+            android:layout_columnWeight="2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="match_parent">
 
-            <RelativeLayout
-                android:paddingTop="5sp"
-                android:paddingBottom="5sp"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <androidx.cardview.widget.CardView
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    android:elevation="3dp"
+                    android:background="#ECEBEA"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:cardCornerRadius="3sp">
+                    android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:padding="5sp"
-                            android:src="@mipmap/logo_nu"
-                            android:layout_width="50sp"
-                            android:layout_height="50sp"/>
+                    <Button
+                        android:layout_marginTop="-14dp"
+                        android:background="@drawable/ic_remove_circle_red"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"/>
 
-                        <TextView
-                            android:paddingStart="10sp"
-                            android:layout_gravity="center"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="5sp"
-                            android:text="National University"
-                            android:textColor="#000"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:paddingStart="20dp"
+                        android:textSize="40sp"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:text="DLSU Green Archers"
+                        android:textAlignment="center"/>
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:paddingTop="5sp"
-                android:paddingBottom="5sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.cardview.widget.CardView
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    android:elevation="3dp"
+                    android:background="#ECEBEA"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:cardCornerRadius="3sp">
+                    android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:padding="5sp"
-                            android:src="@mipmap/logo_ue"
-                            android:layout_width="50sp"
-                            android:layout_height="50sp"/>
+                    <Button
+                        android:layout_marginTop="-14dp"
+                        android:background="@drawable/ic_remove_circle_red"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"/>
 
-                        <TextView
-                            android:paddingStart="10sp"
-                            android:layout_gravity="center"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="5sp"
-                            android:text="University if the East"
-                            android:textColor="#000"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:paddingStart="20dp"
+                        android:textSize="40sp"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:text="UP Fighting Maroons"
+                        android:textAlignment="center"/>
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:paddingTop="5sp"
-                android:paddingBottom="5sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.cardview.widget.CardView
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    android:elevation="3dp"
+                    android:background="#ECEBEA"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:cardCornerRadius="3sp">
+                    android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:padding="5sp"
-                            android:src="@mipmap/logo_up"
-                            android:layout_width="50sp"
-                            android:layout_height="50sp"/>
+                    <Button
+                        android:layout_marginTop="-14dp"
+                        android:background="@drawable/ic_remove_circle_red"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"/>
 
-                        <TextView
-                            android:paddingStart="10sp"
-                            android:layout_gravity="center"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="5sp"
-                            android:text="University of the Philippines"
-                            android:textColor="#000"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:paddingStart="20dp"
+                        android:textSize="40sp"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:text="APC Transparent Rams"
+                        android:textAlignment="center"/>
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:paddingTop="5sp"
-                android:paddingBottom="5sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.cardview.widget.CardView
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    android:elevation="3dp"
+                    android:background="#ECEBEA"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    app:cardCornerRadius="3sp">
+                    android:layout_height="wrap_content">
 
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:padding="5sp"
-                            android:src="@mipmap/logo_ust"
-                            android:layout_width="50sp"
-                            android:layout_height="50sp"/>
+                    <Button
+                        android:layout_marginTop="-14dp"
+                        android:background="@drawable/ic_remove_circle_red"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"/>
 
-                        <TextView
-                            android:paddingStart="10sp"
-                            android:layout_gravity="center"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:padding="5sp"
-                            android:text="University of Santo Tomas"
-                            android:textColor="#000"
-                            android:textSize="16sp" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:paddingStart="20dp"
+                        android:textSize="40sp"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:text="ADMU Blue Eagles"
+                        android:textAlignment="center"/>
 
-            </RelativeLayout>
+                </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            </RelativeLayout>
-        </LinearLayout>
+            </LinearLayout>
+
+        </ScrollView>
 
     </GridLayout>
+
+
+
 </RelativeLayout>
