@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.uaap.Model.Timer;
 import com.example.uaap.Model.User;
 import com.google.gson.Gson;
 
@@ -67,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         if(user.status.equals("true")){
                             if (user.result.get(0).accountType.equals("evaluator")){
-                                Intent intent = new Intent(getApplicationContext(), EvaluatorActivity.class);
+                                Intent intent = new Intent(getApplicationContext(), Timer.class);
                                 startActivity(intent);
                             }
                             else{

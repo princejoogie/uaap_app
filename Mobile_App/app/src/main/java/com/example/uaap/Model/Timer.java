@@ -14,6 +14,7 @@ public class Timer extends AppCompatActivity {
     Button minuteUp, secondUp, miliUp, minuteDown, secondDown, miliDown, start, reset;
     TextView minutes, seconds, milliseconds;
     int finalMinute, finalSecond, finalMilli;
+    int counter = 0;
     private Handler handler = new Handler();
     private Runnable runnable;
     @Override
@@ -37,9 +38,9 @@ public class Timer extends AppCompatActivity {
         finalSecond = Integer.parseInt(second);
         String milli = milliseconds.getText().toString();
         finalMilli = Integer.parseInt(milli);
-        finalMinute = 10;
-        finalSecond = 0;
-        finalMilli = 60;
+        finalMinute = 9;
+        finalSecond = 59;
+        finalMilli = 59;
         update();
 
 
@@ -123,20 +124,42 @@ public class Timer extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                disable();
-                countDown();
-
+                buttonStart();
             }
         });
 
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                onReset();
             }
         });
 
     }
+
+    private void buttonStart(){
+        if (counter == 0) {
+            counter = counter + 1;
+            disable();
+            countDown();
+            start.setText("Pause");
+        }else{
+            onStop();
+            counter = 0;
+            start.setText("Start");
+        }
+    }
+
+    private void onReset(){
+        onStop();
+        enable();
+        finalMinute = 9;
+        finalSecond = 59;
+        finalMilli = 59;
+        update();
+        start.setText("Start");
+    }
+
     private void update(){
         String m = Integer.toString(finalMinute);
         String s= Integer.toString(finalSecond);
@@ -156,15 +179,31 @@ public class Timer extends AppCompatActivity {
 
     }
 
-
     private void countDown(){
         runnable = new Runnable() {
             @Override
             public void run() {
                 try {
-                    handler.postDelayed(this, 1000);
-                    finalMinute = finalMinute - 1;
+                    handler.postDelayed(this, 1);
+                    finalMilli = finalMilli- 1;
                     update();
+                    if(finalMilli== 0){
+                        finalSecond = finalSecond - 1;
+                        finalMilli = 60;
+                        if(finalSecond == 0){
+                            finalMinute = finalMinute - 1;
+                            finalSecond = 60;
+                            finalMilli = 60;
+                            if(finalMinute == 0){
+                                finalMinute = 9;
+                                finalSecond = 59;
+                                finalMilli = 59;
+                                update();
+                                onStop();
+                                enable();
+                            }
+                        }
+                    }
                 }
                 catch (Exception e) {
                     e.printStackTrace();
@@ -178,6 +217,18 @@ public class Timer extends AppCompatActivity {
         super.onStop();
         handler.removeCallbacks(runnable);
     }
+
+    private void enable(){
+        minuteUp.setEnabled(true);
+        secondUp.setEnabled(true);
+        miliUp.setEnabled(true);
+        minuteDown.setEnabled(true);
+        secondDown.setEnabled(true);
+        miliDown.setEnabled(true);
+
+    }
+
+
 }
 
 

@@ -19,9 +19,6 @@ package="com.example.uaap">
         android:name=".Manage.TeamsDashboard"
         android:screenOrientation="landscape" />
     <activity
-        android:name=".Manage.AddTeamActivity"
-        android:screenOrientation="landscape" />
-    <activity
         android:name=".EvaluatorDetails"
         android:screenOrientation="landscape" />
     <activity
