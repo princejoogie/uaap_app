@@ -55,6 +55,7 @@ public class EvaluatorActivity extends AppCompatActivity {
     private String GetGameDetailsURL = "http://68.183.49.18/uaap/public/getGameDetails";
 
     private SharedPreferences pref;
+    iiii
     private SharedPreferences.Editor editor;
 
 
