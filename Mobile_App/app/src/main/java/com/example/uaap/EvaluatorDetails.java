@@ -2,9 +2,7 @@ package com.example.uaap;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -13,9 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -37,10 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class EvaluatorDetails extends AppCompatActivity {
@@ -65,8 +57,6 @@ public class EvaluatorDetails extends AppCompatActivity {
     private Button btnStaffA;
     private Button btnStaffB;
     private Button btnSubmitEval;
-    private Button btnSubA;
-    private Button btnSubB;
     private String GetGameDetailsURL = "http://68.183.49.18/uaap/public/getGameDetails";
 
     private boolean committingTeam;
@@ -90,6 +80,7 @@ public class EvaluatorDetails extends AppCompatActivity {
             teamA = extras.getString("teamA");
             teamB = extras.getString("teamB");
         }
+        Toast.makeText(getApplicationContext(), playing, Toast.LENGTH_SHORT).show();
         playingA = new String[5];
         playingB = new String[5];
         btnCommA = new Button[5];
@@ -128,8 +119,6 @@ public class EvaluatorDetails extends AppCompatActivity {
         btnStaffA = findViewById(R.id.btnStaffA);
         btnStaffB = findViewById(R.id.btnStaffB);
         btnSubmitEval = findViewById(R.id.btnSubmitEval);
-        btnSubA = findViewById(R.id.btnSubA);
-        btnSubB = findViewById(R.id.btnSubB);
         getThisGame();
 
         for (int i = 0; i < 5; i++) {
@@ -250,19 +239,6 @@ public class EvaluatorDetails extends AppCompatActivity {
             }
         });
 
-        btnSubA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showRadioButtonDialogSub(true);
-            }
-        });
-        btnSubB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showRadioButtonDialogSub(false);
-            }
-        });
-
     }
 
     private void buttonSelected(Button[] buttons, int index, boolean team) {
@@ -295,14 +271,12 @@ public class EvaluatorDetails extends AppCompatActivity {
         }
 
     }
-
-    private void clearCommStaff() {
+    private void clearCommStaff(){
         btnStaffB.setBackgroundColor(Color.parseColor("#820000"));
         btnStaffB.setTextColor(Color.parseColor("#FFFFFF"));
         btnStaffA.setBackgroundColor(Color.parseColor("#038500"));
         btnStaffA.setTextColor(Color.parseColor("#FFFFFF"));
     }
-
     private void getThisGame() {
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest putRequest = new StringRequest(Request.Method.POST, GetGameDetailsURL,
@@ -363,31 +337,29 @@ public class EvaluatorDetails extends AppCompatActivity {
 
         final RadioGroup rg = (RadioGroup) dialog.findViewById(R.id.radioGroup);
         Button btnSubmitStaff = (Button) dialog.findViewById(R.id.btnSubmitStaff);
-        TextView radioTitle = (TextView) dialog.findViewById(R.id.radioTitle);
-        if (team) {
-            radioTitle.setText("Select Staff: (" + teamA + ")");
-
+        if (team){
             for (int i = 0; i < game.staffA.size(); i++) {
                 RadioButton rb = new RadioButton(EvaluatorDetails.this); // dynamically creating RadioButton and adding to RadioGroup.
-                rb.setText(game.staffA.get(i).name);
+                rb.setText(game.staffA.get(i).name+" ("+teamA+")");
                 rb.setId(Integer.parseInt(game.staffA.get(i).id));
                 rg.addView(rb);
             }
-        } else {
-            radioTitle.setText("Select Staff: (" + teamB + ")");
+        }
+        else{
             for (int i = 0; i < game.staffB.size(); i++) {
                 RadioButton rb = new RadioButton(EvaluatorDetails.this); // dynamically creating RadioButton and adding to RadioGroup.
-                rb.setText(game.staffB.get(i).name);
+                rb.setText(game.staffB.get(i).name+" ("+teamB+")");
                 rb.setId(Integer.parseInt(game.staffB.get(i).id));
                 rg.addView(rb);
             }
         }
 
 
+
         btnSubmitStaff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (team) {
+                if(team){
                     clearButtons(btnCommA, true);
                     clearButtons(btnCommB, false);
                     clearCommStaff();
@@ -396,14 +368,15 @@ public class EvaluatorDetails extends AppCompatActivity {
                     committingTeam = true;
 
 
-                } else {
+                }
+                else{
                     clearButtons(btnCommA, true);
                     clearButtons(btnCommB, false);
                     clearCommStaff();
                     btnStaffB.setBackgroundColor(Color.parseColor("#FFFFFF"));
                     btnStaffB.setTextColor(Color.parseColor("#820000"));
 
-                    committingTeam = false;
+                    committingTeam=false;
 
                 }
                 dialog.dismiss();
@@ -422,116 +395,4 @@ public class EvaluatorDetails extends AppCompatActivity {
         dialog.show();
 
     }
-
-    private void showRadioButtonDialogSub(final boolean team) {
-        Gson gson = new Gson();
-        final CurrentGame currentGame = gson.fromJson(playing, CurrentGame.class);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(EvaluatorDetails.this);
-        ArrayList<PlayersDetails> playingList = game.getPlayerA();
-        if(team){
-            playingList = game.getPlayerA();
-        }
-        else{
-            playingList = game.getPlayerB();
-        }
-        final String[] allPlayers = new String[playingList.size()];
-        for(int i=0;i<playingList.size();i++){
-            allPlayers[i] = playingList.get(i).jerseyNumber+" "+playingList.get(i).name;
-        }
-        final boolean[] checkedPlayers = new boolean[playingList.size()];
-        for(int i=0;i<playingList.size();i++){
-            boolean found = false;
-           for(int x=0;x<5;x++){
-               if(team){
-                   if(currentGame.playingA[x].equals(playingList.get(i).jerseyNumber)){
-                       found = true;
-                   }
-               }
-               else{
-                   if(currentGame.playingB[x].equals(playingList.get(i).jerseyNumber)){
-                       found = true;
-                   }
-               }
-
-           }
-           if(found) {
-               checkedPlayers[i] = true;
-           }
-           else{
-               checkedPlayers[i] = false;
-           }
-        }
-
-
-
-
-
-        builder.setMultiChoiceItems(allPlayers, checkedPlayers, new DialogInterface.OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                checkedPlayers[which] = isChecked;
-            }
-        });
-
-        builder.setCancelable(true);
-        builder.setTitle("Select Players");
-        final ArrayList<PlayersDetails> finalPlayingList = playingList;
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                int count=0;
-                for(int i=0;i<checkedPlayers.length;i++){
-                    if(checkedPlayers[i]){
-                        count++;
-                    }
-                }
-                if(count!=5){
-                    Toast.makeText(getApplicationContext(),"You must select 5 players", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    int index=0;
-                    for(int i=0;i<checkedPlayers.length;i++){
-                        if(checkedPlayers[i]){
-                            if(team){
-                                playingA[index] = finalPlayingList.get(i).jerseyNumber;
-                            }
-                            else{
-                                playingB[index] = finalPlayingList.get(i).jerseyNumber;
-                            }
-                          index++;
-                        }
-                    }
-                    dialog.dismiss();
-                    currentGame.setPlayingA(playingA);
-                    currentGame.setPlayingB(playingB);
-                    Gson cur = new Gson();
-                    String json = cur.toJson(currentGame);
-                    Intent intent = new Intent(getApplicationContext(), EvaluatorDetails.class);
-                    intent.putExtra("gameId", gameId);
-                    intent.putExtra("gameCode", gameCode);
-                    intent.putExtra("playing", json);
-                    intent.putExtra("teamA", teamA);
-                    intent.putExtra("teamB", teamB);
-                    Toast.makeText(getApplicationContext(),"Players substitution",Toast.LENGTH_SHORT).show();
-                    Log.e("New playing", json);
-                    startActivity(intent);
-                }
-            }
-        });
-
-        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-
-            }
-        });
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
 }
-
-

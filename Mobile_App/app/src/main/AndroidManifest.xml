@@ -1,49 +1,50 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.uaap">
+<?xml version="1.0" encoding="utf-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android"
+package="com.example.uaap">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.INTERNET" />
 
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-<<<<<<< HEAD
-        <activity android:name=".Evaluation"></activity>
-        <activity android:name=".EvaluatorDetails" />
-        <activity android:name=".EvaluatorActivity" />
-=======
->>>>>>> layouts
-        <activity
-            android:name=".Manage.TeamsDashboard"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".Manage.AddTeamActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".EvaluatorDetails"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".EvaluatorActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".Manage.ManageDashboard"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".DashboardActivity"
-            android:screenOrientation="landscape" />
-        <activity
-            android:name=".LoginActivity"
-            android:screenOrientation="landscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<application
+    android:allowBackup="true"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:roundIcon="@mipmap/ic_launcher_round"
+    android:supportsRtl="true"
+    android:theme="@style/AppTheme">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    </application>
+
+    <activity android:name=".Evaluation"></activity>
+
+
+    <activity
+        android:name=".Manage.TeamsDashboard"
+        android:screenOrientation="landscape" />
+    <activity
+        android:name=".Manage.AddTeamActivity"
+        android:screenOrientation="landscape" />
+    <activity
+        android:name=".EvaluatorDetails"
+        android:screenOrientation="landscape" />
+    <activity
+        android:name=".EvaluatorActivity"
+        android:screenOrientation="landscape" />
+    <activity
+        android:name=".Manage.ManageDashboard"
+        android:screenOrientation="landscape" />
+    <activity
+        android:name=".DashboardActivity"
+        android:screenOrientation="landscape" />
+    <activity
+        android:name=".LoginActivity"
+        android:screenOrientation="landscape">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+    <activity android:name="com.example.uaap.Model.Timer"></activity>
+
+</application>
 
 </manifest>
+

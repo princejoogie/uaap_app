@@ -50,7 +50,7 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
     private TextView txtTeamA;
     private TextView txtTeamB;
     private TextView txtScoreA;
-    private TextView txtScoreB;q
+    private TextView txtScoreB;
     private Button btnAddScoreA;
     private Button btnSubScoreA;
     private Button btnAddScoreB;
@@ -187,9 +187,10 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
                         Gson gson = new Gson();
                         calls = gson.fromJson(response, EvaluationModel.class);
                         ArrayList<EvaluationDetails> dataModelArrayList = calls.result;
-
-                        listAdapter = new EvaluationListAdapter(getApplicationContext(), dataModelArrayList);
-                        evaluationList.setAdapter(listAdapter);
+                        if(!dataModelArrayList.isEmpty()) {
+                            listAdapter = new EvaluationListAdapter(getApplicationContext(), dataModelArrayList);
+                            evaluationList.setAdapter(listAdapter);
+                        }
 
                     }
                 },
