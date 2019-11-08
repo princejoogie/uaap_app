@@ -11,15 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Manage.AddTeam"></activity>
-
         <activity
-            android:name=".Manage.AddTeamActivity"
+            android:name=".Manage.AddTeam"
             android:screenOrientation="landscape" />
-
-        <activity android:name=".Evaluation" />
-        <activity android:name=".EvaluatorDetails" />
-        <activity android:name=".EvaluatorActivity" />
+        <activity
+            android:name=".Evaluation"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".EvaluatorDetails"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".EvaluatorActivity"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".Manage.TeamsDashboard"
             android:screenOrientation="landscape" />
