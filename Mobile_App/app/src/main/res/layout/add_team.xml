@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_admin"
+    android:clipToPadding="false"
+    android:gravity="center"
+    tools:context=".Manage.AddTeam">
+
+    <GridLayout
+        android:columnCount="3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:padding="10dp"
+            android:orientation="vertical"
+            android:layout_columnWeight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_margin="5dp"
+                android:background="@drawable/ic_arrow_back_black_24dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="300dp"/>
+
+            <Button
+                android:paddingVertical="10dp"
+                android:textSize="30sp"
+                android:textColor="#F2F2F2"
+                android:background="@drawable/button_eval"
+                android:text="View Leagues"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:padding="10dp"
+            android:orientation="vertical"
+            android:layout_columnWeight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <GridLayout
+                android:layout_marginTop="50dp"
+                android:columnCount="3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:paddingHorizontal="10dp"
+                    android:textAlignment="center"
+                    android:textColor="#F2F2F2"
+                    android:textSize="30sp"
+                    android:text="Team Name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:textSize="30sp"
+                    android:background="#F2F2F2"
+                    android:layout_columnWeight="2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </GridLayout>
+
+            <GridLayout
+                android:layout_marginBottom="50dp"
+                android:columnCount="2"
+                android:layout_marginTop="50dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:orientation="vertical"
+                    android:layout_columnWeight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <GridLayout
+                        android:columnCount="3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:textAlignment="textStart"
+                            android:layout_margin="10dp"
+                            android:textColor="#F2F2F2"
+                            android:textSize="30sp"
+                            android:layout_columnWeight="2"
+                            android:text="Players"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"/>
+
+                        <Button
+                            android:layout_margin="10dp"
+                            android:background="@drawable/ic_add_circle_black_24dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"/>
+                    </GridLayout>
+
+                    <LinearLayout
+                        android:padding="10dp"
+                        android:elevation="3dp"
+                        android:background="#F2F2F2"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp">
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:orientation="vertical"
+                    android:layout_columnWeight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <GridLayout
+                        android:columnCount="3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:textAlignment="textStart"
+                            android:layout_margin="10dp"
+                            android:textColor="#F2F2F2"
+                            android:textSize="30sp"
+                            android:layout_columnWeight="2"
+                            android:text="Staff"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"/>
+
+                        <Button
+                            android:layout_margin="10dp"
+                            android:background="@drawable/ic_add_circle_black_24dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"/>
+                    </GridLayout>
+
+                    <LinearLayout
+                        android:padding="10dp"
+                        android:elevation="3dp"
+                        android:background="#F2F2F2"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="400dp">
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </GridLayout>
+
+
+            <Button
+                android:layout_margin="10dp"
+                android:paddingVertical="10dp"
+                android:textSize="30sp"
+                android:textColor="#F2F2F2"
+                android:background="@drawable/button_eval"
+                android:text="Create Team"
+                android:layout_gravity="end"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </GridLayout>
+
+</RelativeLayout>
