@@ -34,8 +34,6 @@
             <Button
                 android:paddingVertical="10dp"
                 android:textSize="30sp"
-                android:textColor="#F2F2F2"
-                android:background="@drawable/button_eval"
                 android:text="View Leagues"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
@@ -72,9 +70,9 @@
             </GridLayout>
 
             <GridLayout
-                android:layout_marginBottom="50dp"
+                android:layout_marginBottom="20dp"
                 android:columnCount="2"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -168,8 +166,6 @@
                 android:layout_margin="10dp"
                 android:paddingVertical="10dp"
                 android:textSize="30sp"
-                android:textColor="#F2F2F2"
-                android:background="@drawable/button_eval"
                 android:text="Create Team"
                 android:layout_gravity="end"
                 android:layout_width="match_parent"

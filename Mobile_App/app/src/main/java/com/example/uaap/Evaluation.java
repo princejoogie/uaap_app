@@ -187,9 +187,10 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
                         Gson gson = new Gson();
                         calls = gson.fromJson(response, EvaluationModel.class);
                         ArrayList<EvaluationDetails> dataModelArrayList = calls.result;
-
-                        listAdapter = new EvaluationListAdapter(getApplicationContext(), dataModelArrayList);
-                        evaluationList.setAdapter(listAdapter);
+                        if(!dataModelArrayList.isEmpty()) {
+                            listAdapter = new EvaluationListAdapter(getApplicationContext(), dataModelArrayList);
+                            evaluationList.setAdapter(listAdapter);
+                        }
 
                     }
                 },

@@ -12,6 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Manage.AddTeam"></activity>
+
+        <activity
+            android:name=".Manage.AddTeamActivity"
+            android:screenOrientation="landscape" />
+
         <activity android:name=".Evaluation" />
         <activity android:name=".EvaluatorDetails" />
         <activity android:name=".EvaluatorActivity" />
