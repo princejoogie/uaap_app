@@ -55,7 +55,7 @@ public class EvaluatorActivity extends AppCompatActivity {
     private String GetGameDetailsURL = "http://68.183.49.18/uaap/public/getGameDetails";
 
     private SharedPreferences pref;
-    iiii
+
     private SharedPreferences.Editor editor;
 
 
@@ -131,7 +131,7 @@ public class EvaluatorActivity extends AppCompatActivity {
                         }
                     }else{
                         checkGameCode(edtGameCode.getText().toString());////
-                        ello
+
                     }
                 }catch (Exception e){
                     Toast.makeText(EvaluatorActivity.this,

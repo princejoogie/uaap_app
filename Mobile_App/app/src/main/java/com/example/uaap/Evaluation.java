@@ -1,15 +1,12 @@
 package com.example.uaap;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GestureDetectorCompat;
-import androidx.core.view.MotionEventCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -27,13 +24,13 @@ import com.example.uaap.Adapter.EvaluationListAdapter;
 import com.example.uaap.Model.EvaluationDetails;
 import com.example.uaap.Model.EvaluationModel;
 
-import com.example.uaap.Model.Game;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class Evaluation extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
     private String gameId;
@@ -45,7 +42,7 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
     private int scoreB;
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
-
+    int counter = 0;
     private ListView evaluationList;
     private TextView txtTeamA;
     private TextView txtTeamB;
@@ -58,10 +55,18 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
     private FloatingActionButton fab;
     private EvaluationListAdapter listAdapter;
     private EvaluationModel calls;
-
+    long finalMinute, finalSecond, finalMilli;
     private String GetCallURL = "http://68.183.49.18/uaap/public/getAll";
     private String SaveScoreURL = "http://68.183.49.18/uaap/public/saveScore";
     private String DeleteEvaluationURL = "http://68.183.49.18/uaap/public/deleteEvaluation";
+
+    private long totalMillis;
+    // Timer
+    Button minuteUp, secondUp, miliUp, minuteDown, secondDown, miliDown, start, reset;
+    TextView txtMinute1, txtSecond1, txtMillis1, txtMinute2, txtSecond2, txtMillis2;
+
+    private Handler handler = new Handler();
+    private Runnable runnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +83,26 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         btnAddScoreB = findViewById(R.id.btnAddScoreB);
         btnSubScoreB = findViewById(R.id.btnSubScoreB);
         fab = findViewById(R.id.fab);
+        finalMinute = 10;
+        finalSecond = 0;
+        finalMilli = 0;
+        //Timer
+        minuteUp = findViewById(R.id.minuteUp);
+        secondUp = findViewById(R.id.secondUp);
+        miliUp = findViewById(R.id.miliUp);
+        minuteDown = findViewById(R.id.minuteDown);
+        secondDown = findViewById(R.id.secondDown);
+        miliDown = findViewById(R.id.miliDown);
+        txtMinute1 = findViewById(R.id.txtMinute1);
+        txtSecond1 = findViewById(R.id.txtSecond1);
+        txtMillis1 = findViewById(R.id.txtMillis1);
+        txtMinute2 = findViewById(R.id.txtMinute2);
+        txtSecond2 = findViewById(R.id.txtSecond2);
+        txtMillis2 = findViewById(R.id.txtMillis2);
+        start = findViewById(R.id.start);
+        reset = findViewById(R.id.reset);
 
+        initTime();
         pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
         editor = pref.edit();
 
@@ -147,6 +171,95 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
             }
         });
 
+        minuteUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (finalMinute >= 9) {
+                    finalMinute = 0;
+                    txtMinute1.setText("1");
+
+                } else {
+                    finalMinute = finalMinute + 1;
+                }
+                updateTime(txtMinute1, txtMinute2, finalMinute);
+            }
+        });
+
+        secondUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (finalSecond >= 59) {
+                    finalSecond = 0;
+
+                } else {
+                    finalSecond = finalSecond + 1;
+                }
+                updateTime(txtSecond1, txtSecond2, finalSecond);
+            }
+        });
+
+        miliUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (finalMilli >= 59) {
+                    finalMilli = 0;
+                } else {
+                    finalMilli = finalMilli + 1;
+                }
+                updateTime(txtMillis1, txtMillis2, finalMilli);
+            }
+        });
+
+        minuteDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (finalMinute <= 0) {
+                    finalMinute = 10;
+                } else {
+                    finalMinute = finalMinute - 1;
+                }
+                updateTime(txtMinute1, txtMinute2, finalMinute);
+
+            }
+        });
+
+        secondDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (finalSecond <= 0) {
+                    finalSecond = 59;
+
+                } else {
+                    finalSecond = finalSecond - 1;
+                }
+                updateTime(txtSecond1, txtSecond2, finalSecond);
+            }
+        });
+
+        miliDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (finalMilli <= 0) {
+                    finalMilli = 59;
+                } else {
+                    finalMilli = finalMilli - 1;
+                }
+                updateTime(txtMillis1, txtMillis2, finalMilli);
+            }
+        });
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                buttonStart();
+            }
+        });
+
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onReset();
+            }
+        });
     }
 
 
@@ -187,7 +300,7 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
                         Gson gson = new Gson();
                         calls = gson.fromJson(response, EvaluationModel.class);
                         ArrayList<EvaluationDetails> dataModelArrayList = calls.result;
-                        if(!dataModelArrayList.isEmpty()) {
+                        if (!dataModelArrayList.isEmpty()) {
                             listAdapter = new EvaluationListAdapter(getApplicationContext(), dataModelArrayList);
                             evaluationList.setAdapter(listAdapter);
                         }
@@ -293,5 +406,146 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         return true;
     }
 
+    private void initTime() {
+        txtMinute1.setText("1");
+        txtMinute2.setText("0");
+        txtSecond1.setText("0");
+        txtSecond2.setText("0");
+        txtMillis1.setText("0");
+        txtMillis2.setText("0");
+    }
+
+    private void updateTime(TextView textView1, TextView textView2, long time) {
+        if (time >= 10) {
+            textView1.setText(Character.toString(Long.toString(time).charAt(0)));
+            textView2.setText(Character.toString(Long.toString(time).charAt(1)));
+        } else {
+            textView1.setText("0");
+            textView2.setText(Long.toString(time));
+        }
+    }
+
+    //   private void countDown(){
+//        runnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    handler.postDelayed(this, 1);
+//                   finalMilli =finalMilli - 1;
+//
+//
+//                }
+//                catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        };
+//        handler.postDelayed(runnable, 0);
+//    }
+    private void countDown() {
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    handler.postDelayed(this, 1);
+                    totalMillis= finalMilli + (finalSecond*60) + (finalMinute*60*60);
+                    totalMillis--;
+                    if(totalMillis==0){
+
+                    }
+                    finalMinute = (totalMillis/1000) *60;
+                    finalSecond = (totalMillis/1000) %60;
+                    finalMilli = totalMillis - (finalSecond*60)-(finalMinute*60*60);
+                    update();
+//                    finalMilli = finalMilli - 1;
+//
+//                    if (finalMilli <= 0) {
+//                        finalSecond = finalSecond - 1;
+//                        update();
+//                        finalMilli = 60;
+//                        if (finalSecond <= 0) {
+//                            finalMinute = finalMinute - 1;
+//                            update();
+//                            finalSecond = 60;
+//                            finalMilli = 60;
+//                            if (finalMinute <= 0) {
+//                                finalMinute = 10;
+//                                finalSecond = 0;
+//                                finalMilli = 0;
+//                                update();
+//                                onStop();
+//
+//                                enable(false);
+//                            } else {
+//                                update();
+//                            }
+//                        } else {
+//                            update();
+//                        }
+//
+//                    } else {
+//                        update();
+//                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        handler.postDelayed(runnable, 0);
+    }
+
+
+
+
+
+
+
+
+    protected void onStop() {
+        super.onStop();
+        handler.removeCallbacks(runnable);
+    }
+
+    private void update() {
+        updateTime(txtMillis1, txtMillis2, finalMilli);
+        updateTime(txtMinute1, txtMinute2, finalMinute);
+        updateTime(txtSecond1, txtSecond2, finalSecond);
+
+    }
+
+    private void enable(boolean value) {
+        minuteUp.setEnabled(value);
+        secondUp.setEnabled(value);
+        miliUp.setEnabled(value);
+        minuteDown.setEnabled(value);
+        secondDown.setEnabled(value);
+        miliDown.setEnabled(value);
+
+    }
+
+    private void buttonStart() {
+        if (counter == 0) {
+            counter = counter + 1;
+            enable(false);
+            countDown();
+            start.setText("Pause");
+        } else {
+            onStop();
+            counter = 0;
+            enable(true);
+            start.setText("Start");
+        }
+    }
+
+
+    private void onReset() {
+        onStop();
+        enable(true);
+        finalMinute = 9;
+        finalSecond = 59;
+        finalMilli = 59;
+        initTime();
+        start.setText("Start");
+    }
 
 }
