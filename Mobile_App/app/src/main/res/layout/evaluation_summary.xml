@@ -9,6 +9,7 @@
     android:gravity="center"
     tools:context=".Manage.EvaluationSummary">
 
+
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -508,4 +509,20 @@
         </ScrollView>
 
     </GridLayout>
+
+    <LinearLayout
+        android:gravity="bottom"
+        android:layout_alignParentEnd="true"
+        android:layout_width="100dp"
+        android:layout_height="match_parent">
+
+        <Button
+            android:layout_alignParentBottom="true"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/ic_add_circle_black_24dp"
+            android:backgroundTint="#EA1A1A" />
+
+    </LinearLayout>
+
 </RelativeLayout>
