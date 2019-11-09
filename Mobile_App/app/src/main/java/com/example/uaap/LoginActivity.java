@@ -18,6 +18,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.uaap.Manage.AddTeam;
+import com.example.uaap.Manage.EvaluationSummary;
 import com.example.uaap.Model.User;
 import com.google.gson.Gson;
 
@@ -68,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         if(user.status.equals("true")){
                             if (user.result.get(0).accountType.equals("evaluator")){
-                                Intent intent = new Intent(getApplicationContext(), AddTeam.class);
+                                Intent intent = new Intent(getApplicationContext(), EvaluationSummary.class);
                                 startActivity(intent);
                             }
                             else{
