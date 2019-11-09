@@ -1,11 +1,15 @@
 package com.example.uaap;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +40,7 @@ import com.example.uaap.Model.GameId;
 import com.example.uaap.Model.PlayersDetails;
 import com.google.gson.Gson;
 
+import org.apache.commons.text.WordUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
@@ -46,7 +51,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EvaluatorDetails extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class EvaluatorDetails extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     private String gameId;
     private String gameCode;
@@ -68,20 +73,31 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
     private Button btnStaffA;
     private Button btnStaffB;
     private Button btnSubmitEval;
+    private Button btnFoul;
+    private Button btnViolation;
+    private Button btnSubA;
+    private Button btnSubB;
+    private Button btnAreaLead;
+    private Button btnAreaCenter;
+    private Button btnAreaTrail;
+    private Button btnAoPLead;
+    private Button btnAoPTrail;
+    private Button btnAoPCenter;
+    private Button btnReviewCC;
+    private Button btnReviewINC;
+    private Button btnReviewCFR;
+    private Button btnReviewNCFR;
     private String GetGameDetailsURL = "http://68.183.49.18/uaap/public/getGameDetails";
 
-    private boolean committingTeam;
-    private String committingType;
-    private String committing;
-
-    private boolean disTeam;
-    private String disType;
-    private String dis;
-
+    private Button[] refButtons;
+    private Button[] areaButtons;
+    private Button[] aopButtons;
+    private Button[] reviewButtons;
     private CallToIssue callToIssue;
 
     private ListView foulListView;
     private FoulListAdapter listAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,13 +150,32 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         btnStaffA = findViewById(R.id.btnStaffA);
         btnStaffB = findViewById(R.id.btnStaffB);
         btnSubmitEval = findViewById(R.id.btnSubmitEval);
+        btnFoul = findViewById(R.id.btnFoul);
+        btnViolation = findViewById(R.id.btnViolation);
+        btnSubA = findViewById(R.id.btnSubA);
+        btnSubB = findViewById(R.id.btnSubB);
+        btnAreaLead = findViewById(R.id.btnAreaLead);
+        btnAreaCenter = findViewById(R.id.btnAreaCenter);
+        btnAreaTrail = findViewById(R.id.btnAreaTrail);
+        btnAoPLead = findViewById(R.id.btnAoPLead);
+        btnAoPCenter = findViewById(R.id.btnAoPCenter);
+        btnAoPTrail = findViewById(R.id.btnAoPTrial);
+        btnReviewCC = findViewById(R.id.btnReviewCC);
+        btnReviewINC = findViewById(R.id.btnReviewINC);
+        btnReviewCFR = findViewById(R.id.btnReviewCFR);
+        btnReviewNCFR = findViewById(R.id.btnReviewNCFR);
+
+        final Button[] refButtons = {btnRefA, btnRefB, btnRefC};
+        final Button[] areaButtons = {btnAreaLead, btnAreaCenter, btnAreaTrail};
+        final Button[] aopButtons = {btnAoPLead, btnAoPCenter, btnAoPTrail};
+        final Button[] reviewButtons = {btnReviewCC, btnReviewINC, btnReviewCFR, btnReviewNCFR};
 
         foulListView = findViewById(R.id.foulVioList);
         foulListView.setOnItemClickListener(this);
         callToIssue = new CallToIssue();
         getThisGame();
 
-        genFoul();
+        genFoul(getResources().getStringArray(R.array.foul));
 
         for (int i = 0; i < 5; i++) {
             final int finalI = i;
@@ -219,6 +254,25 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                     return true;
                 }
             });
+            btnViolation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    btnViolation.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
+                    btnFoul.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_eval));
+                    callToIssue.setCallType("Violation");
+                    genFoul(getResources().getStringArray(R.array.violation));
+
+                }
+            });
+            btnFoul.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    btnFoul.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
+                    btnViolation.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_eval));
+                    callToIssue.setCallType("Foul");
+                    genFoul(getResources().getStringArray(R.array.foul));
+                }
+            });
         }
         btnStaffA.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -255,11 +309,101 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         btnSubmitEval.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("committing", committing);
-                Log.e("comittingTeam", String.valueOf(committingTeam));
-                Log.e("committingType", committingType);
+
             }
         });
+        btnSubA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showRadioButtonDialogSub(true);
+            }
+        });
+        btnSubB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showRadioButtonDialogSub(false);
+            }
+        });
+        btnRefA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInfo(game.referee.get(0).name, 0, "referee", refButtons);
+            }
+        });
+        btnRefB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInfo(game.referee.get(1).name, 1, "referee", refButtons);
+            }
+        });
+        btnRefC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInfo(game.referee.get(2).name, 2, "referee", refButtons);
+            }
+        });
+        btnAreaLead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInfo("Lead", 0, "area", areaButtons);
+            }
+        });
+        btnAreaCenter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInfo("Center", 1, "area", areaButtons);
+            }
+        });
+        btnAreaTrail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInfo("Trail", 2, "area", areaButtons);
+            }
+        });
+        btnAoPLead.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInfo("Lead", 0, "aop", aopButtons);
+            }
+        });
+        btnAoPCenter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInfo("Center", 1, "aop", aopButtons);
+
+            }
+        });
+        btnAoPTrail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInfo("Trail", 2, "aop", aopButtons);
+            }
+        });
+        btnReviewCC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInfo("CC", 0, "review", reviewButtons);
+            }
+        });
+        btnReviewINC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInfo("INC", 1, "review", reviewButtons);
+            }
+        });
+        btnReviewCFR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInfo("CFR", 2, "review", reviewButtons);
+            }
+        });
+        btnReviewNCFR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInfo("NCFR",3,"review", reviewButtons);
+            }
+        });
+
 
     }
 
@@ -415,15 +559,143 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
 
     }
 
-    private void genFoul() {
+    private void genFoul(String[] list) {
 
-        List<String> fouls = Arrays.asList(getResources().getStringArray(R.array.foul));
+        List<String> fouls = Arrays.asList(list);
         listAdapter = new FoulListAdapter(getApplicationContext(), fouls);
         foulListView.setAdapter(listAdapter);
 
 
     }
+
     public void onItemClick(AdapterView parent, View v, int position, long id) {
-        Toast.makeText(getApplicationContext(), "hello", Toast.LENGTH_SHORT).show();
+        TextView textView = (TextView) v.findViewById(R.id.txtFoul);
+        callToIssue.setCall(WordUtils.capitalizeFully(textView.getText().toString()));
     }
+
+    private void showRadioButtonDialogSub(final boolean team) {
+        Gson gson = new Gson();
+        final CurrentGame currentGame = gson.fromJson(playing, CurrentGame.class);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(EvaluatorDetails.this);
+        ArrayList<PlayersDetails> playingList = game.getPlayerA();
+        if (team) {
+            playingList = game.getPlayerA();
+        } else {
+            playingList = game.getPlayerB();
+        }
+        final String[] allPlayers = new String[playingList.size()];
+        for (int i = 0; i < playingList.size(); i++) {
+            allPlayers[i] = playingList.get(i).jerseyNumber + " " + playingList.get(i).name;
+        }
+        final boolean[] checkedPlayers = new boolean[playingList.size()];
+        for (int i = 0; i < playingList.size(); i++) {
+            boolean found = false;
+            for (int x = 0; x < 5; x++) {
+                if (team) {
+                    if (currentGame.playingA[x].equals(playingList.get(i).jerseyNumber)) {
+                        found = true;
+                    }
+                } else {
+                    if (currentGame.playingB[x].equals(playingList.get(i).jerseyNumber)) {
+                        found = true;
+                    }
+                }
+
+            }
+            if (found) {
+                checkedPlayers[i] = true;
+            } else {
+                checkedPlayers[i] = false;
+            }
+        }
+
+
+        builder.setMultiChoiceItems(allPlayers, checkedPlayers, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                checkedPlayers[which] = isChecked;
+            }
+        });
+
+        builder.setCancelable(true);
+        builder.setTitle("Select Players");
+        final ArrayList<PlayersDetails> finalPlayingList = playingList;
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                int count = 0;
+                for (int i = 0; i < checkedPlayers.length; i++) {
+                    if (checkedPlayers[i]) {
+                        count++;
+                    }
+                }
+                if (count != 5) {
+                    Toast.makeText(getApplicationContext(), "You must select 5 players", Toast.LENGTH_SHORT).show();
+                } else {
+                    int index = 0;
+                    for (int i = 0; i < checkedPlayers.length; i++) {
+                        if (checkedPlayers[i]) {
+                            if (team) {
+                                playingA[index] = finalPlayingList.get(i).jerseyNumber;
+                            } else {
+                                playingB[index] = finalPlayingList.get(i).jerseyNumber;
+                            }
+                            index++;
+                        }
+                    }
+                    dialog.dismiss();
+                    currentGame.setPlayingA(playingA);
+                    currentGame.setPlayingB(playingB);
+                    Gson cur = new Gson();
+                    String json = cur.toJson(currentGame);
+                    Intent intent = new Intent(getApplicationContext(), EvaluatorDetails.class);
+                    intent.putExtra("gameId", gameId);
+                    intent.putExtra("gameCode", gameCode);
+                    intent.putExtra("playing", json);
+                    intent.putExtra("teamA", teamA);
+                    intent.putExtra("teamB", teamB);
+                    Toast.makeText(getApplicationContext(), "Players substitution", Toast.LENGTH_SHORT).show();
+                    Log.e("New playing", json);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void setInfo(String id, int pos, String designation, Button[] buttons){
+        for(int i=0;i<buttons.length;i++){
+            if(i==pos){
+                buttons[i].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
+            }
+            else{
+                buttons[i].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_eval));
+            }
+        }
+        if(designation.equals("referee")){
+            callToIssue.setRefereeId(id);
+        }
+        else if(designation.equals("area")){
+            callToIssue.setArea(id);
+        }
+        else if(designation.equals("aop")){
+            callToIssue.setAreaOfPlay(id);
+        }
+        else if(designation.equals("review")){
+            callToIssue.setReviewDecision(id);
+        }
+    }
+
+
 }

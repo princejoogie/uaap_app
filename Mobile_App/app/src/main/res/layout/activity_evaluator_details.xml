@@ -541,118 +541,110 @@
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginHorizontal="20dp"
-                    android:text="STAFF"
-                    android:textSize="20dp"
                     android:background="#038500"
-                    android:textColor="#FFFFFF" />
+                    android:text="STAFF"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20dp" />
+
                 <Button
                     android:id="@+id/btnStaffB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginHorizontal="20dp"
-                    android:text="STAFF"
-                    android:textSize="20dp"
                     android:background="#820000"
-                    android:textColor="#FFFFFF"/>
+                    android:text="STAFF"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20dp" />
+
                 <Button
                     android:id="@+id/btnSubA"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginHorizontal="20dp"
-                    android:text="SUB"
-                    android:textSize="20dp"
                     android:background="#038500"
-                    android:textColor="#FFFFFF" />
+                    android:text="SUB"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20dp" />
+
                 <Button
                     android:id="@+id/btnSubB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginHorizontal="20dp"
-                    android:text="SUB"
-                    android:textSize="20dp"
                     android:background="#820000"
-                    android:textColor="#FFFFFF"/>
+                    android:text="SUB"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20dp" />
 
 
             </GridLayout>
         </LinearLayout>
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginVertical="10dp"
             android:background="#F2F2F2"
             android:elevation="3dp"
+            android:orientation="vertical"
             android:scrollbars="none">
 
             <LinearLayout
-                android:id="@+id/foulList"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/btnFoul"
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/btn_eval_selected"
+                    android:padding="10dp"
+                    android:text="Foul" />
 
-                    <Button
-                        android:id="@+id/btnFoul"
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/button_eval"
-                        android:padding="10dp"
-                        android:text="Foul" />
-
-                    <Button
-                        android:layout_width="120dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/button_eval"
-                        android:padding="10dp"
-                        android:text="Voilation" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="3dp"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="#C6C6C6"/>
-                <ListView
-                    android:id="@+id/foulVioList"
-                    android:layout_width="250dp"
+                <Button
+                    android:id="@+id/btnViolation"
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="5dp"
-                    android:layout_marginTop="10dp"></ListView>
-
-
-<!--                <Button-->
-<!--                    android:layout_width="250dp"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginHorizontal="10dp"-->
-<!--                    android:layout_marginVertical="5dp"-->
-<!--                    android:layout_marginTop="10dp"-->
-<!--                    android:background="@drawable/button_eval"-->
-<!--                    android:padding="10dp"-->
-<!--                    android:text="Blocking" />-->
-
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/button_eval"
+                    android:padding="10dp"
+                    android:text="Violation" />
 
             </LinearLayout>
 
-        </ScrollView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="#C6C6C6" />
+
+            <ListView
+                android:id="@+id/foulVioList"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:dividerHeight="5dp"
+                android:divider="@android:color/transparent"
+                android:listSelector="@drawable/selector_foul"
+
+                />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -713,6 +705,7 @@
                     android:orientation="horizontal">
 
                     <Button
+                        android:id="@+id/btnAreaLead"
                         android:layout_width="93dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -721,6 +714,7 @@
                         android:text="Lead" />
 
                     <Button
+                        android:id="@+id/btnAreaCenter"
                         android:layout_width="93dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
@@ -729,6 +723,7 @@
                         android:text="Center" />
 
                     <Button
+                        android:id="@+id/btnAreaTrail"
                         android:layout_width="93dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
@@ -751,6 +746,7 @@
                     android:orientation="horizontal">
 
                     <Button
+                        android:id="@+id/btnAoPLead"
                         android:layout_width="93dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -759,6 +755,7 @@
                         android:text="Lead" />
 
                     <Button
+                        android:id="@+id/btnAoPCenter"
                         android:layout_width="93dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
@@ -767,6 +764,7 @@
                         android:text="Center" />
 
                     <Button
+                        android:id="@+id/btnAoPTrial"
                         android:layout_width="93dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
@@ -791,6 +789,7 @@
                     android:rowCount="2">
 
                     <Button
+                        android:id="@+id/btnReviewCC"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
@@ -799,6 +798,7 @@
                         android:text="CC" />
 
                     <Button
+                        android:id="@+id/btnReviewINC"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
@@ -807,6 +807,7 @@
                         android:text="INC" />
 
                     <Button
+                        android:id="@+id/btnReviewCFR"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
@@ -815,6 +816,7 @@
                         android:text="CFR" />
 
                     <Button
+                        android:id="@+id/btnReviewNCFR"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"

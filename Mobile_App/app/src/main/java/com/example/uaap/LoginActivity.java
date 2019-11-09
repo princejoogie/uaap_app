@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         if(user.status.equals("true")){
                             if (user.result.get(0).accountType.equals("evaluator")){
-                                Intent intent = new Intent(getApplicationContext(), Timer.class);
+                                Intent intent = new Intent(getApplicationContext(), EvaluatorActivity.class);
                                 startActivity(intent);
                             }
                             else{

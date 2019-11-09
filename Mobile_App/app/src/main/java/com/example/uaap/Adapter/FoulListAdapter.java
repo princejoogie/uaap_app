@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.uaap.Model.EvaluationDetails;
+import com.example.uaap.Model.Foul;
 import com.example.uaap.R;
 
 import org.w3c.dom.Text;
@@ -19,6 +20,7 @@ public class FoulListAdapter extends BaseAdapter {
     private Context context;
     private List<String> dataModelArrayList;
 
+
     public FoulListAdapter(Context context, List<String> dataModelArrayList) {
 
         this.context = context;
@@ -29,6 +31,7 @@ public class FoulListAdapter extends BaseAdapter {
     public int getViewTypeCount() {
         return getCount();
     }
+
     @Override
     public int getItemViewType(int position) {
 
@@ -41,7 +44,7 @@ public class FoulListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public String getItem(int position) {
         return dataModelArrayList.get(position);
     }
 
@@ -63,12 +66,13 @@ public class FoulListAdapter extends BaseAdapter {
 
 
             convertView.setTag(holder);
-        }else {
+        } else {
             // the getTag returns the viewHolder object set as a tag to the view
-            holder = (ViewHolder)convertView.getTag();
+            holder = (ViewHolder) convertView.getTag();
         }
 //        protected TextView period,time,callType,committingTeam,committing,disadvantagedTeam,disadvantaged,referee,area,reviewDecision,comment;
-        holder.txtFoul.setText(dataModelArrayList.get(position));
+        holder.txtFoul.setText(dataModelArrayList.get(position).toUpperCase());
+
         return convertView;
     }
 

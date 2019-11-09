@@ -8,6 +8,60 @@ public class CallToIssue {
     private String disType;
     private String dis;
     private String callType;
+    private String call;
+    private String refereeId;
+    private String area;
+    private String areaOfPlay;
+    private String reviewDecision;
+    private String comment;
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getAreaOfPlay() {
+        return areaOfPlay;
+    }
+
+    public void setAreaOfPlay(String areaOfPlay) {
+        this.areaOfPlay = areaOfPlay;
+    }
+
+    public String getReviewDecision() {
+        return reviewDecision;
+    }
+
+    public void setReviewDecision(String reviewDecision) {
+        this.reviewDecision = reviewDecision;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String getRefereeId() {
+        return refereeId;
+    }
+
+    public void setRefereeId(String refereeId) {
+        this.refereeId = refereeId;
+    }
+
+    public String getCall() {
+        return call;
+    }
+
+    public void setCall(String call) {
+        this.call = call;
+    }
 
     public boolean isCommittingTeam() {
         return committingTeam;
