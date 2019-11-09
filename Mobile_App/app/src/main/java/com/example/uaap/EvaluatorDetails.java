@@ -45,13 +45,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EvaluatorDetails extends AppCompatActivity implements AdapterView.OnItemClickListener{
+import static android.text.TextUtils.isEmpty;
+
+public class EvaluatorDetails extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private String gameId;
     private String gameCode;
@@ -87,16 +90,36 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
     private Button btnReviewINC;
     private Button btnReviewCFR;
     private Button btnReviewNCFR;
+    private Button btnMinUp;
+    private Button btnMinDown;
+    private Button btnSecUp;
+    private Button btnSecDown;
+    private Button btnMillisUp;
+    private Button btnMillisDown;
+    private Button btnQ1;
+    private Button btnQ2;
+    private Button btnQ3;
+    private Button btnQ4;
+    private Button btnOT;
+    private TextView txtMinute1;
+    private TextView txtMinute2;
+    private TextView txtSecond1;
+    private TextView txtSecond2;
+    private TextView txtMillis1;
+    private TextView txtMillis2;
+    private TextView txtComment;
     private String GetGameDetailsURL = "http://68.183.49.18/uaap/public/getGameDetails";
-
+    private String SubmitEvalURL = "http://68.183.49.18/uaap/public/createEvaluation";
     private Button[] refButtons;
     private Button[] areaButtons;
     private Button[] aopButtons;
     private Button[] reviewButtons;
+    private Button[] periodButtons;
     private CallToIssue callToIssue;
-
+    private int finalMinute, finalSecond, finalMilli;
     private ListView foulListView;
     private FoulListAdapter listAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,16 +187,38 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         btnReviewINC = findViewById(R.id.btnReviewINC);
         btnReviewCFR = findViewById(R.id.btnReviewCFR);
         btnReviewNCFR = findViewById(R.id.btnReviewNCFR);
-
+        btnMinUp = findViewById(R.id.btnMinUp);
+        btnMinDown = findViewById(R.id.btnMinDown);
+        btnSecUp = findViewById(R.id.btnSecUp);
+        btnSecDown = findViewById(R.id.btnSecDown);
+        btnMillisUp = findViewById(R.id.btnMillisUp);
+        btnMillisDown = findViewById(R.id.btnMillisDown);
+        btnQ1 = findViewById(R.id.btnQ1);
+        btnQ2 = findViewById(R.id.btnQ2);
+        btnQ3 = findViewById(R.id.btnQ3);
+        btnQ4 = findViewById(R.id.btnQ4);
+        btnOT = findViewById(R.id.btnOT);
+        txtMinute1 = findViewById(R.id.txtMinute1);
+        txtMinute2 = findViewById(R.id.txtMinute2);
+        txtSecond1 = findViewById(R.id.txtSecond1);
+        txtSecond2 = findViewById(R.id.txtSecond2);
+        txtMillis1 = findViewById(R.id.txtMillis1);
+        txtMillis2 = findViewById(R.id.txtMillis2);
+        txtComment = findViewById(R.id.txtComment);
+        finalMinute = 10;
+        finalSecond = 0;
+        finalMilli = 0;
+        initTime();
         final Button[] refButtons = {btnRefA, btnRefB, btnRefC};
         final Button[] areaButtons = {btnAreaLead, btnAreaCenter, btnAreaTrail};
         final Button[] aopButtons = {btnAoPLead, btnAoPCenter, btnAoPTrail};
         final Button[] reviewButtons = {btnReviewCC, btnReviewINC, btnReviewCFR, btnReviewNCFR};
-
+        final Button[] periodButtons = {btnQ1, btnQ2, btnQ3, btnQ4, btnOT};
         foulListView = findViewById(R.id.foulVioList);
         foulListView.setOnItemClickListener(this);
         callToIssue = new CallToIssue();
         getThisGame();
+        callToIssue.setCallType("Foul");
 
         genFoul(getResources().getStringArray(R.array.foul));
 
@@ -185,7 +230,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                     buttonSelected(btnCommA, finalI, true);  //true if team A
                     clearCommStaff();
                     clearButtons(btnCommB, false);
-                    callToIssue.setCommittingTeam(true);
+                    callToIssue.setCommittingTeam(game.getTeamAId());
                     callToIssue.setCommittingType("player");
                     callToIssue.setCommitting(btnCommA[finalI].getText().toString());
                 }
@@ -204,7 +249,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                     buttonSelected(btnCommB, finalI, false);  //true if team A
                     clearCommStaff();
                     clearButtons(btnCommA, true);
-                    callToIssue.setCommittingTeam(false);
+                    callToIssue.setCommittingTeam(game.getTeamBId());
                     callToIssue.setCommittingType("player");
                     callToIssue.setCommitting(btnCommB[finalI].getText().toString());
                 }
@@ -222,7 +267,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                 public void onClick(View v) {
                     buttonSelected(btnDisA, finalI, true);
                     clearButtons(btnDisB, false);
-                    callToIssue.setDisTeam(true);
+                    callToIssue.setDisTeam(game.getTeamAId());
                     callToIssue.setDisType("player");
                     callToIssue.setDis(btnDisA[finalI].getText().toString());
 
@@ -241,7 +286,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                 public void onClick(View v) {
                     buttonSelected(btnDisB, finalI, false);
                     clearButtons(btnDisA, true);
-                    callToIssue.setDisTeam(false);
+                    callToIssue.setDisTeam(game.getTeamBId());
                     callToIssue.setDisType("player");
                     callToIssue.setDis(btnDisB[finalI].getText().toString());
                 }
@@ -309,7 +354,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         btnSubmitEval.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                submitEval();
             }
         });
         btnSubA.setOnClickListener(new View.OnClickListener() {
@@ -400,7 +445,113 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         btnReviewNCFR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setInfo("NCFR",3,"review", reviewButtons);
+                setInfo("NCFR", 3, "review", reviewButtons);
+            }
+        });
+        btnQ1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInfo("Q1", 0, "period", periodButtons);
+
+            }
+        });
+        btnQ2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInfo("Q2", 1, "period", periodButtons);
+            }
+        });
+        btnQ3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInfo("Q3", 2, "period", periodButtons);
+            }
+        });
+        btnQ4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInfo("Q4", 3, "period", periodButtons);
+            }
+        });
+        btnOT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setInfo("OT", 4, "period", periodButtons);
+            }
+        });
+        btnMinUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (finalMinute >= 10) {
+                    finalMinute = 0;
+
+                } else {
+                    finalMinute = finalMinute + 1;
+                }
+                updateTime(txtMinute1, txtMinute2, finalMinute);
+            }
+        });
+
+        btnSecUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (finalSecond >= 59) {
+                    finalSecond = 0;
+
+                } else {
+                    finalSecond = finalSecond + 1;
+                }
+                updateTime(txtSecond1, txtSecond2, finalSecond);
+            }
+        });
+
+        btnMillisUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (finalMilli >= 59) {
+                    finalMilli = 0;
+                } else {
+                    finalMilli = finalMilli + 1;
+                }
+                updateTime(txtMillis1, txtMillis2, finalMilli);
+            }
+        });
+
+        btnMinDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (finalMinute <= 0) {
+                    finalMinute = 10;
+                } else {
+                    finalMinute = finalMinute - 1;
+                }
+                updateTime(txtMinute1, txtMinute2, finalMinute);
+
+            }
+        });
+
+        btnSecDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (finalSecond <= 0) {
+                    finalSecond = 59;
+
+                } else {
+                    finalSecond = finalSecond - 1;
+                }
+                updateTime(txtSecond1, txtSecond2, finalSecond);
+            }
+        });
+
+        btnMillisDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (finalMilli <= 0) {
+                    finalMilli = 59;
+                } else {
+                    finalMilli = finalMilli - 1;
+                }
+                updateTime(txtMillis1, txtMillis2, finalMilli);
             }
         });
 
@@ -457,7 +608,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                         btnRefA.setText(game.referee.get(0).name);
                         btnRefB.setText(game.referee.get(1).name);
                         btnRefC.setText(game.referee.get(2).name);
-                        setPlayers();
+                        setPlayers(playing);
                     }
                 },
                 new Response.ErrorListener() {
@@ -481,10 +632,10 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         queue.add(putRequest);
     }
 
-    private void setPlayers() {
+    private void setPlayers(String stringPlayers) {
 
         Gson gson = new Gson();
-        CurrentGame currentGame = gson.fromJson(playing, CurrentGame.class);
+        CurrentGame currentGame = gson.fromJson(stringPlayers, CurrentGame.class);
         playingA = currentGame.getPlayingA();
         playingB = currentGame.getPlayingB();
         for (int i = 0; i < 5; i++) {
@@ -531,7 +682,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                     clearCommStaff();
                     btnStaffA.setBackgroundColor(Color.parseColor("#FFFFFF"));
                     btnStaffA.setTextColor(Color.parseColor("#038500"));
-                    callToIssue.setCommittingTeam(false);
+                    callToIssue.setCommittingTeam(game.getTeamBId());
 
                 } else {
                     clearButtons(btnCommA, true);
@@ -540,7 +691,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                     btnStaffB.setBackgroundColor(Color.parseColor("#FFFFFF"));
                     btnStaffB.setTextColor(Color.parseColor("#820000"));
 
-                    callToIssue.setCommittingTeam(true);
+                    callToIssue.setCommittingTeam(game.getTeamAId());
 
                 }
                 dialog.dismiss();
@@ -648,16 +799,23 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                     currentGame.setPlayingA(playingA);
                     currentGame.setPlayingB(playingB);
                     Gson cur = new Gson();
-                    String json = cur.toJson(currentGame);
-                    Intent intent = new Intent(getApplicationContext(), EvaluatorDetails.class);
-                    intent.putExtra("gameId", gameId);
-                    intent.putExtra("gameCode", gameCode);
-                    intent.putExtra("playing", json);
-                    intent.putExtra("teamA", teamA);
-                    intent.putExtra("teamB", teamB);
-                    Toast.makeText(getApplicationContext(), "Players substitution", Toast.LENGTH_SHORT).show();
-                    Log.e("New playing", json);
-                    startActivity(intent);
+                    playing = cur.toJson(currentGame);
+                    clearButtons(btnCommA, true);
+                    clearButtons(btnCommB, false);
+                    clearButtons(btnDisA, true);
+                    clearButtons(btnDisB, false);
+                    callToIssue.setCommitting(null);
+                    callToIssue.setDis(null);
+                    setPlayers(playing);
+//                    Intent intent = new Intent(getApplicationContext(), EvaluatorDetails.class);
+//                    intent.putExtra("gameId", gameId);
+//                    intent.putExtra("gameCode", gameCode);
+//                    intent.putExtra("playing", json);
+//                    intent.putExtra("teamA", teamA);
+//                    intent.putExtra("teamB", teamB);
+//                    Toast.makeText(getApplicationContext(), "Players substitution", Toast.LENGTH_SHORT).show();
+//                    Log.e("New playing", json);
+//                    startActivity(intent);
                 }
             }
         });
@@ -674,28 +832,132 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         dialog.show();
     }
 
-    private void setInfo(String id, int pos, String designation, Button[] buttons){
-        for(int i=0;i<buttons.length;i++){
-            if(i==pos){
+    private void setInfo(String string, int pos, String designation, Button[] buttons) {
+        for (int i = 0; i < buttons.length; i++) {
+            if (i == pos) {
                 buttons[i].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
-            }
-            else{
+            } else {
                 buttons[i].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_eval));
             }
         }
-        if(designation.equals("referee")){
-            callToIssue.setRefereeId(id);
-        }
-        else if(designation.equals("area")){
-            callToIssue.setArea(id);
-        }
-        else if(designation.equals("aop")){
-            callToIssue.setAreaOfPlay(id);
-        }
-        else if(designation.equals("review")){
-            callToIssue.setReviewDecision(id);
+        if (designation.equals("referee")) {
+            callToIssue.setRefereeId(game.referee.get(pos).id);
+        } else if (designation.equals("area")) {
+            callToIssue.setArea(string);
+        } else if (designation.equals("aop")) {
+            callToIssue.setAreaOfPlay(string);
+        } else if (designation.equals("review")) {
+            callToIssue.setReviewDecision(string);
+        } else if (designation.equals("period")) {
+            callToIssue.setPeriod(string);
         }
     }
 
+    private void submitEval() {
+        if (isEmpty(callToIssue.getCommitting())) {
+            Toast.makeText(getApplicationContext(), "Please select a committing player/staff", Toast.LENGTH_SHORT).show();
+        }
+        if (isEmpty(callToIssue.getCallType()) || isEmpty(callToIssue.getCall())) {
+            Toast.makeText(getApplicationContext(), "Please select a call", Toast.LENGTH_SHORT).show();
+        }
+        if (isEmpty(callToIssue.getRefereeId())) {
+            Toast.makeText(getApplicationContext(), "Please select a referee", Toast.LENGTH_SHORT).show();
+        }
+        if (isEmpty(callToIssue.getArea())) {
+            Toast.makeText(getApplicationContext(), "Please select an area", Toast.LENGTH_SHORT).show();
+        }
+        if (isEmpty(callToIssue.getAreaOfPlay())) {
+            Toast.makeText(getApplicationContext(), "Please select an area of play", Toast.LENGTH_SHORT).show();
+        }
+        if (isEmpty(callToIssue.getReviewDecision())) {
+            Toast.makeText(getApplicationContext(), "Please select a review decision", Toast.LENGTH_SHORT).show();
+        }
+        if(isEmpty(callToIssue.getPeriod())){
+            Toast.makeText(getApplicationContext(), "Please select a period", Toast.LENGTH_SHORT).show();
+        }
+        if (!isEmpty(callToIssue.getCommitting()) &&
+                !isEmpty(callToIssue.getCallType()) &&
+                !isEmpty(callToIssue.getCall()) &&
+                !isEmpty(callToIssue.getRefereeId()) &&
+                !isEmpty(callToIssue.getArea()) &&
+                !isEmpty(callToIssue.getAreaOfPlay()) &&
+                !isEmpty(callToIssue.getReviewDecision())) {
+            RequestQueue queue = Volley.newRequestQueue(this);
+            StringRequest putRequest = new StringRequest(Request.Method.POST, SubmitEvalURL,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Intent intent = new Intent(getApplicationContext(), Evaluation.class);
+                            intent.putExtra("gameId", gameId);
+                            intent.putExtra("gameCode", gameCode);
+                            intent.putExtra("playing", playing);
+                            overridePendingTransition(0, 0);
+                            startActivity(intent);
+                            overridePendingTransition(0, 0);
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            // error
+                            Log.d("Error.Response", String.valueOf(error));
+                        }
+                    }
+            ) {
+
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("gameId", gameId);
+                    params.put("period", callToIssue.getPeriod());
+                    params.put("time", finalMinute + ":" + finalSecond + ":" + finalMilli);
+                    params.put("callType", callToIssue.getCallType());
+                    params.put("call", callToIssue.getCall());
+                    params.put("committingType", callToIssue.getCommittingType());
+                    params.put("committingTeam", callToIssue.getCommittingTeam());
+                    params.put("committing", callToIssue.getCommitting());
+                    if(!isEmpty(callToIssue.getDis())){
+                        params.put("disType", callToIssue.getDisType());
+                        params.put("disTeam", callToIssue.getDisTeam());
+                        params.put("dis", callToIssue.getDis());
+                    }
+                    params.put("refereeId", callToIssue.getRefereeId());
+                    params.put("area", callToIssue.getArea());
+                    params.put("areaOfPlay", callToIssue.getAreaOfPlay());
+                    params.put("reviewDecision", callToIssue.getReviewDecision());
+                    if(!isEmpty(txtComment.getText().toString())){
+                        params.put("comment", txtComment.getText().toString());
+                    }
+                    params.put("currentGame", playing);
+                    return params;
+                }
+
+            };
+
+            queue.add(putRequest);
+        } else {
+            return;
+        }
+
+    }
+
+    private void initTime() {
+        txtMinute1.setText("1");
+        txtMinute2.setText("0");
+        txtSecond1.setText("0");
+        txtSecond2.setText("0");
+        txtMillis1.setText("0");
+        txtMillis2.setText("0");
+    }
+
+    private void updateTime(TextView textView1, TextView textView2, int time) {
+        if (time >= 10) {
+            textView1.setText(Character.toString(Integer.toString(time).charAt(0)));
+            textView2.setText(Character.toString(Integer.toString(time).charAt(1)));
+        } else {
+            textView1.setText("0");
+            textView2.setText(Integer.toString(time));
+        }
+    }
 
 }

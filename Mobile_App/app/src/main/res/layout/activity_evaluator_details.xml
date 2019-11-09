@@ -37,29 +37,38 @@
                     android:columnCount="3">
 
                     <Button
+                        android:id="@+id/btnMinUp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
                         android:layout_margin="10dp"
-                        android:text="^">
+                        android:text="&#9650;"
+                        android:background="@drawable/btn_eval_selected"
+                        android:textColor="#FFFFFF">
 
                     </Button>
 
                     <Button
+                        android:id="@+id/btnSecUp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
                         android:layout_margin="10dp"
-                        android:text="^">
+                        android:text="&#9650;"
+                        android:background="@drawable/btn_eval_selected"
+                        android:textColor="#FFFFFF">
 
                     </Button>
 
                     <Button
+                        android:id="@+id/btnMillisUp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
                         android:layout_margin="10dp"
-                        android:text="^">
+                        android:text="&#9650;"
+                        android:background="@drawable/btn_eval_selected"
+                        android:textColor="#FFFFFF">
 
                     </Button>
 
@@ -79,6 +88,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/txtMinute1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -91,6 +101,7 @@
                             android:textSize="50dp" />
 
                         <TextView
+                            android:id="@+id/txtMinute2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -121,6 +132,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/txtSecond1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -133,6 +145,7 @@
                             android:textSize="50dp" />
 
                         <TextView
+                            android:id="@+id/txtSecond2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -161,6 +174,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/txtMillis1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -173,6 +187,7 @@
                             android:textSize="50dp" />
 
                         <TextView
+                            android:id="@+id/txtMillis2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -195,29 +210,38 @@
                     android:columnCount="3">
 
                     <Button
+                        android:id="@+id/btnMinDown"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
                         android:layout_margin="10dp"
-                        android:text="!^">
+                        android:text="&#9660;"
+                        android:background="@drawable/btn_eval_selected"
+                        android:textColor="#FFFFFF">
 
                     </Button>
 
                     <Button
+                        android:id="@+id/btnSecDown"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
                         android:layout_margin="10dp"
-                        android:text="!^">
+                        android:text="&#9660;"
+                        android:background="@drawable/btn_eval_selected"
+                        android:textColor="#FFFFFF">
 
                     </Button>
 
                     <Button
+                        android:id="@+id/btnMillisDown"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
                         android:layout_margin="10dp"
-                        android:text="!^">
+                        android:text="&#9660;"
+                        android:background="@drawable/btn_eval_selected"
+                        android:textColor="#FFFFFF">
 
                     </Button>
 
@@ -227,37 +251,51 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_marginHorizontal="70dp"
                     android:columnCount="5">
-
                     <Button
+                        android:id="@+id/btnQ1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
-                        android:text="1" />
+                        android:background="@drawable/button_eval"
+                        android:layout_marginHorizontal="5dp"
+                        android:text="1"
+                        />
 
                     <Button
+                        android:id="@+id/btnQ2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
+                        android:background="@drawable/button_eval"
+                        android:layout_marginHorizontal="5dp"
                         android:text="2" />
 
                     <Button
+                        android:id="@+id/btnQ3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
+                        android:background="@drawable/button_eval"
+                        android:layout_marginHorizontal="5dp"
                         android:text="3" />
 
                     <Button
+                        android:id="@+id/btnQ4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
+                        android:background="@drawable/button_eval"
+                        android:layout_marginHorizontal="5dp"
                         android:text="4" />
 
                     <Button
+                        android:id="@+id/btnOT"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_columnWeight="1"
+                        android:background="@drawable/button_eval"
+                        android:layout_marginHorizontal="5dp"
                         android:text="OT" />
 
                 </GridLayout>
@@ -834,6 +872,7 @@
                     android:textAlignment="center" />
 
                 <EditText
+                    android:id="@+id/txtComment"
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:layout_marginHorizontal="10dp"

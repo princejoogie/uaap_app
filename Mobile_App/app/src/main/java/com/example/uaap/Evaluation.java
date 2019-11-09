@@ -88,7 +88,6 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
             gameCode = extras.getString("gameCode");
             playing = extras.getString("playing");
         }
-        Log.e("GameCode", gameCode);
 
         init();
         evaluationList.setOnItemClickListener(this);

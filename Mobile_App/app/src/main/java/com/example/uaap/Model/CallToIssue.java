@@ -1,10 +1,10 @@
 package com.example.uaap.Model;
 
 public class CallToIssue {
-    private boolean committingTeam;
+    private String committingTeam;
     private String committingType;
     private String committing;
-    private boolean disTeam;
+    private String disTeam;
     private String disType;
     private String dis;
     private String callType;
@@ -14,6 +14,15 @@ public class CallToIssue {
     private String areaOfPlay;
     private String reviewDecision;
     private String comment;
+    private String period;
+
+    public String getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(String period) {
+        this.period = period;
+    }
 
     public String getArea() {
         return area;
@@ -63,13 +72,6 @@ public class CallToIssue {
         this.call = call;
     }
 
-    public boolean isCommittingTeam() {
-        return committingTeam;
-    }
-
-    public void setCommittingTeam(boolean committingTeam) {
-        this.committingTeam = committingTeam;
-    }
 
     public String getCommittingType() {
         return committingType;
@@ -87,13 +89,7 @@ public class CallToIssue {
         this.committing = committing;
     }
 
-    public boolean isDisTeam() {
-        return disTeam;
-    }
 
-    public void setDisTeam(boolean disTeam) {
-        this.disTeam = disTeam;
-    }
 
     public String getDisType() {
         return disType;
@@ -117,5 +113,21 @@ public class CallToIssue {
 
     public void setCallType(String callType) {
         this.callType = callType;
+    }
+
+    public String getCommittingTeam() {
+        return committingTeam;
+    }
+
+    public void setCommittingTeam(String committingTeam) {
+        this.committingTeam = committingTeam;
+    }
+
+    public String getDisTeam() {
+        return disTeam;
+    }
+
+    public void setDisTeam(String disTeam) {
+        this.disTeam = disTeam;
     }
 }
