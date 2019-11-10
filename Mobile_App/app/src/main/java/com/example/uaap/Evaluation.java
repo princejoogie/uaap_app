@@ -1,15 +1,11 @@
 package com.example.uaap;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GestureDetectorCompat;
-import androidx.core.view.MotionEventCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -27,7 +23,6 @@ import com.example.uaap.Adapter.EvaluationListAdapter;
 import com.example.uaap.Model.EvaluationDetails;
 import com.example.uaap.Model.EvaluationModel;
 
-import com.example.uaap.Model.Game;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
@@ -74,7 +69,7 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         txtScoreA = findViewById(R.id.txtScoreA);
         txtScoreB = findViewById(R.id.txtScoreB);
         btnAddScoreA = findViewById(R.id.btnAddScoreA);
-        btnSubScoreA = findViewById(R.id.btnSubScoreA);
+        btnSubScoreA = findViewById(R.id.btnAddScoreB);
         btnAddScoreB = findViewById(R.id.btnAddScoreB);
         btnSubScoreB = findViewById(R.id.btnSubScoreB);
         fab = findViewById(R.id.fab);

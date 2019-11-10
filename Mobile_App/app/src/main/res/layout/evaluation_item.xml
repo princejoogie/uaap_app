@@ -1,82 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#ECEBEA">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/period"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#000000"
-            android:text="Period" />
+            android:text="Period"
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/time"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#000000"
-            android:text="Time" />
+            android:text="Time"
+            android:textColor="#000000" />
+
         <TextView
             android:id="@+id/callType"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#000000"
-            android:text="callType" />
+            android:text="callType"
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/committing"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#000000"
-            android:text="Committing" />
+            android:text="Committing"
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/disadvantaged"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#000000"
-            android:text="disadvantaged" />
+            android:text="disadvantaged"
+            android:textColor="#000000" />
+
         <TextView
             android:id="@+id/referee"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#000000"
-            android:text="referee" />
+            android:text="referee"
+            android:textColor="#000000" />
+
         <TextView
             android:id="@+id/area"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#000000"
-            android:text="area" />
+            android:text="area"
+            android:textColor="#000000" />
+
         <TextView
             android:id="@+id/reviewDecision"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#000000"
-            android:text="reviewDecision" />
+            android:text="reviewDecision"
+            android:textColor="#000000" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/comment"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_weight="1"
-        android:text="Comment" />
+        android:text="Comment"
+        android:textColor="#000000"
+        android:textStyle="bold" />
 </LinearLayout>
-
 
 
