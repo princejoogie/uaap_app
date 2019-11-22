@@ -10,8 +10,17 @@ public class EvaluationDetails {
     public String disadvantaged;
     public String referee;
     public String area;
+    public String areaOfPlay;
     public String reviewDecision;
     public String comment;
+
+    public String getAreaOfPlay() {
+        return areaOfPlay;
+    }
+
+    public void setAreaOfPlay(String areaOfPlay) {
+        this.areaOfPlay = areaOfPlay;
+    }
 
     public int getId() {
         return id;

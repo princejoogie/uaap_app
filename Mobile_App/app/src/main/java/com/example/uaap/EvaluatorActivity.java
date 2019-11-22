@@ -54,11 +54,8 @@ public class EvaluatorActivity extends AppCompatActivity {
     private String CheckGameCodeURL = "http://68.183.49.18/uaap/public/checkGameCode";
     private String GetGameDetailsURL = "http://68.183.49.18/uaap/public/getGameDetails";
 
-    private SharedPreferences pref;
-    private SharedPreferences.Editor editor;
-
-
     private League details;
+    private CurrentGame currentGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +71,7 @@ public class EvaluatorActivity extends AppCompatActivity {
         btnStartGame = findViewById(R.id.btnStartGame);
         edtGameCode = findViewById(R.id.edtGameCode);
 
-        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
+        currentGame = new CurrentGame();
 
         get(RefereeURL, spinnerRefereeA);
         get(RefereeURL, spinnerRefereeB);
@@ -103,7 +99,7 @@ public class EvaluatorActivity extends AppCompatActivity {
         btnStartGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try{
+                try {
                     String ref1 = spinnerRefereeA.getSelectedItem().toString();
                     String ref2 = spinnerRefereeB.getSelectedItem().toString();
                     String ref3 = spinnerRefereeC.getSelectedItem().toString();
@@ -115,23 +111,21 @@ public class EvaluatorActivity extends AppCompatActivity {
                         if (ref1.equals(null) || ref2.equals(null) || ref3.equals(null) || schoolA.equals(null) || schoolB.equals(null)) {
                             Toast.makeText(EvaluatorActivity.this,
                                     "Empty items are not allowed", Toast.LENGTH_LONG).show();
-                        } else {
-                            if (spinnerTeamA.getSelectedItem().toString().equals(spinnerTeamB.getSelectedItem().toString())) {
-                                Erro1 = "Same teams are not allowed.";
-                            }
-                            if (ref1.equals(ref2) || ref1.equals(ref3) || ref2.equals(ref3)) {
-                                Erro2 = " Same ref are not allowed.";
-                            } else {
-                                createGame();
-                            }
-
-                            Toast.makeText(EvaluatorActivity.this,
-                                    Erro1 + Erro2, Toast.LENGTH_LONG).show();
                         }
-                    }else{
+                        if (spinnerTeamA.getSelectedItem().toString().equals(spinnerTeamB.getSelectedItem().toString())) {
+                            Toast.makeText(getApplicationContext(), "Same teams are not allowed", Toast.LENGTH_SHORT).show();
+                        }
+                        if (ref1.equals(ref2) || ref1.equals(ref3) || ref2.equals(ref3)) {
+                            Toast.makeText(getApplicationContext(), "Same referees are not allowed", Toast.LENGTH_SHORT).show();
+                        } else {
+                            createGame();
+                        }
+
+
+                    } else {
                         checkGameCode(edtGameCode.getText().toString());////
                     }
-                }catch (Exception e){
+                } catch (Exception e) {
                     Toast.makeText(EvaluatorActivity.this,
                             "Empty items are not allowed", Toast.LENGTH_LONG).show();
                 }
@@ -217,16 +211,13 @@ public class EvaluatorActivity extends AppCompatActivity {
                         GameId gameId = gson.fromJson(response, GameId.class);
                         LeagueDetails teamA = (LeagueDetails) spinnerTeamA.getSelectedItem();
                         LeagueDetails teamB = (LeagueDetails) spinnerTeamB.getSelectedItem();
-
-                        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = pref.edit();
-
-
-                        editor.putString("teamA", teamA.name);
-                        editor.putString("teamB", teamB.name);
-                        editor.putInt("scoreA", 0);
-                        editor.putInt("scoreB", 0);
-                        editor.apply();
+                        currentGame.setTeamA(teamA.name);
+                        currentGame.setTeamB(teamB.name);
+                        currentGame.setScoreA(0);
+                        currentGame.setScoreB(0);
+                        currentGame.setPeriodName("Q1");
+                        currentGame.setPeriod(0);
+                        currentGame.setTimeInMillis(600000);
                         prepareEval(gameId.gameId, gameId.gameCode);
 //
 //                        Intent intent = new Intent(getApplicationContext(), Evaluation.class);
@@ -289,26 +280,40 @@ public class EvaluatorActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "Invalid Game Code", Toast.LENGTH_LONG).show();
                             } else {
                                 Log.e("Response", response);
-                                SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-                                SharedPreferences.Editor editor = pref.edit();
-                                editor.putString("teamA", obj.getString("teamA"));
-                                editor.putString("teamB", obj.getString("teamB"));
-                                editor.putInt("scoreA", obj.getInt("scoreA"));
-                                editor.putInt("scoreB", obj.getInt("scoreB"));
-                                editor.apply();
-                                prepareEval(obj.getString("gameId"), gameCode);
-//                                Intent intent = new Intent(EvaluatorActivity.this, Evaluation.class);
-//                                intent.putExtra("gameId", obj.getString("gameId"));
-//                                intent.putExtra("gameCode", gameCode);
-//                                startActivity(intent);
+                                currentGame.setTeamA(obj.getString("teamA"));
+                                currentGame.setTeamB(obj.getString("teamB"));
+                                currentGame.setScoreA(obj.getInt("scoreA"));
+                                currentGame.setScoreB(obj.getInt("scoreB"));
+                                String json = obj.getString("playing");
+                                Gson gson = new Gson();
+                                CurrentGame lastGame = gson.fromJson(json, CurrentGame.class);
+                                currentGame.setTimeInMillis(lastGame.getTimeInMillis());
+                                currentGame.setPeriod(lastGame.getPeriod());
+                                switch (lastGame.getPeriod()) {
+                                    case 0:
+                                        currentGame.setPeriodName("Q1");
+                                        break;
+                                    case 1:
+                                        currentGame.setPeriodName("Q2");
+                                        break;
+                                    case 2:
+                                        currentGame.setPeriodName("Q3");
+                                        break;
+                                    case 3:
+                                        currentGame.setPeriodName("Q4");
+                                        break;
+                                    case 4:
+                                        currentGame.setPeriodName("OT");
+                                        break;
+                                }
+                                prepareEval(obj.getString("gameId"), obj.getString("gameCode"));
+
 
                             }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        Gson gson = new Gson();
-                        GameId gameId = gson.fromJson(response, GameId.class);
 
 
                     }
@@ -342,7 +347,6 @@ public class EvaluatorActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         Gson gson = new Gson();
                         Game game = gson.fromJson(response, Game.class);
-                        CurrentGame currentGame = new CurrentGame();
                         String[] tempA = new String[5];
                         String[] tempB = new String[5];
                         for (int i = 0; i < 5; i++) {
@@ -351,12 +355,12 @@ public class EvaluatorActivity extends AppCompatActivity {
                         }
                         currentGame.setPlayingA(tempA);
                         currentGame.setPlayingB(tempB);
+
+                        currentGame.setGameCode(gameCode);
+                        currentGame.setGameId(gameId);
                         Gson cur = new Gson();
                         String json = cur.toJson(currentGame);
-                        Log.e("JSON", currentGame.getPlayingA()[0]);
                         Intent intent = new Intent(EvaluatorActivity.this, Evaluation.class);
-                        intent.putExtra("gameId", gameId);
-                        intent.putExtra("gameCode", gameCode);
                         intent.putExtra("playing", json);
                         startActivity(intent);
 
