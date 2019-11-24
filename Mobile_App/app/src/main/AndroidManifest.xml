@@ -11,6 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Manage.LeaguesTeamsActivity"></activity>
+        <activity
+            android:name=".Manage.EditLeagueActivity"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".Manage.EvaluationSummary"
             android:screenOrientation="landscape" />

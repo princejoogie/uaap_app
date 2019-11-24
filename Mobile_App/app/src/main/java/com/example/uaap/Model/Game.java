@@ -26,6 +26,12 @@ public class Game {
     @SerializedName("referee")
     public ArrayList<PersonDetails> referee;
 
+    @SerializedName("teamAId")
+    public String teamAId;
+
+    @SerializedName("teamBId")
+    public String teamBId;
+
     public Game(){
 
     }
@@ -34,7 +40,9 @@ public class Game {
                 ArrayList<PlayersDetails> playerB,
                 ArrayList<PersonDetails> staffA,
                 ArrayList<PersonDetails> staffB,
-                ArrayList<PersonDetails> referee
+                ArrayList<PersonDetails> referee,
+                String teamAId,
+                String teamBId
         ){
         this.status = status;
         this.playerA = playerA;
@@ -42,6 +50,24 @@ public class Game {
         this.staffA = staffA;
         this.staffB = staffB;
         this.referee = referee;
+        this.teamAId = teamAId;
+        this.teamBId = teamBId;
+    }
+
+    public String getTeamAId() {
+        return teamAId;
+    }
+
+    public void setTeamAId(String teamAId) {
+        this.teamAId = teamAId;
+    }
+
+    public String getTeamBId() {
+        return teamBId;
+    }
+
+    public void setTeamBId(String teamBId) {
+        this.teamBId = teamBId;
     }
 
     public String getStatus() {

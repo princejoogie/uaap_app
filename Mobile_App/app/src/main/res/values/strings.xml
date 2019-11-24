@@ -1,5 +1,38 @@
 <resources>
     <string name="app_name">UAAP</string>
+    <string-array name="foul">
+        <item>Blocking</item>
+        <item>Pushing</item>
+        <item>Hit to the Head</item>
+        <item>Illegal Use of Hands</item>
+        <item>Illegal Contact to the Hand</item>
+        <item>Handchecking</item>
+        <item>Unsportmanlike</item>
+        <item>Double</item>
+        <item>Illegal Screen</item>
+        <item>Offensive</item>
+        <item>Fake a Foul</item>
+        <item>Technical Foul</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="violation">
+        <item>3 Seconds</item>
+        <item>5 Seconds</item>
+        <item>8 Seconds</item>
+        <item>Shot Clock</item>
+        <item>Jump Ball</item>
+        <item>Travelling</item>
+        <item>Carrying the Ball</item>
+        <item>Double Dribble</item>
+        <item>Goal Interference</item>
+        <item>Goal Tending</item>
+        <item>DOB</item>
+        <item>Backcourt</item>
+        <item>Kickball</item>
+        <item>Inbound</item>
+        <item>Striking the Ball with a Fist</item>
+        <item>Other</item>
+    </string-array>
 
     <string-array name="game_division">
         <item>Men\'s Division</item>
