@@ -22,6 +22,9 @@ package="com.example.uaap">
         android:name=".EvaluatorDetails"
         android:screenOrientation="landscape" />
     <activity
+        android:name=".EvaluatorDetailsEdit"
+        android:screenOrientation="landscape" />
+    <activity
         android:name=".EvaluatorActivity"
         android:screenOrientation="landscape" />
     <activity

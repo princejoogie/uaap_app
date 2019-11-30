@@ -3,7 +3,7 @@ package com.example.uaap.Model;
 public class EvaluationDetails {
 
     public int id;
-    public String period;
+    public String periodName;
     public String time;
     public String callType;
     public String committing;
@@ -30,12 +30,12 @@ public class EvaluationDetails {
         this.id = id;
     }
 
-    public String getPeriod() {
-        return period;
+    public String getPeriodName() {
+        return periodName;
     }
 
-    public void setPeriod(String period) {
-        this.period = period;
+    public void setPeriodName(String periodName) {
+        this.periodName = periodName;
     }
 
     public String getTime() {

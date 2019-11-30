@@ -32,11 +32,13 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.uaap.Adapter.EvaluationListAdapter;
 import com.example.uaap.Adapter.FoulListAdapter;
+import com.example.uaap.Model.Basic;
 import com.example.uaap.Model.CallToIssue;
 import com.example.uaap.Model.CurrentGame;
 import com.example.uaap.Model.EvaluationDetails;
 import com.example.uaap.Model.Game;
 import com.example.uaap.Model.GameId;
+import com.example.uaap.Model.League;
 import com.example.uaap.Model.PlayersDetails;
 import com.google.gson.Gson;
 
@@ -51,15 +53,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static android.text.TextUtils.concat;
 import static android.text.TextUtils.isEmpty;
 
-public class EvaluatorDetails extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 
     private String playing;
-
+    private int id;
     private String[] playingA;
     private String[] playingB;
 
@@ -105,16 +108,16 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
     private TextView txtMillis1;
     private TextView txtMillis2;
     private TextView txtComment;
-    private String SubmitEvalURL = "http://68.183.49.18/uaap/public/createEvaluation";
-
+    private String SubmitEvalURL = "http://68.183.49.18/uaap/public/editEvaluation";
+    private String GetEditDetailsURL = "http://68.183.49.18/uaap/public/getEditDetails";
     private CallToIssue callToIssue;
     private int finalMinute, finalSecond, finalMilli;
     private ListView foulListView;
     private FoulListAdapter listAdapter;
 
     private CurrentGame currentGame;
+    private CurrentGame thisGame;
     private long time;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,12 +127,13 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         if (extras != null) {
 
             playing = extras.getString("playing");
+            id = extras.getInt("id");
+            Log.e("Received iD", String.valueOf(id));
 
         }
         Log.e("playing", playing);
         Gson gson = new Gson();
         currentGame = gson.fromJson(playing, CurrentGame.class);
-        time = currentGame.getTimeInMillis();
         playingA = new String[5];
         playingB = new String[5];
         btnCommA = new Button[5];
@@ -200,7 +204,6 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         txtMillis1 = findViewById(R.id.txtMillis1);
         txtMillis2 = findViewById(R.id.txtMillis2);
         txtComment = findViewById(R.id.txtComment);
-        initTime();
         final Button[] refButtons = {btnRefA, btnRefB, btnRefC};
         final Button[] areaButtons = {btnAreaLead, btnAreaCenter, btnAreaTrail};
         final Button[] aopButtons = {btnAoPLead, btnAoPCenter, btnAoPTrail};
@@ -209,13 +212,14 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         foulListView = findViewById(R.id.foulVioList);
 
 
+
         foulListView.setOnItemClickListener(this);
         callToIssue = new CallToIssue();
-        setInfo(currentGame.getPeriodName(), currentGame.getPeriod(), "period", periodButtons);
         getThisGame();
+
+
         callToIssue.setCallType("Foul");
-        callToIssue.setPeriod(currentGame.getPeriod());
-        callToIssue.setPeriodName(currentGame.getPeriodName());
+
         genFoul(getResources().getStringArray(R.array.foul));
 
         for (int i = 0; i < 5; i++) {
@@ -572,25 +576,96 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         btnRefA.setText(currentGame.referee.get(0).name);
         btnRefB.setText(currentGame.referee.get(1).name);
         btnRefC.setText(currentGame.referee.get(2).name);
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        StringRequest putRequest = new StringRequest(Request.Method.POST, GetEditDetailsURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Basic basic = new Basic();
+                        Gson gson = new Gson();
+                        basic = gson.fromJson(response, Basic.class);
+                        Log.e("data", basic.getData());
+//                        initTime();
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", String.valueOf(error));
+                    }
+                }
+        ) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", String.valueOf(id));
+                return params;
+            }
+
+        };
+
+        queue.add(putRequest);
+//        setInfo(thisGame.getPeriodName(),thisGame.getPeriod(),"period",periodButtons);
+
         setPlayers();
     }
 
     private void setPlayers() {
-        playingA = currentGame.getPlayingA();
-        playingB = currentGame.getPlayingB();
-        for (int i = 0; i < 5; i++) {
-            btnCommA[i].setText(playingA[i]);
-            btnDisA[i].setText(playingA[i]);
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest putRequest = new StringRequest(Request.Method.POST, GetEditDetailsURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject obj = new JSONObject(response);
+                            String data = obj.getString("data");
+                            Gson gson = new Gson();
+                            thisGame = gson.fromJson(data,CurrentGame.class);
+                            playingA = thisGame.getPlayingA();
+                            playingB = thisGame.getPlayingB();
+                            for (int i = 0; i < 5; i++) {
+                                btnCommA[i].setText(playingA[i]);
+                                btnCommA[i].setText(playingA[i]);
+                                btnDisA[i].setText(playingA[i]);
+                                btnCommB[i].setText(playingB[i]);
+                                btnDisB[i].setText(playingB[i]);
 
-            btnCommB[i].setText(playingB[i]);
-            btnDisB[i].setText(playingB[i]);
+                            }
 
-        }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", String.valueOf(error));
+                    }
+                }
+        ) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", String.valueOf(id));
+                return params;
+            }
+
+        };
+
+        queue.add(putRequest);
+
     }
 
     private void showRadioButtonDialog(final boolean team) {
         // custom dialog
-        final Dialog dialog = new Dialog(EvaluatorDetails.this);
+        final Dialog dialog = new Dialog(EvaluatorDetailsEdit.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.radiobutton_staff);
 
@@ -598,14 +673,14 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         Button btnSubmitStaff = (Button) dialog.findViewById(R.id.btnSubmitStaff);
         if (team) {
             for (int i = 0; i < currentGame.staffA.size(); i++) {
-                RadioButton rb = new RadioButton(EvaluatorDetails.this); // dynamically creating RadioButton and adding to RadioGroup.
+                RadioButton rb = new RadioButton(EvaluatorDetailsEdit.this); // dynamically creating RadioButton and adding to RadioGroup.
                 rb.setText(currentGame.staffA.get(i).name + " (" + currentGame.getTeamA() + ")");
                 rb.setId(Integer.parseInt(currentGame.staffA.get(i).id));
                 rg.addView(rb);
             }
         } else {
             for (int i = 0; i < currentGame.staffB.size(); i++) {
-                RadioButton rb = new RadioButton(EvaluatorDetails.this); // dynamically creating RadioButton and adding to RadioGroup.
+                RadioButton rb = new RadioButton(EvaluatorDetailsEdit.this); // dynamically creating RadioButton and adding to RadioGroup.
                 rb.setText(currentGame.staffB.get(i).name + " (" + currentGame.getTeamB() + ")");
                 rb.setId(Integer.parseInt(currentGame.staffB.get(i).id));
                 rg.addView(rb);
@@ -667,12 +742,12 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
     private void showRadioButtonDialogSub(final boolean team) {
         Gson gson = new Gson();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(EvaluatorDetails.this);
-        ArrayList<PlayersDetails> playingList = currentGame.getPlayerA();
+        AlertDialog.Builder builder = new AlertDialog.Builder(EvaluatorDetailsEdit.this);
+        ArrayList<PlayersDetails> playingList = thisGame.getPlayerA();
         if (team) {
-            playingList = currentGame.getPlayerA();
+            playingList = thisGame.getPlayerA();
         } else {
-            playingList = currentGame.getPlayerB();
+            playingList = thisGame.getPlayerB();
         }
         final String[] allPlayers = new String[playingList.size()];
         for (int i = 0; i < playingList.size(); i++) {
@@ -683,11 +758,11 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
             boolean found = false;
             for (int x = 0; x < 5; x++) {
                 if (team) {
-                    if (currentGame.playingA[x].equals(playingList.get(i).jerseyNumber)) {
+                    if (thisGame.playingA[x].equals(playingList.get(i).jerseyNumber)) {
                         found = true;
                     }
                 } else {
-                    if (currentGame.playingB[x].equals(playingList.get(i).jerseyNumber)) {
+                    if (thisGame.playingB[x].equals(playingList.get(i).jerseyNumber)) {
                         found = true;
                     }
                 }
@@ -735,10 +810,10 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                         }
                     }
                     dialog.dismiss();
-                    currentGame.setPlayingA(playingA);
-                    currentGame.setPlayingB(playingB);
+                    thisGame.setPlayingA(playingA);
+                    thisGame.setPlayingB(playingB);
                     Gson cur = new Gson();
-                    playing = cur.toJson(currentGame);
+                    playing = cur.toJson(thisGame);
                     clearButtons(btnCommA, true);
                     clearButtons(btnCommB, false);
                     clearButtons(btnDisA, true);
@@ -781,7 +856,6 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
             callToIssue.setReviewDecision(string);
         } else if (designation.equals("period")) {
             callToIssue.setPeriodName(string);
-            callToIssue.setPeriod(pos);
         }
     }
 
@@ -814,17 +888,13 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                 !isEmpty(callToIssue.getArea()) &&
                 !isEmpty(callToIssue.getAreaOfPlay()) &&
                 !isEmpty(callToIssue.getReviewDecision())) {
-
             RequestQueue queue = Volley.newRequestQueue(this);
             StringRequest putRequest = new StringRequest(Request.Method.POST, SubmitEvalURL,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            currentGame.setTimeInMillis(time);
-                            Gson gson = new Gson();
-                            String json = gson.toJson(currentGame);
                             Intent intent = new Intent(getApplicationContext(), Evaluation.class);
-                            intent.putExtra("playing", json);
+                            intent.putExtra("playing", playing);
                             overridePendingTransition(0, 0);
                             startActivity(intent);
                             overridePendingTransition(0, 0);
@@ -834,7 +904,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             // error
-                            Log.e("Error.Response", String.valueOf(error));
+                            Log.d("Error.Response", String.valueOf(error));
                         }
                     }
             ) {
@@ -843,15 +913,15 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
                     Gson gson = new Gson();
-
+                    params.put("id", String.valueOf(id));
                     params.put("gameId", currentGame.getGameId());
-                    params.put("period", String.valueOf(callToIssue.getPeriod()));
                     params.put("periodName", callToIssue.getPeriodName());
-                    Log.e("period", String.valueOf(callToIssue.getPeriod()));
-                    Log.e("periodName", callToIssue.getPeriodName());
+                    params.put("period", String.valueOf(callToIssue.getPeriod()));
                     String time = txtMinute1.getText().toString()+txtMinute2.getText().toString()+":"+
                             txtSecond1.getText().toString()+txtSecond2.getText().toString()+":"+
                             txtMillis1.getText().toString()+txtMillis2.getText().toString();
+                    thisGame.setTime(time);
+
                     params.put("time", time);
                     params.put("callType", callToIssue.getCallType());
                     params.put("call", callToIssue.getCall());
@@ -863,7 +933,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                         params.put("disTeam", callToIssue.getDisTeam());
                         params.put("dis", callToIssue.getDis());
                     }
-                    currentGame.setTime(time);
+
                     params.put("refereeId", callToIssue.getRefereeId());
                     params.put("area", callToIssue.getArea());
                     params.put("areaOfPlay", callToIssue.getAreaOfPlay());
@@ -871,7 +941,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                     if (!isEmpty(txtComment.getText().toString())) {
                         params.put("comment", txtComment.getText().toString());
                     }
-                    String json = gson.toJson(currentGame);
+                    String json = gson.toJson(thisGame);
                     params.put("currentGame", json);
                     return params;
                 }
@@ -886,57 +956,62 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
     }
 
     private void initTime() {
-        long minutes = (time / 1000) / 60;
-        long seconds = (time / 1000) % 60;
-        long millis = time - (minutes * 60000) - (seconds * 1000);
-        updateText(txtMinute1, txtMinute2, minutes);
-        updateText(txtSecond1, txtSecond2, seconds);
-        updateText(txtMillis1, txtMillis2, millis);
+        String timeString = thisGame.getTime();
+        String[] times = timeString.split(":");
+        long minutes = Long.parseLong(times[0]);
+        long seconds = Long.parseLong(times[1]);
+        long millis = Long.parseLong(times[2])*10;
+        time = TimeUnit.MINUTES.toMillis(minutes) + TimeUnit.SECONDS.toMillis(seconds) + millis;
+        updateText(txtMinute1, txtMinute2,minutes);
+        updateText(txtSecond1,txtSecond2,seconds);
+        updateText(txtMillis1,txtMillis2,millis);
     }
-
-    private void ops(String op, boolean opType) {
+    private void ops(String op, boolean opType){
         long value = 0;
-        if (op.equals("minute")) {
+        if(op.equals("minute")){
             value = 60000;
-        } else if (op.equals("second")) {
+        }
+        else if(op.equals("second")){
             value = 1000;
-        } else if (op.equals("millis")) {
+        }
+        else if(op.equals("millis")){
             value = 10;
         }
-        if (opType) {
-            time += value;
-        } else {
-            time -= value;
+        if(opType){
+            time+=value;
+        }
+        else{
+            time-=value;
         }
         Log.e("current time", String.valueOf(time));
-        currentGame.setTimeInMillis(time);
+        thisGame.setTimeInMillis(time);
         updateCountDownText();
     }
 
     private void updateCountDownText() {
         long minutes = (time / 1000) / 60;
         long seconds = (time / 1000) % 60;
-        long millis = time - (minutes * 60000) - (seconds * 1000);
-        updateText(txtMinute1, txtMinute2, minutes);
-        updateText(txtSecond1, txtSecond2, seconds);
-        updateMillis(txtMillis1, txtMillis2, millis);
+        long millis = time - (minutes*60000) - (seconds*1000);
+        updateText(txtMinute1, txtMinute2,minutes);
+        updateText(txtSecond1,txtSecond2,seconds);
+        updateMillis(txtMillis1,txtMillis2,millis);
     }
-
-    private void updateText(TextView txtView1, TextView txtView2, long timeValue) {
-        if (timeValue >= 10) {
+    private void updateText(TextView txtView1, TextView txtView2, long timeValue){
+        if(timeValue>=10){
             txtView1.setText(Character.toString(Long.toString(timeValue).charAt(0)));
             txtView2.setText(Character.toString(Long.toString(timeValue).charAt(1)));
-        } else {
+        }
+        else{
             txtView1.setText("0");
             txtView2.setText(Long.toString(timeValue));
         }
     }
-
-    private void updateMillis(TextView txtView1, TextView txtView2, long timeValue) {
-        if (timeValue >= 100) {
+    private void updateMillis(TextView txtView1, TextView txtView2, long timeValue){
+        if(timeValue>=100){
             txtView1.setText(Character.toString(Long.toString(timeValue).charAt(0)));
             txtView2.setText(Character.toString(Long.toString(timeValue).charAt(1)));
-        } else {
+        }
+        else{
             txtView1.setText("0");
             txtView2.setText(Character.toString(Long.toString(timeValue).charAt(0)));
         }
@@ -944,10 +1019,8 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), Evaluation.class);
-        Gson gson = new Gson();
-        String json = gson.toJson(currentGame);
-        intent.putExtra("playing", json);
+        Intent intent = new Intent(getApplicationContext(),Evaluation.class);
+        intent.putExtra("playing", playing);
         startActivity(intent);
     }
 }

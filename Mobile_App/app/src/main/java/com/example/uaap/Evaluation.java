@@ -3,6 +3,8 @@ package com.example.uaap;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -369,43 +371,89 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
     }
 
 
-    public void onItemClick(AdapterView parent, View v, int position, long id) {
-        Toast.makeText(getApplicationContext(), "hello", Toast.LENGTH_SHORT).show();
+    public void onItemClick(AdapterView parent, View v, final int position, long id) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Evaluation.this);
+        builder.setCancelable(true);
+        builder.setTitle("Edit Evaluation");
+        builder.setMessage("Do you want to edit this record?");
+        builder.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getApplicationContext(), EvaluatorDetailsEdit.class);
+                        currentGame.setTimeInMillis(time);
+                        Gson gson = new Gson();
+                        String json = gson.toJson(currentGame);
+                        intent.putExtra("playing", json);
+                        Log.e("EVAL ID", String.valueOf(calls.result.get(position).id));
+                        intent.putExtra("id",calls.result.get(position).id);
+                        startActivity(intent);
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-        RequestQueue queue = Volley.newRequestQueue(this);
-        StringRequest putRequest = new StringRequest(Request.Method.POST, DeleteEvaluationURL,
-                new Response.Listener<String>() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Evaluation.this);
+        builder.setCancelable(true);
+        builder.setTitle("Delete Evaluation");
+        builder.setMessage("Are you sure you want to delete this record?");
+        builder.setPositiveButton("Confirm",
+                new DialogInterface.OnClickListener() {
                     @Override
-                    public void onResponse(String response) {
-                        Log.e("Response", response);
-                        finish();
-                        overridePendingTransition(0, 0);
-                        startActivity(getIntent());
-                        overridePendingTransition(0, 0);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // error
-                        Log.d("Error.Response", String.valueOf(error));
-                    }
-                }
-        ) {
+                    public void onClick(DialogInterface dialog, int which) {
+                        RequestQueue queue = Volley.newRequestQueue(Evaluation.this);
+                        StringRequest putRequest = new StringRequest(Request.Method.POST, DeleteEvaluationURL,
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        Log.e("Response", response);
+                                        finish();
+                                        overridePendingTransition(0, 0);
+                                        startActivity(getIntent());
+                                        overridePendingTransition(0, 0);
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        // error
+                                        Log.d("Error.Response", String.valueOf(error));
+                                    }
+                                }
+                        ) {
 
+                            @Override
+                            protected Map<String, String> getParams() {
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put("evaluationId", String.valueOf(calls.result.get(position).id));
+                                return params;
+                            }
+
+                        };
+
+                        queue.add(putRequest);
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("evaluationId", String.valueOf(calls.result.get(position).id));
-                return params;
+            public void onClick(DialogInterface dialog, int which) {
             }
+        });
 
-        };
+        AlertDialog dialog = builder.create();
+        dialog.show();
 
-        queue.add(putRequest);
         return true;
     }
     private void ops(String op, boolean opType){

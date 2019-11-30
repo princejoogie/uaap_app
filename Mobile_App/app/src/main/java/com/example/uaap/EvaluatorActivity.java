@@ -289,21 +289,27 @@ public class EvaluatorActivity extends AppCompatActivity {
                                 CurrentGame lastGame = gson.fromJson(json, CurrentGame.class);
                                 currentGame.setTimeInMillis(lastGame.getTimeInMillis());
                                 currentGame.setPeriod(lastGame.getPeriod());
+                                currentGame.setPeriodName(lastGame.getPeriodName());
                                 switch (lastGame.getPeriod()) {
                                     case 0:
                                         currentGame.setPeriodName("Q1");
+                                        currentGame.setPeriod(0);
                                         break;
                                     case 1:
                                         currentGame.setPeriodName("Q2");
+                                        currentGame.setPeriod(1);
                                         break;
                                     case 2:
                                         currentGame.setPeriodName("Q3");
+                                        currentGame.setPeriod(2);
                                         break;
                                     case 3:
                                         currentGame.setPeriodName("Q4");
+                                        currentGame.setPeriod(3);
                                         break;
                                     case 4:
                                         currentGame.setPeriodName("OT");
+                                        currentGame.setPeriod(4);
                                         break;
                                 }
                                 prepareEval(obj.getString("gameId"), obj.getString("gameCode"));
@@ -322,7 +328,7 @@ public class EvaluatorActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // error
-                        Log.d("Error.Response", String.valueOf(error));
+                        Log.e("Error.Response", String.valueOf(error));
                     }
                 }
         ) {
@@ -346,18 +352,25 @@ public class EvaluatorActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Gson gson = new Gson();
-                        Game game = gson.fromJson(response, Game.class);
+                        CurrentGame thisGame = gson.fromJson(response, CurrentGame.class);
                         String[] tempA = new String[5];
                         String[] tempB = new String[5];
                         for (int i = 0; i < 5; i++) {
-                            tempA[i] = game.playerA.get(i).jerseyNumber;
-                            tempB[i] = game.playerB.get(i).jerseyNumber;
+                            tempA[i] = thisGame.playerA.get(i).jerseyNumber;
+                            tempB[i] = thisGame.playerB.get(i).jerseyNumber;
                         }
                         currentGame.setPlayingA(tempA);
                         currentGame.setPlayingB(tempB);
-
                         currentGame.setGameCode(gameCode);
                         currentGame.setGameId(gameId);
+                        currentGame.setStaffA(thisGame.staffA);
+                        currentGame.setStaffB(thisGame.staffB);
+                        currentGame.setReferee(thisGame.referee);
+                        currentGame.setTeamAId(thisGame.getTeamAId());
+                        currentGame.setTeamBId(thisGame.getTeamBId());
+                        currentGame.setPlayerA(thisGame.getPlayerA());
+                        currentGame.setPlayerB(thisGame.getPlayerB());
+
                         Gson cur = new Gson();
                         String json = cur.toJson(currentGame);
                         Intent intent = new Intent(EvaluatorActivity.this, Evaluation.class);

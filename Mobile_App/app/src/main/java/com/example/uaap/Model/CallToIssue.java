@@ -14,13 +14,22 @@ public class CallToIssue {
     private String areaOfPlay;
     private String reviewDecision;
     private String comment;
-    private String period;
+    private int period;
+    private String periodName;
 
-    public String getPeriod() {
+    public String getPeriodName() {
+        return periodName;
+    }
+
+    public void setPeriodName(String periodName) {
+        this.periodName = periodName;
+    }
+
+    public int getPeriod() {
         return period;
     }
 
-    public void setPeriod(String period) {
+    public void setPeriod(int period) {
         this.period = period;
     }
 

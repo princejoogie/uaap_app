@@ -75,7 +75,7 @@ public class EvaluationListAdapter extends BaseAdapter {
         }
 //        protected TextView period,time,callType,committingTeam,committing,disadvantagedTeam,disadvantaged,referee,area,reviewDecision,comment;
 
-        holder.period.setText(dataModelArrayList.get(position).getPeriod());
+        holder.period.setText(dataModelArrayList.get(position).getPeriodName());
         holder.time.setText(dataModelArrayList.get(position).getTime());
         holder.callType.setText(dataModelArrayList.get(position).getCallType());
         holder.committing.setText(dataModelArrayList.get(position).getCommitting());
