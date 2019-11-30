@@ -107,7 +107,6 @@ public class EvaluatorActivity extends AppCompatActivity {
                     String schoolB = spinnerTeamB.getSelectedItem().toString();
                     String Erro1 = "";
                     String Erro2 = "";
-<<<<<<< HEAD
                     if (ref1.equals(null) || ref2.equals(null) || ref3.equals(null) || schoolA.equals(null) || schoolB.equals(null)) {
                         Toast.makeText(EvaluatorActivity.this,
                                 "Empty items are not allowed", Toast.LENGTH_LONG).show();
@@ -126,7 +125,6 @@ public class EvaluatorActivity extends AppCompatActivity {
                         }
                         Toast.makeText(EvaluatorActivity.this,
                                 Erro1 + Erro2, Toast.LENGTH_LONG).show();
-=======
                     if (edtGameCode.getText().toString().isEmpty()) {
                         if (ref1.equals(null) || ref2.equals(null) || ref3.equals(null) || schoolA.equals(null) || schoolB.equals(null)) {
                             Toast.makeText(EvaluatorActivity.this,
@@ -144,7 +142,6 @@ public class EvaluatorActivity extends AppCompatActivity {
 
                     } else {
                         checkGameCode(edtGameCode.getText().toString());////
->>>>>>> 16a15aa44c812737f9868f24338eb9de9f3261df
                     }
                 } catch (Exception e) {
                     Toast.makeText(EvaluatorActivity.this,
