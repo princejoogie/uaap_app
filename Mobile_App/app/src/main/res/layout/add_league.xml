@@ -27,10 +27,6 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"/>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="300dp"/>
-
             <Button
                 android:id="@+id/btnAddLeague"
                 android:layout_width="match_parent"
@@ -41,30 +37,25 @@
         </LinearLayout>
 
 
-        <ListView
-            android:id="@+id/list"
-            android:layout_width="wrap_content"
-            android:layout_height="856dp"
-            android:layout_columnWeight="2"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_columnWeight="10"
+            android:layout_margin="10dp"
             android:background="#F2F2F2"
-            android:elevation="3dp">
+            android:baselineAligned="false"
+            android:elevation="3dp"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <ListView
+                android:id="@+id/leagueList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-
-            </LinearLayout>
-
-        </ListView>
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
     </GridLayout>
-
     <LinearLayout
         android:id="@+id/addLeague"
         android:layout_width="match_parent"
@@ -125,5 +116,4 @@
                 android:text="ADD" />
         </LinearLayout>
     </LinearLayout>
-
 </RelativeLayout>
