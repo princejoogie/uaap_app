@@ -7,12 +7,10 @@ import java.util.ArrayList;
 public class CurrentGame {
     public String gameCode;
     public String gameId;
-    @SerializedName("playingA")
-    public String[] playingA;
-
-    @SerializedName("playingB")
-    public String[] playingB;
-
+    public ArrayList<PersonDetails> staffA;
+    public ArrayList<PersonDetails> staffB;
+    public ArrayList<PlayersDetails> playerA;
+    public ArrayList<PlayersDetails> playerB;
     public int period;
     public String periodName;
     public String teamA;
@@ -20,10 +18,26 @@ public class CurrentGame {
     public String teamBId;
     public String teamB;
     public long timeInMillis;
-    @SerializedName("time")
-
     public String time;
     public int ScoreA;
+    public int colorTeamA;
+    public int colorTeamB;
+
+    public int getColorTeamA() {
+        return colorTeamA;
+    }
+
+    public void setColorTeamA(int colorTeamA) {
+        this.colorTeamA = colorTeamA;
+    }
+
+    public int getColorTeamB() {
+        return colorTeamB;
+    }
+
+    public void setColorTeamB(int colorTeamB) {
+        this.colorTeamB = colorTeamB;
+    }
 
     public String getTime() {
         return time;
@@ -34,10 +48,7 @@ public class CurrentGame {
     }
 
     public int ScoreB;
-    public ArrayList<PersonDetails> staffA;
-    public ArrayList<PersonDetails> staffB;
-    public ArrayList<PlayersDetails> playerA;
-    public ArrayList<PlayersDetails> playerB;
+
 
     public ArrayList<PlayersDetails> getPlayerA() {
         return playerA;
@@ -173,24 +184,6 @@ public class CurrentGame {
 
     }
 
-    public CurrentGame(String[] playingA, String[] playingB){
-        this.playingA = playingA;
-        this.playingB = playingB;
-    }
 
-    public String[] getPlayingA() {
-        return playingA;
-    }
 
-    public void setPlayingA(String[] playingA) {
-        this.playingA = playingA;
-    }
-
-    public String[] getPlayingB() {
-        return playingB;
-    }
-
-    public void setPlayingB(String[] playingB) {
-        this.playingB = playingB;
-    }
 }

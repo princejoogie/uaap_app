@@ -5,12 +5,15 @@ import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.LayoutDirection;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -37,6 +40,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import petrov.kristiyan.colorpicker.ColorPicker;
+
 public class EvaluatorActivity extends AppCompatActivity {
     private Spinner spinLeague;
     private Spinner spinnerTeamA;
@@ -54,8 +59,12 @@ public class EvaluatorActivity extends AppCompatActivity {
     private String CheckGameCodeURL = "http://68.183.49.18/uaap/public/checkGameCode";
     private String GetGameDetailsURL = "http://68.183.49.18/uaap/public/getGameDetails";
 
+    private Button btnColorTeamA;
+    private Button btnColorTeamB;
     private League details;
     private CurrentGame currentGame;
+    private int colorTeamA;
+    private int colorTeamB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +79,10 @@ public class EvaluatorActivity extends AppCompatActivity {
         spinnerRefereeC = findViewById(R.id.spinnerRefereeC);
         btnStartGame = findViewById(R.id.btnStartGame);
         edtGameCode = findViewById(R.id.edtGameCode);
+        btnColorTeamA = findViewById(R.id.btnColorTeamA);
+        btnColorTeamB = findViewById(R.id.btnColorTeamB);
+        btnColorTeamA.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        btnColorTeamB.setBackgroundColor(Color.parseColor("#FFFFFF"));
 
         currentGame = new CurrentGame();
 
@@ -112,10 +125,10 @@ public class EvaluatorActivity extends AppCompatActivity {
                             Toast.makeText(EvaluatorActivity.this,
                                     "Empty items are not allowed", Toast.LENGTH_LONG).show();
                         }
-                        if (spinnerTeamA.getSelectedItem().toString().equals(spinnerTeamB.getSelectedItem().toString())) {
+                        else if (spinnerTeamA.getSelectedItem().toString().equals(spinnerTeamB.getSelectedItem().toString())) {
                             Toast.makeText(getApplicationContext(), "Same teams are not allowed", Toast.LENGTH_SHORT).show();
                         }
-                        if (ref1.equals(ref2) || ref1.equals(ref3) || ref2.equals(ref3)) {
+                        else if (ref1.equals(ref2) || ref1.equals(ref3) || ref2.equals(ref3)) {
                             Toast.makeText(getApplicationContext(), "Same referees are not allowed", Toast.LENGTH_SHORT).show();
                         } else {
                             createGame();
@@ -131,6 +144,50 @@ public class EvaluatorActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnColorTeamA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setTeamColor(btnColorTeamA);
+            }
+        });
+        btnColorTeamB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setTeamColor(btnColorTeamB);
+            }
+        });
+    }
+
+    private void setTeamColor(final Button btnColorTeam) {
+        final ColorPicker colorPicker = new ColorPicker(this);
+        ArrayList<String> colors = new ArrayList<>();
+        colors.add("#DC143C");
+        colors.add("#FF69B4");
+        colors.add("#FF6347");
+        colors.add("#BDB76B");
+        colors.add("#BA55D3");
+        colors.add("#008000");
+        colors.add("#4169E1");
+        colors.add("#FFFFFF");
+        colorPicker.setColors(colors)
+                .setColumns(5)
+                .setRoundColorButton(false)
+                .setOnChooseColorListener(new ColorPicker.OnChooseColorListener() {
+                    @Override
+                    public void onChooseColor(int position, int color) {
+                        btnColorTeam.setBackgroundColor(color);
+                        Log.e("color", String.valueOf(color));
+
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        btnColorTeam.setBackgroundColor(Color.parseColor("#FFFFFF"));
+
+                    }
+                }).show();
+
     }
 
     private void getTeam(final String URL, final Spinner spinner, final String id) {
@@ -218,12 +275,9 @@ public class EvaluatorActivity extends AppCompatActivity {
                         currentGame.setPeriodName("Q1");
                         currentGame.setPeriod(0);
                         currentGame.setTimeInMillis(600000);
+                        currentGame.setColorTeamA(((ColorDrawable) btnColorTeamA.getBackground()).getColor());
+                        currentGame.setColorTeamB(((ColorDrawable) btnColorTeamB.getBackground()).getColor());
                         prepareEval(gameId.gameId, gameId.gameCode);
-//
-//                        Intent intent = new Intent(getApplicationContext(), Evaluation.class);
-//                        intent.putExtra("gameId", gameId.gameId);
-//                        intent.putExtra("gameCode", gameId.gameCode);
-//                        startActivity(intent);
 
 
                     }
@@ -254,6 +308,8 @@ public class EvaluatorActivity extends AppCompatActivity {
                 params.put("refereeA", refereeA.id);
                 params.put("refereeB", refereeB.id);
                 params.put("refereeC", refereeC.id);
+                params.put("colorA", String.valueOf(((ColorDrawable) btnColorTeamA.getBackground()).getColor()));
+                params.put("colorB", String.valueOf(((ColorDrawable) btnColorTeamB.getBackground()).getColor()));
 
                 return params;
             }
@@ -353,14 +409,9 @@ public class EvaluatorActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         Gson gson = new Gson();
                         CurrentGame thisGame = gson.fromJson(response, CurrentGame.class);
-                        String[] tempA = new String[5];
-                        String[] tempB = new String[5];
-                        for (int i = 0; i < 5; i++) {
-                            tempA[i] = thisGame.playerA.get(i).jerseyNumber;
-                            tempB[i] = thisGame.playerB.get(i).jerseyNumber;
-                        }
-                        currentGame.setPlayingA(tempA);
-                        currentGame.setPlayingB(tempB);
+                        currentGame.setPlayerA(thisGame.playerA);
+                        currentGame.setPlayerB(thisGame.playerB);
+                        Log.e("player", currentGame.playerA.get(0).jerseyNumber);
                         currentGame.setGameCode(gameCode);
                         currentGame.setGameId(gameId);
                         currentGame.setStaffA(thisGame.staffA);

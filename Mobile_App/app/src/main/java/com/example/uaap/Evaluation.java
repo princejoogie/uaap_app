@@ -6,17 +6,14 @@ import androidx.core.content.ContextCompat;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -93,7 +90,7 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         setContentView(R.layout.activity_evaluation);
 
         evaluationList = findViewById(R.id.evaluationList);
-        txtTeamA = findViewById(R.id.txtTeamA);
+        txtTeamA = findViewById(R.id.txtTeamComm);
         txtTeamB = findViewById(R.id.txtTeamB);
         txtScoreA = findViewById(R.id.txtScoreA);
         txtScoreB = findViewById(R.id.txtScoreB);
@@ -380,14 +377,14 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(getApplicationContext(), EvaluatorDetailsEdit.class);
-                        currentGame.setTimeInMillis(time);
-                        Gson gson = new Gson();
-                        String json = gson.toJson(currentGame);
-                        intent.putExtra("playing", json);
-                        Log.e("EVAL ID", String.valueOf(calls.result.get(position).id));
-                        intent.putExtra("id",calls.result.get(position).id);
-                        startActivity(intent);
+//                        Intent intent = new Intent(getApplicationContext(), EvaluatorDetailsEdit.class);
+//                        currentGame.setTimeInMillis(time);
+//                        Gson gson = new Gson();
+//                        String json = gson.toJson(currentGame);
+//                        intent.putExtra("playing", json);
+//                        Log.e("EVAL ID", String.valueOf(calls.result.get(position).id));
+//                        intent.putExtra("id",calls.result.get(position).id);
+//                        startActivity(intent);
                     }
                 });
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {

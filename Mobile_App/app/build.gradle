@@ -36,4 +36,7 @@ dependencies {
     implementation 'androidx.coordinatorlayout:coordinatorlayout:1.0.0-alpha1'
 
     implementation 'org.apache.commons:commons-text:1.6'
+    implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
+
+
 }
