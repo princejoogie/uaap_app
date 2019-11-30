@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/bg_admin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Manage.LeaguesTeamsActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginHorizontal="250dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:textAlignment="center"
+            android:textColor="#F2F2F2"
+            android:text="UAAP Men's Division"
+            android:textSize="45sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <GridLayout
+            android:orientation="vertical"
+            android:rowCount="2"
+            android:paddingBottom="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_rowWeight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textColor="#F2F2F2"
+                    android:textSize="25sp"
+                    android:text="Included Teams:"
+                    android:textAlignment="textStart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <ScrollView
+                    android:background="#F2F2F2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:textSize="15sp"
+                            android:padding="10dp"
+                            android:textAlignment="center"
+                            android:drawableStart="@drawable/ic_remove_circle_red"
+                            android:text="Adamson Soraing Falcons"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                </ScrollView>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                android:layout_rowWeight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textColor="#F2F2F2"
+                    android:textSize="25sp"
+                    android:text="All Teams:"
+                    android:textAlignment="textStart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <ScrollView
+                    android:background="#F2F2F2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <Button
+                            android:textSize="15sp"
+                            android:padding="10dp"
+                            android:textAlignment="center"
+                            android:drawableStart="@drawable/ic_remove_circle_red"
+                            android:text="Adamson Soraing Falcons"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                </ScrollView>
+
+            </LinearLayout>
+        </GridLayout>
+
+        <Button
+            android:layout_marginTop="-70dp"
+            android:textSize="25sp"
+            android:textColor="#F2F2F2"
+            android:background="#EC3D3D"
+            android:layout_gravity="center"
+            android:text="OK"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+</RelativeLayout>

@@ -3,9 +3,7 @@ package com.example.uaap;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -17,8 +15,11 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+<<<<<<< HEAD
+=======
 import android.widget.LinearLayout;
 import android.widget.ListView;
+>>>>>>> 16a15aa44c812737f9868f24338eb9de9f3261df
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -45,11 +46,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+<<<<<<< HEAD
+=======
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+>>>>>>> 16a15aa44c812737f9868f24338eb9de9f3261df
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static android.text.TextUtils.concat;
@@ -73,6 +76,8 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
     private Button btnStaffA;
     private Button btnStaffB;
     private Button btnSubmitEval;
+<<<<<<< HEAD
+=======
     private Button btnFoul;
     private Button btnViolation;
     private Button btnSubA;
@@ -105,6 +110,11 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
     private TextView txtMillis1;
     private TextView txtMillis2;
     private TextView txtComment;
+<<<<<<< HEAD
+=======
+>>>>>>> 16a15aa44c812737f9868f24338eb9de9f3261df
+    private String GetGameDetailsURL = "http://68.183.49.18/uaap/public/getGameDetails";
+>>>>>>> carlo
     private String SubmitEvalURL = "http://68.183.49.18/uaap/public/createEvaluation";
 
     private CallToIssue callToIssue;
@@ -168,6 +178,8 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         btnStaffA = findViewById(R.id.btnStaffA);
         btnStaffB = findViewById(R.id.btnStaffB);
         btnSubmitEval = findViewById(R.id.btnSubmitEval);
+<<<<<<< HEAD
+=======
         btnFoul = findViewById(R.id.btnFoul);
         btnViolation = findViewById(R.id.btnViolation);
         btnSubA = findViewById(R.id.btnSubA);
@@ -211,7 +223,11 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
 
         foulListView.setOnItemClickListener(this);
         callToIssue = new CallToIssue();
+<<<<<<< HEAD
         setInfo(currentGame.getPeriodName(), currentGame.getPeriod(), "period", periodButtons);
+=======
+>>>>>>> 16a15aa44c812737f9868f24338eb9de9f3261df
+>>>>>>> carlo
         getThisGame();
         callToIssue.setCallType("Foul");
         callToIssue.setPeriod(currentGame.getPeriod());
@@ -355,6 +371,8 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                 submitEval();
             }
         });
+<<<<<<< HEAD
+=======
         btnSubA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -527,6 +545,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
             }
         });
 
+>>>>>>> 16a15aa44c812737f9868f24338eb9de9f3261df
 
     }
 
@@ -560,14 +579,12 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         }
 
     }
-
-    private void clearCommStaff() {
+    private void clearCommStaff(){
         btnStaffB.setBackgroundColor(Color.parseColor("#820000"));
         btnStaffB.setTextColor(Color.parseColor("#FFFFFF"));
         btnStaffA.setBackgroundColor(Color.parseColor("#038500"));
         btnStaffA.setTextColor(Color.parseColor("#FFFFFF"));
     }
-
     private void getThisGame() {
         btnRefA.setText(currentGame.referee.get(0).name);
         btnRefB.setText(currentGame.referee.get(1).name);
@@ -596,6 +613,20 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
 
         final RadioGroup rg = (RadioGroup) dialog.findViewById(R.id.radioGroup);
         Button btnSubmitStaff = (Button) dialog.findViewById(R.id.btnSubmitStaff);
+<<<<<<< HEAD
+        if (team){
+            for (int i = 0; i < game.staffA.size(); i++) {
+                RadioButton rb = new RadioButton(EvaluatorDetails.this); // dynamically creating RadioButton and adding to RadioGroup.
+                rb.setText(game.staffA.get(i).name+" ("+teamA+")");
+                rb.setId(Integer.parseInt(game.staffA.get(i).id));
+                rg.addView(rb);
+            }
+        }
+        else{
+            for (int i = 0; i < game.staffB.size(); i++) {
+                RadioButton rb = new RadioButton(EvaluatorDetails.this); // dynamically creating RadioButton and adding to RadioGroup.
+                rb.setText(game.staffB.get(i).name+" ("+teamB+")");
+=======
         if (team) {
             for (int i = 0; i < currentGame.staffA.size(); i++) {
                 RadioButton rb = new RadioButton(EvaluatorDetails.this); // dynamically creating RadioButton and adding to RadioGroup.
@@ -606,17 +637,24 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         } else {
             for (int i = 0; i < currentGame.staffB.size(); i++) {
                 RadioButton rb = new RadioButton(EvaluatorDetails.this); // dynamically creating RadioButton and adding to RadioGroup.
+<<<<<<< HEAD
                 rb.setText(currentGame.staffB.get(i).name + " (" + currentGame.getTeamB() + ")");
                 rb.setId(Integer.parseInt(currentGame.staffB.get(i).id));
+=======
+                rb.setText(game.staffB.get(i).name + " (" + teamB + ")");
+>>>>>>> 16a15aa44c812737f9868f24338eb9de9f3261df
+                rb.setId(Integer.parseInt(game.staffB.get(i).id));
+>>>>>>> carlo
                 rg.addView(rb);
             }
         }
 
 
+
         btnSubmitStaff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (team) {
+                if(team){
                     clearButtons(btnCommA, true);
                     clearButtons(btnCommB, false);
                     clearCommStaff();
@@ -624,14 +662,23 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                     btnStaffA.setTextColor(Color.parseColor("#038500"));
                     callToIssue.setCommittingTeam(currentGame.getTeamBId());
 
-                } else {
+                }
+                else{
                     clearButtons(btnCommA, true);
                     clearButtons(btnCommB, false);
                     clearCommStaff();
                     btnStaffB.setBackgroundColor(Color.parseColor("#FFFFFF"));
                     btnStaffB.setTextColor(Color.parseColor("#820000"));
 
+<<<<<<< HEAD
                     callToIssue.setCommittingTeam(currentGame.getTeamAId());
+=======
+<<<<<<< HEAD
+                    committingTeam=false;
+=======
+                    callToIssue.setCommittingTeam(game.getTeamAId());
+>>>>>>> 16a15aa44c812737f9868f24338eb9de9f3261df
+>>>>>>> carlo
 
                 }
                 dialog.dismiss();
@@ -649,6 +696,8 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         dialog.show();
 
     }
+<<<<<<< HEAD
+=======
 
     private void genFoul(String[] list) {
 
@@ -913,6 +962,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         updateCountDownText();
     }
 
+<<<<<<< HEAD
     private void updateCountDownText() {
         long minutes = (time / 1000) / 60;
         long seconds = (time / 1000) % 60;
@@ -950,4 +1000,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         intent.putExtra("playing", json);
         startActivity(intent);
     }
+=======
+>>>>>>> 16a15aa44c812737f9868f24338eb9de9f3261df
+>>>>>>> carlo
 }
