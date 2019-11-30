@@ -4,10 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_admin"
-    android:clipToPadding="false"
-    android:gravity="center"
-    tools:context=".Manage.AddLeague">
+    tools:context=".Manage.AddingLeague">
 
     <GridLayout
         android:columnCount="3"
@@ -42,9 +39,9 @@
 
 
         <ListView
-            android:id="@+id/list"
+            android:id="@+id/listGame"
             android:layout_width="wrap_content"
-            android:layout_height="856dp"
+            android:layout_height="match_parent"
             android:layout_columnWeight="2"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
@@ -125,5 +122,8 @@
                 android:text="ADD" />
         </LinearLayout>
     </LinearLayout>
+
+
+
 
 </RelativeLayout>

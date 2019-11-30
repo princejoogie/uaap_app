@@ -143,7 +143,6 @@ public class EvaluatorActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         Gson gson = new Gson();
                         details = gson.fromJson(response, League.class);
-
                         ArrayAdapter<LeagueDetails> adapter = new ArrayAdapter<LeagueDetails>(getApplicationContext(), R.layout.spinner_item, details.result);
                         spinner.setAdapter(adapter);
 
@@ -181,7 +180,6 @@ public class EvaluatorActivity extends AppCompatActivity {
                             Log.e("Here", response);
                             Gson gson = new Gson();
                             details = gson.fromJson(response, League.class);
-
                             ArrayAdapter<LeagueDetails> adapter = new ArrayAdapter<LeagueDetails>(getApplicationContext(), R.layout.spinner_item, details.result);
                             spinner.setAdapter(adapter);
 
