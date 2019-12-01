@@ -7,32 +7,26 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.uaap.Adapter.LeagueListAdapter;
-import com.example.uaap.Admin;
-import com.example.uaap.EvaluatorActivity;
-import com.example.uaap.Model.EvaluationDetails;
 import com.example.uaap.Model.League;
 import com.example.uaap.Model.LeagueDetails;
-import com.example.uaap.Model.User;
 import com.example.uaap.R;
 import com.google.gson.Gson;
-
+import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
-
+import android.widget.AdapterView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class AddLeague extends AppCompatActivity {
     Button btnAddLeague, btnCancel, btnAdd;
@@ -42,19 +36,26 @@ public class AddLeague extends AppCompatActivity {
     private String addLeagueUrl = "http://68.183.49.18/uaap/public/addLeague";
     private String GetLeagueURL = "http://68.183.49.18/uaap/public/getLeague";
     private League league;
+    ArrayList<LeagueDetails> dataModelArray;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_league);
-
         btnAddLeague = findViewById(R.id.btnAddLeague);
-        btnCancel = findViewById(R.id.btnCancel);
+        btnCancel = findViewById(R.id.btnNo);
         btnAdd = findViewById(R.id.btnAdd);
         final LinearLayout linearLayout = findViewById(R.id.addLeague);
         edtLeague = findViewById(R.id.edtLeague);
         leagueList = findViewById(R.id.leagueList);
 
-        getLeague();
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                getLeague();
+            }
+        }, 0, 1000);
+
+
         btnAddLeague.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,6 +78,15 @@ public class AddLeague extends AppCompatActivity {
                 String leagueName = edtLeague.getText().toString();
                 addingLeague(leagueName);
 
+            }
+        });
+
+        leagueList.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,int position, long id)
+            {
+                Toast.makeText(getApplicationContext(), "Sucess", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -144,4 +154,5 @@ public class AddLeague extends AppCompatActivity {
             queue.add(putRequest);
         }
     }
+
 }
