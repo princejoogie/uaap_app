@@ -1,12 +1,6 @@
 package com.example.uaap;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,11 +9,13 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,26 +23,29 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.uaap.Adapter.FoulListAdapter;
+import com.example.uaap.Model.Call;
 import com.example.uaap.Model.CallToIssue;
 import com.example.uaap.Model.CurrentGame;
+import com.example.uaap.Model.EvaluationDetails;
 import com.example.uaap.Model.PlayersDetails;
 import com.google.gson.Gson;
 
 import org.apache.commons.text.WordUtils;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
 
 import static android.text.TextUtils.isEmpty;
 
-public class EvaluatorDetails extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 
     private String playing;
+    private String id;
 
     private String[] playingA;
     private String[] playingB;
@@ -95,7 +94,8 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
     private TextView txtTeamComm;
     private TextView txtTeamDis;
     private TextView txtFoul;
-    private String SubmitEvalURL = "http://68.183.49.18/uaap/public/createEvaluation";
+    private String SubmitEvalURL = "http://68.183.49.18/uaap/public/editEvaluation";
+    private String GetEvalURL = "http://68.183.49.18/uaap/public/getEval";
 
     private CallToIssue callToIssue;
 
@@ -110,10 +110,10 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-
             playing = extras.getString("playing");
-
+            id = extras.getString("id");
         }
+        Log.e("id", id);
         Gson gson = new Gson();
         currentGame = gson.fromJson(playing, CurrentGame.class);
         Log.e("thisplaying", playing);
@@ -215,9 +215,6 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         final Button[] aopButtons = {btnAoPLead, btnAoPCenter, btnAoPTrail};
         final Button[] reviewButtons = {btnReviewCC, btnReviewIC, btnReviewCFR, btnReviewNCFR, btnReviewCNC, btnReviewINC};
         final Button[] periodButtons = {btnQ1, btnQ2, btnQ3, btnQ4, btnOT};
-
-        callToIssue = new CallToIssue();
-        setInfo(currentGame.getPeriodName(), currentGame.getPeriod(), "period", periodButtons);
         playingA = new String[currentGame.playerA.size()];
         playingB = new String[currentGame.playerB.size()];
 
@@ -229,9 +226,6 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         }
 
         getThisGame();
-        callToIssue.setPeriod(currentGame.getPeriod());
-        callToIssue.setPeriodName(currentGame.getPeriodName());
-
 
         for (int i = 0; i < 20; i++) {
             final int finalI = i;
@@ -522,7 +516,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                 callToIssue.setDisType(null);
                 callToIssue.setDis(null);
                 changed = !changed;
-                setPlayers(changed);
+                setPlayers();
             }
         });
 
@@ -533,11 +527,173 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         btnRefA.setText(currentGame.referee.get(0).name);
         btnRefB.setText(currentGame.referee.get(1).name);
         btnRefC.setText(currentGame.referee.get(2).name);
-        changed = false;
-        setPlayers(changed);
-    }
+        RequestQueue queue = Volley.newRequestQueue(EvaluatorDetailsEdit.this);
+        StringRequest putRequest = new StringRequest(Request.Method.POST, GetEvalURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
 
-    private void setPlayers(boolean changed) {
+                        Log.e("response", response);
+                        Gson gson = new Gson();
+                        Call call = gson.fromJson(response, Call.class);
+                        callToIssue = call.result.get(0);
+                        Log.e("type", callToIssue.getCommittingType());
+                        if(callToIssue.getCommittingTeam().equals(currentGame.getTeamAId())){
+                           changed = false;
+                        }else{
+                            changed = true;
+                        }
+                        setInitPlayers();
+                        if(callToIssue.getCommittingType().equals("player")){
+                           if(!changed){
+                               int index = getIndexOfPlayers(callToIssue.getCommitting(),currentGame.getPlayerA());
+                               if(currentGame.getColorTeamA()==Color.WHITE){
+                                   btnComm[index].setBackgroundColor(Color.BLACK);
+                                   btnComm[index].setTextColor(Color.WHITE);
+                               }else{
+                                   btnComm[index].setBackgroundColor(Color.WHITE);
+                                   btnComm[index].setTextColor(currentGame.getColorTeamA());
+                               }
+                           }else{
+                               int index = getIndexOfPlayers(callToIssue.getCommitting(),currentGame.getPlayerB());
+                               if(currentGame.getColorTeamB()==Color.WHITE){
+                                   btnComm[index].setBackgroundColor(Color.BLACK);
+                                   btnComm[index].setTextColor(Color.WHITE);
+                               }else{
+                                   btnComm[index].setBackgroundColor(Color.WHITE);
+                                   btnComm[index].setTextColor(currentGame.getColorTeamB());
+                               }
+                           }
+                        }else{
+                            if(!changed){
+                                if(currentGame.getColorTeamA()==Color.WHITE){
+                                    btnStaffComm.setBackgroundColor(Color.BLACK);
+                                    btnStaffComm.setTextColor(Color.WHITE);
+                                }else{
+                                    btnStaffComm.setBackgroundColor(Color.WHITE);
+                                    btnStaffComm.setTextColor(currentGame.getColorTeamA());
+                                }
+                            }else{
+                                if(currentGame.getColorTeamB()==Color.WHITE){
+                                    btnStaffComm.setBackgroundColor(Color.BLACK);
+                                    btnStaffComm.setTextColor(Color.WHITE);
+                                }else{
+                                    btnStaffComm.setBackgroundColor(Color.WHITE);
+                                    btnStaffComm.setTextColor(currentGame.getColorTeamB());
+                                }
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", String.valueOf(error));
+                    }
+                }
+        ) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", id);
+                return params;
+            }
+
+        };
+
+        queue.add(putRequest);
+
+    }
+    private int getIndexOfPlayers(String playerId, ArrayList<PlayersDetails> players) {
+        for(int i=0;i<players.size();i++){
+            if(players.get(i).id.equals(playerId)){
+                return i;
+            }
+        }
+        return -1;
+    }
+    private void setInitPlayers(){
+        for (int i = 0; i < 20; i++) {
+            btnComm[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
+            btnComm[i].setText("");
+            btnDis[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
+            btnDis[i].setText("");
+
+        }
+        if (!changed) {
+            if (currentGame.getColorTeamA() == Color.WHITE) {
+                btnStaffComm.setTextColor(Color.BLACK);
+            } else {
+                btnStaffComm.setTextColor(Color.WHITE);
+            }
+            if (currentGame.getColorTeamB() == Color.WHITE) {
+                btnStaffDis.setTextColor(Color.BLACK);
+            } else {
+                btnStaffDis.setTextColor(Color.WHITE);
+            }
+            btnStaffComm.setBackgroundColor(currentGame.getColorTeamA());
+            btnStaffDis.setBackgroundColor(currentGame.getColorTeamB());
+            txtTeamComm.setText(currentGame.getTeamA());
+            txtTeamDis.setText(currentGame.getTeamB());
+            for (int i = 0; i < playingA.length; i++) {
+                btnComm[i].setBackgroundColor(currentGame.getColorTeamA());
+                if (currentGame.getColorTeamA() == Color.WHITE) {
+                    btnComm[i].setTextColor(Color.BLACK);
+                } else {
+                    btnComm[i].setTextColor(Color.WHITE);
+                }
+                btnComm[i].setText(playingA[i]);
+
+            }
+            for (int i = 0; i < playingB.length; i++) {
+                btnDis[i].setBackgroundColor(currentGame.getColorTeamB());
+                if (currentGame.getColorTeamB() == Color.WHITE) {
+                    btnDis[i].setTextColor(Color.BLACK);
+                } else {
+                    btnDis[i].setTextColor(Color.WHITE);
+                }
+                btnDis[i].setText(playingB[i]);
+            }
+        } else {
+            if (currentGame.getColorTeamB() == Color.WHITE) {
+                btnStaffComm.setTextColor(Color.BLACK);
+            } else {
+                btnStaffComm.setTextColor(Color.WHITE);
+            }
+            if (currentGame.getColorTeamA() == Color.WHITE) {
+                btnStaffDis.setTextColor(Color.BLACK);
+            } else {
+                btnStaffDis.setTextColor(Color.WHITE);
+            }
+            txtTeamComm.setText(currentGame.getTeamB());
+            txtTeamDis.setText(currentGame.getTeamA());
+            btnStaffComm.setBackgroundColor(currentGame.getColorTeamB());
+            btnStaffDis.setBackgroundColor(currentGame.getColorTeamA());
+            for (int i = 0; i < playingB.length; i++) {
+                btnComm[i].setBackgroundColor(currentGame.getColorTeamB());
+                if (currentGame.getColorTeamB() == Color.WHITE) {
+                    btnComm[i].setTextColor(Color.BLACK);
+                } else {
+                    btnComm[i].setTextColor(Color.WHITE);
+                }
+                btnComm[i].setText(playingB[i]);
+
+            }
+            for (int i = 0; i < playingA.length; i++) {
+                btnDis[i].setBackgroundColor(currentGame.getColorTeamA());
+                if (currentGame.getColorTeamA() == Color.WHITE) {
+                    btnDis[i].setTextColor(Color.BLACK);
+                } else {
+                    btnDis[i].setTextColor(Color.WHITE);
+                }
+                btnDis[i].setText(playingA[i]);
+            }
+        }
+
+    }
+    private void setPlayers() {
         for (int i = 0; i < 20; i++) {
             btnComm[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
             btnComm[i].setText("");
@@ -733,7 +889,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
 
     private void staff(final boolean commDis) {
         // custom dialog
-        final Dialog dialog = new Dialog(EvaluatorDetails.this);
+        final Dialog dialog = new Dialog(EvaluatorDetailsEdit.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.radiobutton_staff);
 
@@ -741,14 +897,14 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         Button btnSubmitStaff = (Button) dialog.findViewById(R.id.btnSubmitStaff);
         if (!changed) {
             for (int i = 0; i < currentGame.staffA.size(); i++) {
-                RadioButton rb = new RadioButton(EvaluatorDetails.this); // dynamically creating RadioButton and adding to RadioGroup.
+                RadioButton rb = new RadioButton(EvaluatorDetailsEdit.this); // dynamically creating RadioButton and adding to RadioGroup.
                 rb.setText(currentGame.staffA.get(i).name + " (" + currentGame.getTeamA() + ")");
                 rb.setId(Integer.parseInt(currentGame.staffA.get(i).id));
                 rg.addView(rb);
             }
         } else {
             for (int i = 0; i < currentGame.staffB.size(); i++) {
-                RadioButton rb = new RadioButton(EvaluatorDetails.this); // dynamically creating RadioButton and adding to RadioGroup.
+                RadioButton rb = new RadioButton(EvaluatorDetailsEdit.this); // dynamically creating RadioButton and adding to RadioGroup.
                 rb.setText(currentGame.staffB.get(i).name + " (" + currentGame.getTeamB() + ")");
                 rb.setId(Integer.parseInt(currentGame.staffB.get(i).id));
                 rg.addView(rb);
@@ -842,7 +998,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
     }
 
     private void showCall(final boolean foulVio) {
-        final Dialog dialog = new Dialog(EvaluatorDetails.this);
+        final Dialog dialog = new Dialog(EvaluatorDetailsEdit.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.radiobutton_staff);
 
@@ -857,7 +1013,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
             foulVioList = getResources().getStringArray(R.array.violation);
         }
         for (int i = 0; i < foulVioList.length; i++) {
-            RadioButton rb = new RadioButton(EvaluatorDetails.this); // dynamically creating RadioButton and adding to RadioGroup.
+            RadioButton rb = new RadioButton(EvaluatorDetailsEdit.this); // dynamically creating RadioButton and adding to RadioGroup.
             rb.setText(foulVioList[i]);
             rg.addView(rb);
         }

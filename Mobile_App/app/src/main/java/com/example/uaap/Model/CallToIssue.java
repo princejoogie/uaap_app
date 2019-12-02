@@ -1,21 +1,42 @@
 package com.example.uaap.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class CallToIssue {
+    @SerializedName("committingTeam")
     private String committingTeam;
+    @SerializedName("committingType")
     private String committingType;
+    @SerializedName("committing")
     private String committing;
+    @SerializedName("disTeam")
     private String disTeam;
+    @SerializedName("disType")
     private String disType;
+    @SerializedName("dis")
     private String dis;
+    @SerializedName("callType")
     private String callType;
+    @SerializedName("call")
     private String call;
+    @SerializedName("refereeId")
     private String refereeId;
+    @SerializedName("area")
     private String area;
+    @SerializedName("areaOfPlay")
     private String areaOfPlay;
+    @SerializedName("reviewDecision")
     private String reviewDecision;
+    @SerializedName("comment")
     private String comment;
+    @SerializedName("period")
     private int period;
+    @SerializedName("periodName")
     private String periodName;
+
+    public CallToIssue(){
+
+    }
 
     public String getPeriodName() {
         return periodName;

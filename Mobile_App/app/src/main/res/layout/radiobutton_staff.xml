@@ -16,7 +16,7 @@
             android:id="@+id/radioTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select Staff">
+            android:text="Select">
 
         </TextView>
 

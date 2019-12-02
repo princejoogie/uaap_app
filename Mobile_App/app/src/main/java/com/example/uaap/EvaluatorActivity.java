@@ -63,8 +63,6 @@ public class EvaluatorActivity extends AppCompatActivity {
     private Button btnColorTeamB;
     private League details;
     private CurrentGame currentGame;
-    private int colorTeamA;
-    private int colorTeamB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -270,8 +268,6 @@ public class EvaluatorActivity extends AppCompatActivity {
                         LeagueDetails teamB = (LeagueDetails) spinnerTeamB.getSelectedItem();
                         currentGame.setTeamA(teamA.name);
                         currentGame.setTeamB(teamB.name);
-                        currentGame.setScoreA(0);
-                        currentGame.setScoreB(0);
                         currentGame.setPeriodName("Q1");
                         currentGame.setPeriod(0);
                         currentGame.setTimeInMillis(600000);
@@ -338,36 +334,14 @@ public class EvaluatorActivity extends AppCompatActivity {
                                 Log.e("Response", response);
                                 currentGame.setTeamA(obj.getString("teamA"));
                                 currentGame.setTeamB(obj.getString("teamB"));
-                                currentGame.setScoreA(obj.getInt("scoreA"));
-                                currentGame.setScoreB(obj.getInt("scoreB"));
-                                String json = obj.getString("playing");
-                                Gson gson = new Gson();
-                                CurrentGame lastGame = gson.fromJson(json, CurrentGame.class);
-                                currentGame.setTimeInMillis(lastGame.getTimeInMillis());
-                                currentGame.setPeriod(lastGame.getPeriod());
-                                currentGame.setPeriodName(lastGame.getPeriodName());
-                                switch (lastGame.getPeriod()) {
-                                    case 0:
-                                        currentGame.setPeriodName("Q1");
-                                        currentGame.setPeriod(0);
-                                        break;
-                                    case 1:
-                                        currentGame.setPeriodName("Q2");
-                                        currentGame.setPeriod(1);
-                                        break;
-                                    case 2:
-                                        currentGame.setPeriodName("Q3");
-                                        currentGame.setPeriod(2);
-                                        break;
-                                    case 3:
-                                        currentGame.setPeriodName("Q4");
-                                        currentGame.setPeriod(3);
-                                        break;
-                                    case 4:
-                                        currentGame.setPeriodName("OT");
-                                        currentGame.setPeriod(4);
-                                        break;
-                                }
+                                String time = obj.getString("time");
+                                String[] timeSep = time.split(":");
+                                long timeInMillis = (Long.valueOf(timeSep[0])*60000)+(Long.valueOf(timeSep[1])*1000)+(Long.valueOf(timeSep[2])*10);
+                                currentGame.setTimeInMillis(timeInMillis);
+                                currentGame.setPeriod(obj.getInt("period"));
+                                currentGame.setPeriodName(obj.getString("periodName"));
+                                currentGame.setColorTeamA(obj.getInt("teamAColor"));
+                                currentGame.setColorTeamB(obj.getInt("teamBColor"));
                                 prepareEval(obj.getString("gameId"), obj.getString("gameCode"));
 
 
@@ -411,7 +385,6 @@ public class EvaluatorActivity extends AppCompatActivity {
                         CurrentGame thisGame = gson.fromJson(response, CurrentGame.class);
                         currentGame.setPlayerA(thisGame.playerA);
                         currentGame.setPlayerB(thisGame.playerB);
-                        Log.e("player", currentGame.playerA.get(0).jerseyNumber);
                         currentGame.setGameCode(gameCode);
                         currentGame.setGameId(gameId);
                         currentGame.setStaffA(thisGame.staffA);

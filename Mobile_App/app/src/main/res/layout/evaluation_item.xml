@@ -25,7 +25,7 @@
             android:id="@+id/time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1.5"
             android:text="Time"
             android:textColor="#000000" />
 
@@ -33,7 +33,7 @@
             android:id="@+id/callType"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:text="callType"
             android:textColor="#000000" />
 
@@ -41,7 +41,7 @@
             android:id="@+id/committing"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="4"
             android:text="Committing"
             android:textColor="#000000" />
 
@@ -49,7 +49,7 @@
             android:id="@+id/disadvantaged"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="4"
             android:text="disadvantaged"
             android:textColor="#000000" />
 

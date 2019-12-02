@@ -35,21 +35,7 @@ import java.util.Map;
 
 public class Evaluation extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
     private String playing;
-    private String teamA;
-    private String teamB;
-    private int scoreA;
-    private int scoreB;
-
-
     private ListView evaluationList;
-    private TextView txtTeamA;
-    private TextView txtTeamB;
-    private TextView txtScoreA;
-    private TextView txtScoreB;
-    private Button btnAddScoreA;
-    private Button btnSubScoreA;
-    private Button btnAddScoreB;
-    private Button btnSubScoreB;
     private Button btnQ1;
     private Button btnQ2;
     private Button btnQ3;
@@ -69,6 +55,7 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
     private Button btnSecondDown;
     private Button btnMillisUp;
     private Button btnMillisDown;
+    private TextView txtTeams;
 
     private FloatingActionButton fab;
     private EvaluationListAdapter listAdapter;
@@ -81,7 +68,6 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
     private CurrentGame currentGame;
 
     private String GetCallURL = "http://68.183.49.18/uaap/public/getAll";
-    private String SaveScoreURL = "http://68.183.49.18/uaap/public/saveScore";
     private String DeleteEvaluationURL = "http://68.183.49.18/uaap/public/deleteEvaluation";
 
     @Override
@@ -90,15 +76,8 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         setContentView(R.layout.activity_evaluation);
 
         evaluationList = findViewById(R.id.evaluationList);
-        txtTeamA = findViewById(R.id.txtTeamComm);
-        txtTeamB = findViewById(R.id.txtTeamB);
-        txtScoreA = findViewById(R.id.txtScoreA);
-        txtScoreB = findViewById(R.id.txtScoreB);
-        btnAddScoreA = findViewById(R.id.btnAddScoreA);
-        btnSubScoreA = findViewById(R.id.btnSubScoreA);
-        btnAddScoreB = findViewById(R.id.btnAddScoreB);
-        btnSubScoreB = findViewById(R.id.btnSubScoreB);
         fab = findViewById(R.id.fab);
+        txtTeams = findViewById(R.id.txtTeams);
         txtMinute1 = findViewById(R.id.txtMinute1);
         txtSecond1 = findViewById(R.id.txtSecond1);
         txtMillis1 = findViewById(R.id.txtMillis1);
@@ -120,6 +99,7 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         btnOT = findViewById(R.id.btnOT);
 
         final Button[] periodButtons = {btnQ1, btnQ2, btnQ3, btnQ4, btnOT};
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             playing = extras.getString("playing");
@@ -127,50 +107,12 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         Gson gson = new Gson();
         currentGame = gson.fromJson(playing, CurrentGame.class);
 
+        txtTeams.setText(currentGame.getTeamA() + " vs " +currentGame.getTeamB());
+        getCalls();
         time = currentGame.getTimeInMillis();
-        init();
         evaluationList.setOnItemClickListener(this);
         evaluationList.setOnItemLongClickListener(this);
 
-
-        btnAddScoreA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreA++;
-                refreshScore();
-            }
-        });
-
-        btnAddScoreB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreB++;
-                refreshScore();
-
-            }
-        });
-
-        btnSubScoreA.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreA--;
-                if (scoreA < 0) {
-                    scoreA = 0;
-                }
-                refreshScore();
-            }
-        });
-
-        btnSubScoreB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scoreB--;
-                if (scoreB < 0) {
-                    scoreB = 0;
-                }
-                refreshScore();
-            }
-        });
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -257,7 +199,6 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
 
     private void enablePeriod(int i, Button[] buttons){
         String[] periods = {"Q1", "Q2", "Q3", "Q4", "OT"};
-//        final Button[] periodButtons = {btnQ1, btnQ2, btnQ3, btnQ4, btnOT};
         for (int x=0;x<5;x++){
             if(x==i){
                 buttons[x].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
@@ -268,26 +209,6 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
                 buttons[x].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_eval));
             }
         }
-    }
-    private void refreshScore() {
-        currentGame.setScoreA(scoreA);
-        currentGame.setScoreB(scoreB);
-        txtScoreA.setText(String.valueOf(scoreA));
-        txtScoreB.setText(String.valueOf(scoreB));
-    }
-
-    private void init() {
-        btnQ1.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
-        updateCountDownText();
-        teamA = currentGame.getTeamA();
-        teamB = currentGame.getTeamB();
-        scoreA = currentGame.getScoreA();
-        scoreB = currentGame.getScoreB();
-        txtTeamA.setText(teamA);
-        txtTeamB.setText(teamB);
-        txtScoreA.setText(String.valueOf(scoreA));
-        txtScoreB.setText(String.valueOf(scoreB));
-        getCalls();
     }
 
     private void getCalls() {
@@ -330,42 +251,7 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         queue.add(putRequest);
     }
 
-    @Override
-    public void onBackPressed() {
-        RequestQueue queue = Volley.newRequestQueue(this);
 
-        StringRequest putRequest = new StringRequest(Request.Method.POST, SaveScoreURL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // error
-                        Log.d("Error.Response", String.valueOf(error));
-                    }
-                }
-        ) {
-
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("gameId", currentGame.getGameId());
-                params.put("scoreA", String.valueOf(scoreA));
-                params.put("scoreB", String.valueOf(scoreB));
-                return params;
-            }
-
-        };
-
-        queue.add(putRequest);
-        Intent intent = new Intent(getApplicationContext(), EvaluatorActivity.class);
-        startActivity(intent);
-    }
 
 
     public void onItemClick(AdapterView parent, View v, final int position, long id) {
@@ -377,14 +263,14 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-//                        Intent intent = new Intent(getApplicationContext(), EvaluatorDetailsEdit.class);
-//                        currentGame.setTimeInMillis(time);
-//                        Gson gson = new Gson();
-//                        String json = gson.toJson(currentGame);
-//                        intent.putExtra("playing", json);
-//                        Log.e("EVAL ID", String.valueOf(calls.result.get(position).id));
-//                        intent.putExtra("id",calls.result.get(position).id);
-//                        startActivity(intent);
+                        Intent intent = new Intent(getApplicationContext(), EvaluatorDetailsEdit.class);
+                        currentGame.setTimeInMillis(time);
+                        Gson gson = new Gson();
+                        String json = gson.toJson(currentGame);
+                        intent.putExtra("playing", json);
+                        intent.putExtra("id",String.valueOf(calls.result.get(position).id));
+                        Log.e("id", String.valueOf(calls.result.get(position).id));
+                        startActivity(intent);
                     }
                 });
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {

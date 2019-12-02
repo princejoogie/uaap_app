@@ -333,7 +333,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
                                 android:layout_weight="1"
-                                android:background="@drawable/btn_eval_selected"
+                                android:background="@drawable/button_eval"
                                 android:text="Foul" />
 
                             <Button
@@ -347,14 +347,16 @@
 
                         </LinearLayout>
 
-                        <Spinner
-                            android:id="@+id/spinnerTeamA2"
+                        <TextView
+                            android:id="@+id/txtFoul"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_columnWeight="1"
                             android:layout_margin="10dp"
                             android:background="@drawable/button_eval"
-                            android:padding="10sp" />
+                            android:padding="10dp"
+                            android:text="No Foul/Violation Selected"
+                            android:textColor="@android:color/black"
+                            android:textSize="16dp" />
 
                     </LinearLayout>
 
@@ -982,7 +984,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:columnCount="2"
+                android:columnCount="3"
                 android:rowCount="2">
 
                 <Button
@@ -995,15 +997,6 @@
                     android:text="CC" />
 
                 <Button
-                    android:id="@+id/btnReviewINC"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:background="@drawable/button_eval"
-                    android:padding="10dp"
-                    android:text="INC" />
-
-                <Button
                     android:id="@+id/btnReviewCFR"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -1011,6 +1004,24 @@
                     android:background="@drawable/button_eval"
                     android:padding="10dp"
                     android:text="CFR" />
+
+                <Button
+                    android:id="@+id/btnReviewCNC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/button_eval"
+                    android:padding="10dp"
+                    android:text="CNC" />
+
+                <Button
+                    android:id="@+id/btnReviewIC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/button_eval"
+                    android:padding="10dp"
+                    android:text="IC" />
 
                 <Button
                     android:id="@+id/btnReviewNCFR"
@@ -1021,6 +1032,15 @@
                     android:padding="10dp"
                     android:text="NCFR" />
 
+                <Button
+                    android:id="@+id/btnReviewINC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/button_eval"
+                    android:padding="10dp"
+                    android:text="INC" />
+
             </GridLayout>
 
             <TextView
@@ -1029,6 +1049,11 @@
                 android:layout_marginTop="5dp"
                 android:text="Comment"
                 android:textAlignment="center" />
+            <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_width="0px"
+                android:layout_height="0px"/>
 
             <EditText
                 android:id="@+id/txtComment"
