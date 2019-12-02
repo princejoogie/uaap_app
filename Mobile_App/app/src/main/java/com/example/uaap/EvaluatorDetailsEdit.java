@@ -1,6 +1,7 @@
 package com.example.uaap;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.example.uaap.Model.Call;
 import com.example.uaap.Model.CallToIssue;
 import com.example.uaap.Model.CurrentGame;
 import com.example.uaap.Model.EvaluationDetails;
+import com.example.uaap.Model.PersonDetails;
 import com.example.uaap.Model.PlayersDetails;
 import com.google.gson.Gson;
 
@@ -55,6 +57,12 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
     private Button btnRefC;
     private Button[] btnComm;
     private Button[] btnDis;
+    private Button[] refButtons;
+    private Button[] areaButtons;
+    private Button[] aopButtons;
+    private Button[] reviewButtons;
+    private Button[] periodButtons;
+
     private Button btnStaffComm;
     private Button btnStaffDis;
     private Button btnChange;
@@ -123,6 +131,11 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
         time = currentGame.getTimeInMillis();
         btnComm = new Button[20];
         btnDis = new Button[20];
+        refButtons = new Button[3];
+        areaButtons = new Button[3];
+        aopButtons = new Button[3];
+        reviewButtons = new Button[6];
+        periodButtons = new Button[5];
 
         btnRefA = findViewById(R.id.btnRefA);
         btnRefB = findViewById(R.id.btnRefB);
@@ -210,11 +223,26 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
         txtTeamComm = findViewById(R.id.txtTeamComm);
         txtFoul = findViewById(R.id.txtFoul);
         initTime();
-        final Button[] refButtons = {btnRefA, btnRefB, btnRefC};
-        final Button[] areaButtons = {btnAreaLead, btnAreaCenter, btnAreaTrail};
-        final Button[] aopButtons = {btnAoPLead, btnAoPCenter, btnAoPTrail};
-        final Button[] reviewButtons = {btnReviewCC, btnReviewIC, btnReviewCFR, btnReviewNCFR, btnReviewCNC, btnReviewINC};
-        final Button[] periodButtons = {btnQ1, btnQ2, btnQ3, btnQ4, btnOT};
+        refButtons[0] = btnRefA;
+        refButtons[1] = btnRefB;
+        refButtons[2] = btnRefC;
+        areaButtons[0] = btnAreaLead;
+        areaButtons[1] = btnAreaCenter;
+        areaButtons[2] = btnAreaTrail;
+        aopButtons[0] = btnAoPLead;
+        aopButtons[1] = btnAoPCenter;
+        aopButtons[2] = btnAoPTrail;
+        reviewButtons[0] = btnReviewCC;
+        reviewButtons[1] = btnReviewIC;
+        reviewButtons[2] = btnReviewCFR;
+        reviewButtons[3] = btnReviewNCFR;
+        reviewButtons[4] = btnReviewCNC;
+        reviewButtons[5] = btnReviewINC;
+        periodButtons[0] = btnQ1;
+        periodButtons[1] = btnQ2;
+        periodButtons[2] = btnQ3;
+        periodButtons[3] = btnQ4;
+        periodButtons[4] = btnOT;
         playingA = new String[currentGame.playerA.size()];
         playingB = new String[currentGame.playerB.size()];
 
@@ -232,12 +260,27 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
             btnComm[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     if (!changed) {
+                        if(currentGame.getColorTeamA()==Color.WHITE){
+                            btnStaffComm.setBackgroundColor(Color.WHITE);
+                            btnStaffComm.setTextColor(Color.BLACK);
+                        }else{
+                            btnStaffComm.setBackgroundColor(currentGame.getColorTeamA());
+                            btnStaffComm.setTextColor(Color.WHITE);
+                        }
                         if (finalI < currentGame.playerA.size()) {
                             clearPlayer(true);
                             playerSelect(true, finalI);
                         }
                     } else {
+                        if(currentGame.getColorTeamB()==Color.WHITE){
+                            btnStaffComm.setBackgroundColor(Color.WHITE);
+                            btnStaffComm.setTextColor(Color.BLACK);
+                        }else{
+                            btnStaffComm.setBackgroundColor(currentGame.getColorTeamB());
+                            btnStaffComm.setTextColor(Color.WHITE);
+                        }
                         if (finalI < currentGame.playerB.size()) {
                             clearPlayer(true);
                             playerSelect(true, finalI);
@@ -249,6 +292,9 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
             btnComm[i].setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
+                    callToIssue.setCommittingType(null);
+                    callToIssue.setCommitting(null);
+                    callToIssue.setCommittingTeam(null);
                     if (!changed) {
                         if (finalI < currentGame.playerA.size()) {
                             clearPlayer(true);
@@ -265,12 +311,27 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
             btnDis[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     if (!changed) {
+                        if(currentGame.getColorTeamB()==Color.WHITE){
+                            btnStaffDis.setBackgroundColor(Color.WHITE);
+                            btnStaffDis.setTextColor(Color.BLACK);
+                        }else{
+                            btnStaffDis.setBackgroundColor(currentGame.getColorTeamB());
+                            btnStaffDis.setTextColor(Color.WHITE);
+                        }
                         if (finalI < currentGame.playerB.size()) {
                             clearPlayer(false);
                             playerSelect(false, finalI);
                         }
                     } else {
+                        if(currentGame.getColorTeamA()==Color.WHITE){
+                            btnStaffDis.setBackgroundColor(Color.WHITE);
+                            btnStaffDis.setTextColor(Color.BLACK);
+                        }else{
+                            btnStaffDis.setBackgroundColor(currentGame.getColorTeamA());
+                            btnStaffDis.setTextColor(Color.WHITE);
+                        }
                         if (finalI < currentGame.playerB.size()) {
                             clearPlayer(false);
                             playerSelect(false, finalI);
@@ -281,6 +342,9 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
             btnDis[i].setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
+                    callToIssue.setDisType(null);
+                    callToIssue.setDis(null);
+                    callToIssue.setDisTeam(null);
                     if (!changed) {
                         if (finalI < currentGame.playerB.size()) {
                             clearPlayer(false);
@@ -583,6 +647,106 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                                 }
                             }
                         }
+                        if(callToIssue.getDis()!=null){
+                            if(callToIssue.getDisType().equals("player")){
+                                if(!changed){
+                                    int index = getIndexOfPlayers(callToIssue.getDis(),currentGame.getPlayerB());
+                                    if(currentGame.getColorTeamB()==Color.WHITE){
+                                        btnDis[index].setBackgroundColor(Color.BLACK);
+                                        btnDis[index].setTextColor(Color.WHITE);
+                                    }else{
+                                        btnDis[index].setBackgroundColor(Color.WHITE);
+                                        btnDis[index].setTextColor(currentGame.getColorTeamB());
+                                    }
+                                }else{
+                                    int index = getIndexOfPlayers(callToIssue.getDis(),currentGame.getPlayerA());
+                                    if(currentGame.getColorTeamA()==Color.WHITE){
+                                        btnDis[index].setBackgroundColor(Color.BLACK);
+                                        btnDis[index].setTextColor(Color.WHITE);
+                                    }else{
+                                        btnDis[index].setBackgroundColor(Color.WHITE);
+                                        btnDis[index].setTextColor(currentGame.getColorTeamA());
+                                    }
+                                }
+                            }else{
+                                if(!changed){
+                                    if(currentGame.getColorTeamB()==Color.WHITE){
+                                        btnStaffDis.setBackgroundColor(Color.BLACK);
+                                        btnStaffDis.setTextColor(Color.WHITE);
+                                    }else{
+                                        btnStaffDis.setBackgroundColor(Color.WHITE);
+                                        btnStaffDis.setTextColor(currentGame.getColorTeamB());
+                                    }
+                                }else{
+                                    if(currentGame.getColorTeamA()==Color.WHITE){
+                                        btnStaffDis.setBackgroundColor(Color.BLACK);
+                                        btnStaffDis.setTextColor(Color.WHITE);
+                                    }else{
+                                        btnStaffDis.setBackgroundColor(Color.WHITE);
+                                        btnStaffDis.setTextColor(currentGame.getColorTeamA());
+                                    }
+                                }
+                            }
+                        }
+                        //timie
+                        String timeString = callToIssue.getTime();
+                        String[] timeSep = timeString.split(":");
+                        time = (Long.valueOf(timeSep[0])*60000)+(Long.valueOf(timeSep[1])*1000)+(Long.valueOf(timeSep[2])*10);
+                        initTime();
+
+                        //foul
+                        txtFoul.setText(callToIssue.getCall());
+                        if(callToIssue.getCallType().equals("Foul")){
+                            btnFoul.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
+                            btnViolation.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_eval));
+                        }else{
+                            btnViolation.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
+                            btnFoul.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_eval));
+                        }
+
+                        //referee
+                        int refIndex = getIndexOfReferee(callToIssue.getRefereeId(),currentGame.getReferee());
+                        refButtons[refIndex].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
+
+                        String[] areas = {"Lead", "Center", "Trail"};
+                        //area
+                        int index=0;
+                        if(callToIssue.getArea()!=null){
+                            for (int i=0;i<areas.length;i++) {
+                                if (areas[i].equals(callToIssue.getArea())) {
+                                    index = i;
+                                    break;
+                                }
+                            }
+                            areaButtons[index].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
+                        }
+                        //aop
+                        if(callToIssue.getAreaOfPlay()!=null){
+                            for (int i=0;i<areas.length;i++) {
+                                if (areas[i].equals(callToIssue.getAreaOfPlay())) {
+                                    index = i;
+                                    break;
+                                }
+                            }
+                            aopButtons[index].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
+                        }
+
+                        //review
+                        String[] rev = {"CC", "IC", "CFR", "NCFR", "CNC", "INC"};
+                        for (int i=0;i<rev.length;i++) {
+                            if (rev[i].equals(callToIssue.getReviewDecision())) {
+                                index = i;
+                                break;
+                            }
+                        }
+                        reviewButtons[index].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
+
+                        if(callToIssue.getComment()!=null){
+                            txtComment.setText(callToIssue.getComment());
+                        }
+
+                        periodButtons[callToIssue.getPeriod()].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -609,6 +773,14 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
     private int getIndexOfPlayers(String playerId, ArrayList<PlayersDetails> players) {
         for(int i=0;i<players.size();i++){
             if(players.get(i).id.equals(playerId)){
+                return i;
+            }
+        }
+        return -1;
+    }
+    private int getIndexOfReferee(String refereeId, ArrayList<PersonDetails> referees) {
+        for(int i=0;i<referees.size();i++){
+            if(referees.get(i).id.equals(refereeId)){
                 return i;
             }
         }
@@ -892,7 +1064,56 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
         final Dialog dialog = new Dialog(EvaluatorDetailsEdit.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.radiobutton_staff);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                if(commDis){
+                    callToIssue.setCommitting(null);
+                    callToIssue.setCommittingType(null);
+                    callToIssue.setCommittingTeam(null);
+                    if(!changed){
+                        if(currentGame.getColorTeamA()==Color.WHITE){
+                            btnStaffComm.setBackgroundColor(Color.WHITE);
+                            btnStaffComm.setTextColor(Color.BLACK);
+                        }else{
+                            btnStaffComm.setBackgroundColor(currentGame.getColorTeamA());
+                            btnStaffComm.setTextColor(Color.WHITE);
+                        }
+                    }else{
+                        if(currentGame.getColorTeamB()==Color.WHITE){
+                            btnStaffComm.setBackgroundColor(Color.WHITE);
+                            btnStaffComm.setTextColor(Color.BLACK);
+                        }else{
+                            btnStaffComm.setBackgroundColor(currentGame.getColorTeamB());
+                            btnStaffComm.setTextColor(Color.WHITE);
+                        }
+                    }
+                }else{
 
+                    callToIssue.setDis(null);
+                    callToIssue.setDisType(null);
+                    callToIssue.setDisTeam(null);
+                    if(!changed){
+                        if(currentGame.getColorTeamB()==Color.WHITE){
+                            btnStaffDis.setBackgroundColor(Color.WHITE);
+                            btnStaffDis.setTextColor(Color.BLACK);
+                        }else{
+                            btnStaffDis.setBackgroundColor(currentGame.getColorTeamB());
+                            btnStaffDis.setTextColor(Color.WHITE);
+                        }
+                    }else{
+                        if(currentGame.getColorTeamA()==Color.WHITE){
+                            btnStaffDis.setBackgroundColor(Color.WHITE);
+                            btnStaffDis.setTextColor(Color.BLACK);
+                        }else{
+                            btnStaffDis.setBackgroundColor(currentGame.getColorTeamA());
+                            btnStaffDis.setTextColor(Color.WHITE);
+                        }
+                    }
+                }
+            }
+        });
         final RadioGroup rg = (RadioGroup) dialog.findViewById(R.id.radioGroup);
         Button btnSubmitStaff = (Button) dialog.findViewById(R.id.btnSubmitStaff);
         if (!changed) {
@@ -916,10 +1137,8 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
             @Override
             public void onClick(View v) {
                 if (commDis) {
-                    //committing staff
+                    clearPlayer(true);
                     if (!changed) {
-                        clearPlayer(true);
-                        clearPlayer(false);
 
                         if (currentGame.getColorTeamA() == Color.WHITE) {
                             btnStaffComm.setBackgroundColor(Color.BLACK);
@@ -943,9 +1162,10 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                         callToIssue.setCommittingTeam(currentGame.getTeamBId());
                     }
                 } else {
+                    clearPlayer(false);
+
                     if (!changed) {
-                        clearPlayer(true);
-                        clearPlayer(false);
+
                         if (currentGame.getColorTeamB() == Color.WHITE) {
                             btnStaffDis.setBackgroundColor(Color.BLACK);
                             btnStaffDis.setTextColor(Color.WHITE);
@@ -1022,7 +1242,7 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
         btnSubmitStaff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!call[0].isEmpty()) {
+                if (call[0]!=null) {
                     txtFoul.setText(call[0]);
                     callToIssue.setCall(call[0]);
 
@@ -1134,7 +1354,7 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<String, String>();
-                    Gson gson = new Gson();
+                    params.put("id", id);
 
                     params.put("gameId", currentGame.getGameId());
                     params.put("period", String.valueOf(callToIssue.getPeriod()));
@@ -1161,7 +1381,7 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                     if (!isEmpty(txtComment.getText().toString())) {
                         params.put("comment", txtComment.getText().toString());
                     }
-                    Log.e("gameId", currentGame.getGameId());
+                     Log.e("gameId", currentGame.getGameId());
                     Log.e("period", String.valueOf(callToIssue.getPeriod()));
                     Log.e("periodName", callToIssue.getPeriodName());
 

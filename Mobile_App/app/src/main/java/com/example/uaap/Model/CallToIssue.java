@@ -33,6 +33,16 @@ public class CallToIssue {
     private int period;
     @SerializedName("periodName")
     private String periodName;
+    @SerializedName("time")
+    private String time;
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
 
     public CallToIssue(){
 

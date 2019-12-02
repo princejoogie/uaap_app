@@ -110,8 +110,10 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         txtTeams.setText(currentGame.getTeamA() + " vs " +currentGame.getTeamB());
         getCalls();
         time = currentGame.getTimeInMillis();
+        updateCountDownText();
         evaluationList.setOnItemClickListener(this);
         evaluationList.setOnItemLongClickListener(this);
+        enablePeriod(currentGame.getPeriod(), periodButtons);
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -255,7 +257,7 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
 
 
     public void onItemClick(AdapterView parent, View v, final int position, long id) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Evaluation.this);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(Evaluation.this);
         builder.setCancelable(true);
         builder.setTitle("Edit Evaluation");
         builder.setMessage("Do you want to edit this record?");

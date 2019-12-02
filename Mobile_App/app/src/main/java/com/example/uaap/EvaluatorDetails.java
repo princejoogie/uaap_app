@@ -238,12 +238,27 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
             btnComm[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     if (!changed) {
+                        if(currentGame.getColorTeamA()==Color.WHITE){
+                            btnStaffComm.setBackgroundColor(Color.WHITE);
+                            btnStaffComm.setTextColor(Color.BLACK);
+                        }else{
+                            btnStaffComm.setBackgroundColor(currentGame.getColorTeamA());
+                            btnStaffComm.setTextColor(Color.WHITE);
+                        }
                         if (finalI < currentGame.playerA.size()) {
                             clearPlayer(true);
                             playerSelect(true, finalI);
                         }
                     } else {
+                        if(currentGame.getColorTeamB()==Color.WHITE){
+                            btnStaffComm.setBackgroundColor(Color.WHITE);
+                            btnStaffComm.setTextColor(Color.BLACK);
+                        }else{
+                            btnStaffComm.setBackgroundColor(currentGame.getColorTeamB());
+                            btnStaffComm.setTextColor(Color.WHITE);
+                        }
                         if (finalI < currentGame.playerB.size()) {
                             clearPlayer(true);
                             playerSelect(true, finalI);
@@ -255,6 +270,9 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
             btnComm[i].setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
+                    callToIssue.setCommittingType(null);
+                    callToIssue.setCommitting(null);
+                    callToIssue.setCommittingTeam(null);
                     if (!changed) {
                         if (finalI < currentGame.playerA.size()) {
                             clearPlayer(true);
@@ -271,12 +289,27 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
             btnDis[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     if (!changed) {
+                        if(currentGame.getColorTeamB()==Color.WHITE){
+                            btnStaffDis.setBackgroundColor(Color.WHITE);
+                            btnStaffDis.setTextColor(Color.BLACK);
+                        }else{
+                            btnStaffDis.setBackgroundColor(currentGame.getColorTeamB());
+                            btnStaffDis.setTextColor(Color.WHITE);
+                        }
                         if (finalI < currentGame.playerB.size()) {
                             clearPlayer(false);
                             playerSelect(false, finalI);
                         }
                     } else {
+                        if(currentGame.getColorTeamA()==Color.WHITE){
+                            btnStaffDis.setBackgroundColor(Color.WHITE);
+                            btnStaffDis.setTextColor(Color.BLACK);
+                        }else{
+                            btnStaffDis.setBackgroundColor(currentGame.getColorTeamA());
+                            btnStaffDis.setTextColor(Color.WHITE);
+                        }
                         if (finalI < currentGame.playerB.size()) {
                             clearPlayer(false);
                             playerSelect(false, finalI);
@@ -287,6 +320,9 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
             btnDis[i].setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
+                    callToIssue.setDisType(null);
+                    callToIssue.setDis(null);
+                    callToIssue.setDisTeam(null);
                     if (!changed) {
                         if (finalI < currentGame.playerB.size()) {
                             clearPlayer(false);
@@ -678,7 +714,6 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         }
     }
 
-
     private void playerSelect(boolean commDis, int position) {
         if (commDis) {
             if (!changed) {
@@ -736,7 +771,56 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         final Dialog dialog = new Dialog(EvaluatorDetails.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.radiobutton_staff);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                if (commDis) {
 
+                    callToIssue.setCommitting(null);
+                    callToIssue.setCommittingType(null);
+                    callToIssue.setCommittingTeam(null);
+                    if (!changed) {
+                        if (currentGame.getColorTeamA() == Color.WHITE) {
+                            btnStaffComm.setBackgroundColor(Color.WHITE);
+                            btnStaffComm.setTextColor(Color.BLACK);
+                        } else {
+                            btnStaffComm.setBackgroundColor(currentGame.getColorTeamA());
+                            btnStaffComm.setTextColor(Color.WHITE);
+                        }
+                    } else {
+                        if (currentGame.getColorTeamB() == Color.WHITE) {
+                            btnStaffComm.setBackgroundColor(Color.WHITE);
+                            btnStaffComm.setTextColor(Color.BLACK);
+                        } else {
+                            btnStaffComm.setBackgroundColor(currentGame.getColorTeamB());
+                            btnStaffComm.setTextColor(Color.WHITE);
+                        }
+                    }
+                } else {
+                    callToIssue.setDis(null);
+                    callToIssue.setDisType(null);
+                    callToIssue.setDisTeam(null);
+                    if (!changed) {
+                        if (currentGame.getColorTeamB() == Color.WHITE) {
+                            btnStaffDis.setBackgroundColor(Color.WHITE);
+                            btnStaffDis.setTextColor(Color.BLACK);
+                        } else {
+                            btnStaffDis.setBackgroundColor(currentGame.getColorTeamB());
+                            btnStaffDis.setTextColor(Color.WHITE);
+                        }
+                    } else {
+                        if (currentGame.getColorTeamA() == Color.WHITE) {
+                            btnStaffDis.setBackgroundColor(Color.WHITE);
+                            btnStaffDis.setTextColor(Color.BLACK);
+                        } else {
+                            btnStaffDis.setBackgroundColor(currentGame.getColorTeamA());
+                            btnStaffDis.setTextColor(Color.WHITE);
+                        }
+                    }
+                }
+            }
+        });
         final RadioGroup rg = (RadioGroup) dialog.findViewById(R.id.radioGroup);
         Button btnSubmitStaff = (Button) dialog.findViewById(R.id.btnSubmitStaff);
         if (!changed) {
@@ -754,17 +838,12 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                 rg.addView(rb);
             }
         }
-
-
         btnSubmitStaff.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (commDis) {
-                    //committing staff
+                    clearPlayer(true);
                     if (!changed) {
-                        clearPlayer(true);
-                        clearPlayer(false);
-
                         if (currentGame.getColorTeamA() == Color.WHITE) {
                             btnStaffComm.setBackgroundColor(Color.BLACK);
                             btnStaffComm.setTextColor(Color.WHITE);
@@ -787,9 +866,9 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                         callToIssue.setCommittingTeam(currentGame.getTeamBId());
                     }
                 } else {
+                    clearPlayer(false);
+
                     if (!changed) {
-                        clearPlayer(true);
-                        clearPlayer(false);
                         if (currentGame.getColorTeamB() == Color.WHITE) {
                             btnStaffDis.setBackgroundColor(Color.BLACK);
                             btnStaffDis.setTextColor(Color.WHITE);
