@@ -3,12 +3,14 @@ package com.example.uaap.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.uaap.Model.Delete;
@@ -18,6 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.uaap.Model.EditLeague;
 import com.example.uaap.Model.LeagueDetails;
 import com.example.uaap.R;
 import com.google.gson.Gson;
@@ -31,10 +34,12 @@ import android.widget.Toast;
 public class LeagueListAdapter extends BaseAdapter {
     private Context context;
     private Delete delete;
+    private EditLeague edit;
     private ArrayList<LeagueDetails> dataModelArrayList;
     private String deleteLeague1 = "http://68.183.49.18/uaap/public/deleteLeague1";
     private String deleteLeague2 = "http://68.183.49.18/uaap/public/deleteLeague2";
-
+    private String editLeague = "http://68.183.49.18/uaap/public/editLeague";
+    AlertDialog dialog;
     public LeagueListAdapter(Context context, ArrayList<LeagueDetails> dataModelArrayList) {
 
         this.context = context;
@@ -80,6 +85,7 @@ public class LeagueListAdapter extends BaseAdapter {
 
             holder.btnDelLeague = convertView.findViewById(R.id.btnDelLeague);
             holder.txtLeagueName = convertView.findViewById(R.id.txtLeagueName);
+            holder.btnEdit = convertView.findViewById(R.id.btnEdit);
 
             convertView.setTag(holder);
         } else {
@@ -105,11 +111,11 @@ public class LeagueListAdapter extends BaseAdapter {
                                 Gson gson = new Gson();
                                 delete = gson.fromJson(response, Delete.class);
                                 String status = delete.status;
-                                String message = delete.message;
+                                final String message = delete.message;
                                 if (status.equals("true")) {
                                     Toast.makeText(context, League + " Successfully deleted.", Toast.LENGTH_SHORT).show();
                                 } else {
-                                    AlertDialog.Builder alertbox = new AlertDialog.Builder(view.getRootView().getContext());
+                                    final AlertDialog.Builder alertbox = new AlertDialog.Builder(view.getRootView().getContext());
                                     alertbox.setMessage(message);
                                     alertbox.setTitle("Warning");
 
@@ -123,7 +129,8 @@ public class LeagueListAdapter extends BaseAdapter {
                                                             new Response.Listener<String>() {
                                                                 @Override
                                                                 public void onResponse(String response) {
-                                                                    Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+                                                                    Toast.makeText(context, "Successfully deleted.", Toast.LENGTH_SHORT).show();
+                                                                    dialog.dismiss();
                                                                 }
                                                             },
                                                             new Response.ErrorListener() {
@@ -147,12 +154,7 @@ public class LeagueListAdapter extends BaseAdapter {
                                                     queue.add(putRequest);
                                                 }
                                             });
-                                    alertbox.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialogInterface, int i) {
-                                        }
-                                    });
-                                    alertbox.show();
+                                    dialog = alertbox.show();
                                 }
                             }
                         },
@@ -177,7 +179,64 @@ public class LeagueListAdapter extends BaseAdapter {
                 queue.add(putRequest);
             }
         });
+        final EditText edittext = new EditText(context);
+        final TextView title = new TextView(context);
+        holder.btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AlertDialog.Builder alertbox = new AlertDialog.Builder(view.getRootView().getContext());
+                title.setBackgroundColor(Color.parseColor("#F7741F"));
+                title.setText("Enter new league");
+                title.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                title.setTextSize(20.f);
+                edittext.setTextColor(Color.BLACK);
+                String name = dataModelArrayList.get(position).name;
+                edittext.setText(name);
+                alertbox.setView(edittext);
+                alertbox.setCustomTitle(title);
+                alertbox.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        final String id = dataModelArrayList.get(position).id;
+                        final String newLeague = edittext.getText().toString();
+                        RequestQueue queue = Volley.newRequestQueue(context);
 
+                        StringRequest putRequest = new StringRequest(Request.Method.POST, editLeague,
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        Gson gson = new Gson();
+                                        edit = gson.fromJson(response, EditLeague.class);
+                                        String message = edit.message;
+                                        Toast.makeText(context, message + "", Toast.LENGTH_SHORT).show();
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        // error
+                                        Log.d("Error.Response", String.valueOf(error));
+                                    }
+                                }
+                        ) {
+
+                            @Override
+                            protected Map<String, String> getParams() {
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put("id", id);
+                                params.put("leagueName", newLeague);
+                                return params;
+                            }
+
+                        };
+
+                        queue.add(putRequest);
+
+                    }
+                });
+                alertbox.show();
+            }
+        });
 
         return convertView;
 
@@ -187,6 +246,7 @@ public class LeagueListAdapter extends BaseAdapter {
 
     private class ViewHolder {
         public View VieAdd;
+        protected Button btnEdit;
         protected TextView txtLeagueName;
         protected Button btnDelLeague;
     }

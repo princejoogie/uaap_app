@@ -1,7 +1,6 @@
 package com.example.uaap;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.uaap.Manage.AddLeague;
-import com.example.uaap.Manage.AddingLeague;
 
 public class Admin extends AppCompatActivity {
     Button btnLeague, btnTeam, btnReferee, btnReport, btnAccount, btnRealtime;
