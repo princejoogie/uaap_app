@@ -5,6 +5,7 @@ import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -30,6 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
+    boolean doubleBackToExitPressedOnce = false;
 
     private CardView login_pressed;
     private EditText edtUsername;
@@ -110,7 +112,25 @@ public class LoginActivity extends AppCompatActivity {
         queue.add(putRequest);
     }
 
-//    public void login_pressed(View v) {
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Press Back again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
+    //    public void login_pressed(View v) {
 //        startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
 //    }
 }

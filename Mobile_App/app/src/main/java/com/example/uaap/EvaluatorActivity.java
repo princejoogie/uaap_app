@@ -3,6 +3,7 @@ package com.example.uaap;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -88,7 +89,6 @@ public class EvaluatorActivity extends AppCompatActivity {
         get(RefereeURL, spinnerRefereeB);
         get(RefereeURL, spinnerRefereeC);
         get(LeagueURL, spinLeague);
-
         // String teamA = spinnerTeamA.getSelectedItem().toString();
         //String teamB = spinnerTeamB.getSelectedItem().toString();
 

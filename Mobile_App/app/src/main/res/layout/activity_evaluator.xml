@@ -16,34 +16,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/login_border"
-        android:gravity="center"
+        android:gravity="center_vertical"
         android:orientation="vertical"
         android:padding="20sp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:orientation="horizontal">
-
+            <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_width="0px"
+                android:layout_height="0px"/>
             <TextView
-                android:textAlignment="viewStart"
-                android:gravity="center"
-                android:layout_width="200dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="Game Code:"
+                android:textAlignment="viewStart"
                 android:textColor="#F2F2F2"
                 android:textSize="24sp" />
 
             <EditText
                 android:id="@+id/edtGameCode"
-                android:textSize="23sp"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="50dp"
                 android:background="#F2F2F2"
-                android:textAlignment="center"
                 android:hint="Enter Game Code"
-                android:padding="5sp" />
+                android:padding="5sp"
+                android:textAlignment="center"
+                android:textSize="23sp" />
 
         </LinearLayout>
 
@@ -52,27 +57,28 @@
             android:layout_height="30sp" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
-                android:textAlignment="viewStart"
-                android:gravity="center"
-                android:layout_width="200dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="Division:"
+                android:textAlignment="viewStart"
                 android:textColor="#F2F2F2"
                 android:textSize="24sp" />
 
 
             <Spinner
                 android:id="@+id/spinLeague"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
                 android:layout_columnWeight="1"
-                />
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="50dp"
+                android:background="#F2F2F2" />
 
 
         </LinearLayout>
@@ -81,32 +87,32 @@
             android:layout_width="match_parent"
             android:layout_height="30sp" />
 
-        <GridLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="5"
             android:gravity="center"
             android:orientation="horizontal">
 
             <Spinner
                 android:id="@+id/spinnerTeamA"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="5"
                 android:background="#F2F2F2"
                 android:padding="10sp" />
 
             <Button
                 android:id="@+id/btnColorTeamA"
-                android:layout_width="40dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="5dp"
+                android:layout_weight=".75"
                 android:text=" " />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:paddingHorizontal="10sp"
                 android:text="VS"
@@ -115,71 +121,66 @@
 
             <Spinner
                 android:id="@+id/spinnerTeamB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_weight="5"
                 android:background="#F2F2F2"
                 android:padding="10sp" />
 
             <Button
                 android:id="@+id/btnColorTeamB"
-                android:layout_width="40dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp" />
+                android:layout_margin="5dp"
+                android:layout_weight=".75" />
 
-        </GridLayout>
+        </LinearLayout>
 
 
         <View
             android:layout_width="match_parent"
             android:layout_height="30sp" />
 
-        <GridLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:columnCount="5"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:rowCount="2">
+            android:orientation="horizontal">
 
 
             <Spinner
                 android:id="@+id/spinnerRefereeA"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
                 android:background="#F2F2F2"
                 android:padding="10sp" />
-
-            <View
-                android:layout_width="15sp"
-                android:layout_height="15sp"/>
 
             <Spinner
                 android:id="@+id/spinnerRefereeB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
                 android:background="#F2F2F2"
                 android:padding="10sp" />
-
-            <View
-                android:layout_width="15sp"
-                android:layout_height="15sp"/>
 
             <Spinner
                 android:id="@+id/spinnerRefereeC"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1"
                 android:background="#F2F2F2"
                 android:padding="10sp" />
 
-        </GridLayout>
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="60sp" />
+            android:layout_height="30sp" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/btnStartGame"
@@ -194,7 +195,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5sp"
+                android:padding="20dp"
                 android:text="START GAME"
                 android:textAlignment="center"
                 android:textColor="#F2F2F2"
