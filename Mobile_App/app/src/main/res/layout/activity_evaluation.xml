@@ -33,8 +33,7 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:background="@android:color/white"
-                android:orientation="vertical"
-                android:padding="10dp">
+                android:orientation="vertical">
 
                 <GridLayout
                     android:layout_width="match_parent"
@@ -249,18 +248,16 @@
 
                 </GridLayout>
 
-                <GridLayout
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:columnCount="5">
+                    android:layout_marginTop="10dp">
 
                     <Button
                         android:id="@+id/btnQ1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
                         android:layout_marginHorizontal="5dp"
                         android:background="@drawable/button_eval"
                         android:text="1"
@@ -270,7 +267,6 @@
                         android:id="@+id/btnQ2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
                         android:layout_marginHorizontal="5dp"
                         android:background="@drawable/button_eval"
                         android:text="2"
@@ -280,7 +276,6 @@
                         android:id="@+id/btnQ3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
                         android:layout_marginHorizontal="5dp"
                         android:background="@drawable/button_eval"
                         android:text="3"
@@ -290,7 +285,6 @@
                         android:id="@+id/btnQ4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
                         android:layout_marginHorizontal="5dp"
                         android:background="@drawable/button_eval"
                         android:text="4"
@@ -300,29 +294,26 @@
                         android:id="@+id/btnOT"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
                         android:layout_marginHorizontal="5dp"
                         android:background="@drawable/button_eval"
                         android:text="OT"
                         android:textColor="#E9841A" />
 
-                </GridLayout>
+                </LinearLayout>
 
-                <GridLayout
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="70dp"
                     android:layout_marginVertical="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:columnCount="2">
+                    android:layout_marginBottom="10dp">
 
                     <Button
                         android:id="@+id/btnStart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
                         android:layout_marginHorizontal="10dp"
                         android:background="@drawable/button_eval"
                         android:text="START"
@@ -332,12 +323,12 @@
                         android:id="@+id/btnReset"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_columnWeight="1"
                         android:layout_marginHorizontal="10dp"
                         android:background="@drawable/button_eval"
                         android:text="RESET"
                         android:textColor="#E9841A" />
-                </GridLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -373,7 +364,9 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical">
 
                             <TextView
@@ -396,8 +389,11 @@
 
                             <TextView
                                 android:id="@+id/txtScoreA"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:background="@drawable/txt_time"
+                                android:gravity="center"
+                                android:padding="10dp"
                                 android:text="0"
                                 android:textAlignment="center"
                                 android:textSize="50sp" />
@@ -406,6 +402,7 @@
                                 android:id="@+id/btnSubScoreA"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
                                 android:background="@drawable/btn_eval_selected"
                                 android:text="&#9660;"
                                 android:textColor="#FFFFFF" />
@@ -434,6 +431,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:gravity="center"
                             android:orientation="vertical">
 
 
@@ -457,8 +455,11 @@
 
                             <TextView
                                 android:id="@+id/txtScoreB"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:background="@drawable/txt_time"
+                                android:gravity="center"
+                                android:padding="10dp"
                                 android:text="0"
                                 android:textAlignment="center"
                                 android:textSize="50sp" />
@@ -467,6 +468,7 @@
                                 android:id="@+id/btnSubScoreB"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
                                 android:background="@drawable/btn_eval_selected"
                                 android:text="&#9660;"
                                 android:textColor="#FFFFFF" />

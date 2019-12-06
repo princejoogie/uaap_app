@@ -501,5 +501,28 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(Evaluation.this);
+        builder.setCancelable(true);
+        builder.setTitle("Exit Game");
+        builder.setMessage("Are you sure you want to exit game (CODE:"+currentGame.getGameCode()+")");
+        builder.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(getApplicationContext(), EvaluatorActivity.class);
+                        startActivity(intent);
+                    }
+                });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
 
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
 }

@@ -16,9 +16,6 @@
             android:name=".Manage.EditLeagueActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".Manage.EvaluationSummary"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".Manage.AddLeague"
             android:screenOrientation="landscape" />
         <activity
@@ -26,16 +23,20 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".Evaluation"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:noHistory="true"/>
         <activity
             android:name=".EvaluatorDetails"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:noHistory="true"/>
         <activity
             android:name=".EvaluatorDetailsEdit"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:noHistory="true"/>
         <activity
             android:name=".EvaluatorActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:noHistory="true"/>
         <activity
             android:name=".Manage.TeamsDashboard"
             android:screenOrientation="landscape" />
@@ -47,7 +48,8 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

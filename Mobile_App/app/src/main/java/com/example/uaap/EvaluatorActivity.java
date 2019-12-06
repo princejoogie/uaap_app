@@ -422,5 +422,9 @@ public class EvaluatorActivity extends AppCompatActivity {
         queue.add(putRequest);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(EvaluatorActivity.this, LoginActivity.class);
+        startActivity(intent);
+    }
 }

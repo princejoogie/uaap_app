@@ -869,9 +869,10 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
         for (int i = 0; i < 20; i++) {
             btnComm[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
             btnComm[i].setText("");
+            btnComm[i].setElevation(0);
             btnDis[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
             btnDis[i].setText("");
-
+            btnDis[i].setElevation(0);
         }
 
 
@@ -904,6 +905,7 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                     btnComm[i].setTextColor(Color.WHITE);
                 }
                 btnComm[i].setText(playingA[i]);
+                btnComm[i].setElevation(3);
 
             }
             for (int i = 0; i < playingB.length; i++) {
@@ -914,6 +916,8 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                     btnDis[i].setTextColor(Color.WHITE);
                 }
                 btnDis[i].setText(playingB[i]);
+                btnDis[i].setElevation(3);
+
             }
         } else {
             if (currentGame.getColorTeamB() == Color.WHITE) {
@@ -938,6 +942,7 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                     btnComm[i].setTextColor(Color.WHITE);
                 }
                 btnComm[i].setText(playingB[i]);
+                btnComm[i].setElevation(3);
 
             }
             for (int i = 0; i < playingA.length; i++) {
@@ -948,6 +953,8 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                     btnDis[i].setTextColor(Color.WHITE);
                 }
                 btnDis[i].setText(playingA[i]);
+                btnDis[i].setElevation(3);
+
             }
         }
 
@@ -1020,6 +1027,9 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                 callToIssue.setCommittingTeam(currentGame.getTeamAId());
                 callToIssue.setCommittingType("player");
                 callToIssue.setCommitting(currentGame.playerA.get(position).id);
+                Toast.makeText(getApplicationContext(),
+                        "You selected "+currentGame.playerA.get(position).jerseyNumber +" "+currentGame.playerA.get(position).name,
+                        Toast.LENGTH_SHORT).show();
             } else {
                 if (currentGame.getColorTeamB() == Color.WHITE) {
                     btnComm[position].setBackgroundColor(Color.BLACK);
@@ -1031,6 +1041,9 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                 callToIssue.setCommittingTeam(currentGame.getTeamBId());
                 callToIssue.setCommittingType("player");
                 callToIssue.setCommitting(currentGame.playerB.get(position).id);
+                Toast.makeText(getApplicationContext(),
+                        "You selected "+currentGame.playerB.get(position).jerseyNumber +" "+currentGame.playerB.get(position).name,
+                        Toast.LENGTH_SHORT).show();
             }
         } else {
             if (!changed) {
@@ -1044,6 +1057,9 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                 callToIssue.setDisTeam(currentGame.getTeamBId());
                 callToIssue.setDisType("player");
                 callToIssue.setDis(currentGame.playerB.get(position).id);
+                Toast.makeText(getApplicationContext(),
+                        "You selected "+currentGame.playerB.get(position).jerseyNumber +" "+currentGame.playerB.get(position).name,
+                        Toast.LENGTH_SHORT).show();
             } else {
                 if (currentGame.getColorTeamA() == Color.WHITE) {
                     btnDis[position].setBackgroundColor(Color.BLACK);
@@ -1055,6 +1071,9 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                 callToIssue.setDisTeam(currentGame.getTeamAId());
                 callToIssue.setDisType("player");
                 callToIssue.setDis(currentGame.playerA.get(position).id);
+                Toast.makeText(getApplicationContext(),
+                        "You selected "+currentGame.playerA.get(position).jerseyNumber +" "+currentGame.playerA.get(position).name,
+                        Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -1115,7 +1134,6 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
             }
         });
         final RadioGroup rg = (RadioGroup) dialog.findViewById(R.id.radioGroup);
-        Button btnSubmitStaff = (Button) dialog.findViewById(R.id.btnSubmitStaff);
         if(commDis){
             if (!changed) {
                 for (int i = 0; i < currentGame.staffA.size(); i++) {
@@ -1132,7 +1150,7 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                     rg.addView(rb);
                 }
             }
-        }else{
+        }else {
             if (!changed) {
                 for (int i = 0; i < currentGame.staffB.size(); i++) {
                     RadioButton rb = new RadioButton(EvaluatorDetailsEdit.this); // dynamically creating RadioButton and adding to RadioGroup.
@@ -1150,10 +1168,15 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
             }
         }
 
-
-        btnSubmitStaff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (commDis) {
+                    callToIssue.setCommittingType("staff");
+                    callToIssue.setCommitting(String.valueOf(checkedId));
+                } else {
+                    callToIssue.setDisType("staff");
+                    callToIssue.setDis(String.valueOf(checkedId));
+                }
                 if (commDis) {
                     clearPlayer(true);
                     if (!changed) {
@@ -1208,19 +1231,6 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                 }
 
                 dialog.dismiss();
-            }
-        });
-
-
-        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (commDis) {
-                    callToIssue.setCommittingType("staff");
-                    callToIssue.setCommitting(String.valueOf(checkedId));
-                } else {
-                    callToIssue.setDisType("staff");
-                    callToIssue.setDis(String.valueOf(checkedId));
-                }
 
             }
         });
@@ -1242,7 +1252,6 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
 
         final String[] call = new String[1];
         final RadioGroup rg = (RadioGroup) dialog.findViewById(R.id.radioGroup);
-        Button btnSubmitStaff = (Button) dialog.findViewById(R.id.btnSubmitStaff);
         final String[] foulVioList;
         if (foulVio) {
             foulVioList = getResources().getStringArray(R.array.foul);
@@ -1257,9 +1266,22 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
         }
 
 
-        btnSubmitStaff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+
+
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (foulVio) {
+                    callToIssue.setCallType("Foul");
+                } else {
+                    callToIssue.setCallType("Violation");
+                }
+                for (int i = 0; i < rg.getChildCount(); i++) {
+                    RadioButton btn = (RadioButton) rg.getChildAt(i);
+                    if (btn.getId() == checkedId) {
+                        call[0] = btn.getText().toString();
+                        break;
+                    }
+                }
                 if (call[0]!=null) {
                     txtFoul.setText(call[0]);
                     callToIssue.setCall(call[0]);
@@ -1274,24 +1296,6 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                 }
 
                 dialog.dismiss();
-            }
-        });
-
-
-        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (foulVio) {
-                    callToIssue.setCallType("Foul");
-                } else {
-                    callToIssue.setCallType("Violation");
-                }
-                for (int i = 0; i < rg.getChildCount(); i++) {
-                    RadioButton btn = (RadioButton) rg.getChildAt(i);
-                    if (btn.getId() == checkedId) {
-                        call[0] = btn.getText().toString();
-                        return;
-                    }
-                }
 
 
             }
@@ -1304,8 +1308,10 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
         for (int i = 0; i < buttons.length; i++) {
             if (i == pos) {
                 buttons[i].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
+                buttons[i].setTextColor(Color.parseColor("#FFFFFF"));
             } else {
                 buttons[i].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_eval));
+                buttons[i].setTextColor(Color.parseColor("#E9841A"));
             }
         }
         if (designation.equals("referee")) {
@@ -1390,35 +1396,18 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                     }
                     currentGame.setTime(timeText);
                     params.put("refereeId", callToIssue.getRefereeId());
-                    params.put("area", callToIssue.getArea());
-                    params.put("areaOfPlay", callToIssue.getAreaOfPlay());
+                    if(!isEmpty(callToIssue.getArea())){
+                        params.put("area", callToIssue.getArea());
+                    }
+                    if(!isEmpty(callToIssue.getAreaOfPlay())){
+                        params.put("areaOfPlay", callToIssue.getAreaOfPlay());
+                    }
                     params.put("reviewDecision", callToIssue.getReviewDecision());
                     if (!isEmpty(txtComment.getText().toString())) {
                         params.put("comment", txtComment.getText().toString());
                     }
                     params.put("scoreA", callToIssue.getScoreA());
                     params.put("scoreB", callToIssue.getScoreB());
-                     Log.e("gameId", currentGame.getGameId());
-                    Log.e("period", String.valueOf(callToIssue.getPeriod()));
-
-                    Log.e("time", timeText);
-                    Log.e("callType", callToIssue.getCallType());
-                    Log.e("call", callToIssue.getCall());
-                    Log.e("committingType", callToIssue.getCommittingType());
-                    Log.e("committingTeam", callToIssue.getCommittingTeam());
-                    Log.e("committing", callToIssue.getCommitting());
-                    if (!isEmpty(callToIssue.getDis())) {
-                        Log.e("disType", callToIssue.getDisType());
-                        Log.e("disTeam", callToIssue.getDisTeam());
-                        Log.e("dis", callToIssue.getDis());
-                    }
-                    Log.e("refereeId", callToIssue.getRefereeId());
-                    Log.e("area", callToIssue.getArea());
-                    Log.e("areaOfPlay", callToIssue.getAreaOfPlay());
-                    Log.e("reviewDecision", callToIssue.getReviewDecision());
-                    if (!isEmpty(txtComment.getText().toString())) {
-                        Log.e("comment", txtComment.getText().toString());
-                    }
                     return params;
                 }
 
