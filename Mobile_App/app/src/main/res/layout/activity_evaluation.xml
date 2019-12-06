@@ -32,8 +32,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:background="#F2F2F2"
-                android:elevation="3dp"
+                android:background="@android:color/white"
                 android:orientation="vertical"
                 android:padding="10dp">
 
@@ -99,8 +98,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginHorizontal="10dp"
-                            android:background="#C6C6C6"
-                            android:elevation="3dp"
+                            android:background="@drawable/txt_time"
+                            android:elevation="2dp"
                             android:padding="10dp"
                             android:text="1"
                             android:textAlignment="center"
@@ -112,8 +111,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginHorizontal="10dp"
-                            android:background="#C6C6C6"
-                            android:elevation="3dp"
+                            android:background="@drawable/txt_time"
+                            android:elevation="2dp"
                             android:padding="10dp"
                             android:text="0"
                             android:textAlignment="center"
@@ -128,6 +127,7 @@
                         android:layout_gravity="center"
                         android:text=":"
                         android:textAlignment="center"
+                        android:textColor="@android:color/black"
                         android:textSize="50dp" />
 
                     <LinearLayout
@@ -143,8 +143,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginHorizontal="10dp"
-                            android:background="#C6C6C6"
-                            android:elevation="3dp"
+                            android:background="@drawable/txt_time"
+                            android:elevation="2dp"
                             android:padding="10dp"
                             android:text="0"
                             android:textAlignment="center"
@@ -156,8 +156,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginHorizontal="10dp"
-                            android:background="#C6C6C6"
-                            android:elevation="3dp"
+                            android:background="@drawable/txt_time"
+                            android:elevation="2dp"
                             android:padding="10dp"
                             android:text="0"
                             android:textAlignment="center"
@@ -170,6 +170,7 @@
                         android:layout_gravity="center"
                         android:text=":"
                         android:textAlignment="center"
+                        android:textColor="@android:color/black"
                         android:textSize="50dp" />
 
                     <LinearLayout
@@ -185,8 +186,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginHorizontal="10dp"
-                            android:background="#C6C6C6"
-                            android:elevation="3dp"
+                            android:background="@drawable/txt_time"
+                            android:elevation="2dp"
                             android:padding="10dp"
                             android:text="0"
                             android:textAlignment="center"
@@ -198,8 +199,8 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginHorizontal="10dp"
-                            android:background="#C6C6C6"
-                            android:elevation="3dp"
+                            android:background="@drawable/txt_time"
+                            android:elevation="2dp"
                             android:padding="10dp"
                             android:text="0"
                             android:textAlignment="center"
@@ -249,7 +250,7 @@
                 </GridLayout>
 
                 <GridLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
@@ -262,7 +263,8 @@
                         android:layout_columnWeight="1"
                         android:layout_marginHorizontal="5dp"
                         android:background="@drawable/button_eval"
-                        android:text="1" />
+                        android:text="1"
+                        android:textColor="#E9841A" />
 
                     <Button
                         android:id="@+id/btnQ2"
@@ -271,7 +273,8 @@
                         android:layout_columnWeight="1"
                         android:layout_marginHorizontal="5dp"
                         android:background="@drawable/button_eval"
-                        android:text="2" />
+                        android:text="2"
+                        android:textColor="#E9841A" />
 
                     <Button
                         android:id="@+id/btnQ3"
@@ -280,7 +283,8 @@
                         android:layout_columnWeight="1"
                         android:layout_marginHorizontal="5dp"
                         android:background="@drawable/button_eval"
-                        android:text="3" />
+                        android:text="3"
+                        android:textColor="#E9841A" />
 
                     <Button
                         android:id="@+id/btnQ4"
@@ -289,7 +293,8 @@
                         android:layout_columnWeight="1"
                         android:layout_marginHorizontal="5dp"
                         android:background="@drawable/button_eval"
-                        android:text="4" />
+                        android:text="4"
+                        android:textColor="#E9841A" />
 
                     <Button
                         android:id="@+id/btnOT"
@@ -298,13 +303,15 @@
                         android:layout_columnWeight="1"
                         android:layout_marginHorizontal="5dp"
                         android:background="@drawable/button_eval"
-                        android:text="OT" />
+                        android:text="OT"
+                        android:textColor="#E9841A" />
 
                 </GridLayout>
 
                 <GridLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginHorizontal="70dp"
                     android:layout_marginVertical="10dp"
                     android:layout_marginTop="10dp"
@@ -316,18 +323,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
-                        android:background="@drawable/button_eval"
                         android:layout_marginHorizontal="10dp"
-                        android:text="START" />
+                        android:background="@drawable/button_eval"
+                        android:text="START"
+                        android:textColor="#E9841A" />
 
                     <Button
                         android:id="@+id/btnReset"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_columnWeight="1"
-                        android:background="@drawable/button_eval"
                         android:layout_marginHorizontal="10dp"
-                        android:text="RESET" />
+                        android:background="@drawable/button_eval"
+                        android:text="RESET"
+                        android:textColor="#E9841A" />
                 </GridLayout>
 
             </LinearLayout>
@@ -337,7 +346,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:background="#F2F2F2"
+                android:background="@android:color/white"
                 android:elevation="3dp"
                 android:orientation="vertical"
                 android:padding="10dp">
@@ -418,7 +427,7 @@
                                 android:layout_columnWeight=".1"
                                 android:text="VS"
                                 android:textAlignment="center"
-                                android:textSize="30sp" />
+                                android:textSize="16dp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -478,7 +487,7 @@
             android:layout_height="wrap_content"
             android:layout_columnWeight="2"
             android:layout_margin="10dp"
-            android:background="#FFFFFF"
+            android:background="@android:color/white"
             android:elevation="3dp"
             android:orientation="vertical">
 

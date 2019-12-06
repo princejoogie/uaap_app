@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -259,14 +260,15 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         txtScoreB.setText(String.valueOf(currentGame.getScoreB()));
     }
     private void enablePeriod(int i, Button[] buttons){
-        String[] periods = {"Q1", "Q2", "Q3", "Q4", "OT"};
         for (int x=0;x<5;x++){
             if(x==i){
                 buttons[x].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
+                buttons[x].setTextColor(Color.parseColor("#FFFFFF"));
                 currentGame.setPeriod(i);
             }
             else{
                 buttons[x].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_eval));
+                buttons[x].setTextColor(Color.parseColor("#E9841A"));
             }
         }
     }

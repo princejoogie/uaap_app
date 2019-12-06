@@ -12,8 +12,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="20dp"
-        android:background="#F2F2F2"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#FFFFFF"
         android:orientation="horizontal">>
 
         <LinearLayout
@@ -30,11 +33,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_margin="5dp"
                     android:layout_weight="1"
+                    android:background="@drawable/layout_corner"
                     android:duplicateParentState="true"
-                    android:elevation="3dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
 
                     <LinearLayout
@@ -98,8 +102,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginHorizontal="10dp"
-                                android:background="#C6C6C6"
-                                android:elevation="3dp"
+                                android:background="@drawable/txt_time"
                                 android:padding="10dp"
                                 android:text="0"
                                 android:textAlignment="center"
@@ -111,8 +114,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginHorizontal="10dp"
-                                android:background="#C6C6C6"
-                                android:elevation="3dp"
+                                android:background="@drawable/txt_time"
                                 android:padding="10dp"
                                 android:text="0"
                                 android:textAlignment="center"
@@ -142,8 +144,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginHorizontal="10dp"
-                                android:background="#C6C6C6"
-                                android:elevation="3dp"
+                                android:background="@drawable/txt_time"
                                 android:padding="10dp"
                                 android:text="0"
                                 android:textAlignment="center"
@@ -155,8 +156,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginHorizontal="10dp"
-                                android:background="#C6C6C6"
-                                android:elevation="3dp"
+                                android:background="@drawable/txt_time"
                                 android:padding="10dp"
                                 android:text="0"
                                 android:textAlignment="center"
@@ -184,8 +184,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginHorizontal="10dp"
-                                android:background="#C6C6C6"
-                                android:elevation="3dp"
+                                android:background="@drawable/txt_time"
                                 android:padding="10dp"
                                 android:text="0"
                                 android:textAlignment="center"
@@ -197,8 +196,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginHorizontal="10dp"
-                                android:background="#C6C6C6"
-                                android:elevation="3dp"
+                                android:background="@drawable/txt_time"
                                 android:padding="10dp"
                                 android:text="0"
                                 android:textAlignment="center"
@@ -253,7 +251,7 @@
                     </GridLayout>
 
                     <GridLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:columnCount="5">
@@ -265,7 +263,8 @@
                             android:layout_columnWeight="1"
                             android:layout_marginHorizontal="5dp"
                             android:background="@drawable/button_eval"
-                            android:text="1" />
+                            android:text="1"
+                            android:textColor="#E9841A" />
 
                         <Button
                             android:id="@+id/btnQ2"
@@ -274,7 +273,8 @@
                             android:layout_columnWeight="1"
                             android:layout_marginHorizontal="5dp"
                             android:background="@drawable/button_eval"
-                            android:text="2" />
+                            android:text="2"
+                            android:textColor="#E9841A" />
 
                         <Button
                             android:id="@+id/btnQ3"
@@ -283,7 +283,8 @@
                             android:layout_columnWeight="1"
                             android:layout_marginHorizontal="5dp"
                             android:background="@drawable/button_eval"
-                            android:text="3" />
+                            android:text="3"
+                            android:textColor="#E9841A" />
 
                         <Button
                             android:id="@+id/btnQ4"
@@ -292,7 +293,8 @@
                             android:layout_columnWeight="1"
                             android:layout_marginHorizontal="5dp"
                             android:background="@drawable/button_eval"
-                            android:text="4" />
+                            android:text="4"
+                            android:textColor="#E9841A" />
 
                         <Button
                             android:id="@+id/btnOT"
@@ -301,7 +303,8 @@
                             android:layout_columnWeight="1"
                             android:layout_marginHorizontal="5dp"
                             android:background="@drawable/button_eval"
-                            android:text="OT" />
+                            android:text="OT"
+                            android:textColor="#E9841A" />
 
                     </GridLayout>
 
@@ -311,9 +314,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="10dp"
+                    android:layout_margin="5dp"
                     android:layout_weight="2"
-                    android:elevation="3dp"
+                    android:background="@drawable/layout_corner"
                     android:gravity="center">
 
                     <LinearLayout
@@ -334,7 +337,8 @@
                                 android:layout_margin="5dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/button_eval"
-                                android:text="Foul" />
+                                android:text="Foul"
+                                android:textColor="#E9841A" />
 
                             <Button
                                 android:id="@+id/btnViolation"
@@ -343,7 +347,8 @@
                                 android:layout_margin="5dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/button_eval"
-                                android:text="Violation" />
+                                android:text="Violation"
+                                android:textColor="#E9841A" />
 
                         </LinearLayout>
 
@@ -351,11 +356,11 @@
                             android:id="@+id/txtFoul"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
+                            android:layout_margin="15dp"
                             android:background="@drawable/button_eval"
                             android:padding="10dp"
                             android:text="No Foul/Violation Selected"
-                            android:textColor="@android:color/black"
+                            android:textColor="#E9841A"
                             android:textSize="16dp" />
 
                     </LinearLayout>
@@ -368,15 +373,15 @@
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:layout_weight="2"
-                android:columnCount="3">
+                android:background="@drawable/layout_corner"
+                android:paddingBottom="10dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_columnWeight="1"
-                    android:background="#F2F2F2"
-                    android:elevation="3dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -580,6 +585,7 @@
                             android:layout_rowWeight="1"
                             android:layout_columnWeight="1"
                             android:layout_margin="2dp"
+                            android:background="#FFFFFF"
                             android:textColor="#FFFFFF" />
 
                     </GridLayout>
@@ -589,25 +595,25 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="30dp"
                     android:layout_columnWeight="1"
-                    android:background="#F2F2F2"
-                    android:elevation="3dp"
-                    android:orientation="vertical" >
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/btn_eval_selected"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <Button
                         android:id="@+id/btnChange"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="SWAP" />
+                        android:layout_width="30dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/ic_swap_horiz_black_24dp"
+                        android:gravity="center" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_columnWeight="1"
-                    android:background="#F2F2F2"
-                    android:elevation="3dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -820,7 +826,7 @@
             </GridLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
                 android:orientation="horizontal">
@@ -832,6 +838,9 @@
                     android:layout_columnWeight="1"
                     android:layout_marginHorizontal="20dp"
                     android:layout_weight="1"
+                    android:includeFontPadding="true"
+                    android:paddingLeft="50dp"
+                    android:paddingRight="50dp"
                     android:text="STAFF"
                     android:textColor="#FFFFFF"
                     android:textSize="20dp" />
@@ -843,6 +852,9 @@
                     android:layout_columnWeight="1"
                     android:layout_marginHorizontal="20dp"
                     android:layout_weight="1"
+                    android:includeFontPadding="true"
+                    android:paddingLeft="50dp"
+                    android:paddingRight="50dp"
                     android:text="STAFF"
                     android:textColor="#FFFFFF"
                     android:textSize="20dp" />
@@ -852,11 +864,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:layout_weight="5"
-            android:background="#F2F2F2"
-            android:elevation="3dp"
-            android:orientation="vertical">
+            android:background="@drawable/layout_corner"
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <Button
                 android:id="@+id/btnRefA"
@@ -867,7 +879,8 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/button_eval"
                 android:padding="10dp"
-                android:text="Referee 1" />
+                android:text="Referee 1"
+                android:textColor="#E9841A" />
 
             <Button
                 android:id="@+id/btnRefB"
@@ -878,7 +891,8 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/button_eval"
                 android:padding="10dp"
-                android:text="Referee 2" />
+                android:text="Referee 2"
+                android:textColor="#E9841A" />
 
             <Button
                 android:id="@+id/btnRefC"
@@ -889,7 +903,8 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/button_eval"
                 android:padding="10dp"
-                android:text="Referee 3" />
+                android:text="Referee 3"
+                android:textColor="#E9841A" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -910,7 +925,8 @@
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/button_eval"
                     android:padding="10dp"
-                    android:text="Lead" />
+                    android:text="Lead"
+                    android:textColor="#E9841A" />
 
                 <Button
                     android:id="@+id/btnAreaCenter"
@@ -919,7 +935,8 @@
                     android:layout_marginHorizontal="10dp"
                     android:background="@drawable/button_eval"
                     android:padding="10dp"
-                    android:text="Center" />
+                    android:text="Center"
+                    android:textColor="#E9841A" />
 
                 <Button
                     android:id="@+id/btnAreaTrail"
@@ -928,7 +945,8 @@
                     android:layout_marginRight="10dp"
                     android:background="@drawable/button_eval"
                     android:padding="10dp"
-                    android:text="Trail" />
+                    android:text="Trail"
+                    android:textColor="#E9841A" />
 
             </LinearLayout>
 
@@ -951,7 +969,8 @@
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/button_eval"
                     android:padding="10dp"
-                    android:text="Lead" />
+                    android:text="Lead"
+                    android:textColor="#E9841A" />
 
                 <Button
                     android:id="@+id/btnAoPCenter"
@@ -960,7 +979,8 @@
                     android:layout_marginHorizontal="10dp"
                     android:background="@drawable/button_eval"
                     android:padding="10dp"
-                    android:text="Center" />
+                    android:text="Center"
+                    android:textColor="#E9841A" />
 
                 <Button
                     android:id="@+id/btnAoPTrial"
@@ -969,7 +989,8 @@
                     android:layout_marginRight="10dp"
                     android:background="@drawable/button_eval"
                     android:padding="10dp"
-                    android:text="Trail" />
+                    android:text="Trail"
+                    android:textColor="#E9841A" />
 
             </LinearLayout>
 
@@ -994,7 +1015,8 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/button_eval"
                     android:padding="10dp"
-                    android:text="CC" />
+                    android:text="CC"
+                    android:textColor="#E9841A" />
 
                 <Button
                     android:id="@+id/btnReviewCFR"
@@ -1003,7 +1025,8 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/button_eval"
                     android:padding="10dp"
-                    android:text="CFR" />
+                    android:text="CFR"
+                    android:textColor="#E9841A" />
 
                 <Button
                     android:id="@+id/btnReviewCNC"
@@ -1012,7 +1035,8 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/button_eval"
                     android:padding="10dp"
-                    android:text="CNC" />
+                    android:text="CNC"
+                    android:textColor="#E9841A" />
 
                 <Button
                     android:id="@+id/btnReviewIC"
@@ -1021,7 +1045,8 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/button_eval"
                     android:padding="10dp"
-                    android:text="IC" />
+                    android:text="IC"
+                    android:textColor="#E9841A" />
 
                 <Button
                     android:id="@+id/btnReviewNCFR"
@@ -1030,7 +1055,8 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/button_eval"
                     android:padding="10dp"
-                    android:text="NCFR" />
+                    android:text="NCFR"
+                    android:textColor="#E9841A" />
 
                 <Button
                     android:id="@+id/btnReviewINC"
@@ -1039,7 +1065,8 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/button_eval"
                     android:padding="10dp"
-                    android:text="INC" />
+                    android:text="INC"
+                    android:textColor="#E9841A" />
 
             </GridLayout>
 
@@ -1049,16 +1076,17 @@
                 android:layout_marginTop="5dp"
                 android:text="Comment"
                 android:textAlignment="center" />
+
             <LinearLayout
-                android:focusable="true"
-                android:focusableInTouchMode="true"
                 android:layout_width="0px"
-                android:layout_height="0px"/>
+                android:layout_height="0px"
+                android:focusable="true"
+                android:focusableInTouchMode="true" />
 
             <EditText
                 android:id="@+id/txtComment"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="100dp"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="#C6C6C6"

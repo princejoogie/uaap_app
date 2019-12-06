@@ -570,15 +570,17 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         btnRefC.setText(currentGame.referee.get(2).name);
         changed = false;
         setPlayers(changed);
+
     }
 
     private void setPlayers(boolean changed) {
         for (int i = 0; i < 20; i++) {
             btnComm[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
             btnComm[i].setText("");
+            btnComm[i].setElevation(0);
             btnDis[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
             btnDis[i].setText("");
-
+            btnDis[i].setElevation(0);
         }
 
 
@@ -611,6 +613,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                     btnComm[i].setTextColor(Color.WHITE);
                 }
                 btnComm[i].setText(playingA[i]);
+                btnComm[i].setElevation(3);
 
             }
             for (int i = 0; i < playingB.length; i++) {
@@ -621,6 +624,8 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                     btnDis[i].setTextColor(Color.WHITE);
                 }
                 btnDis[i].setText(playingB[i]);
+                btnDis[i].setElevation(3);
+
             }
         } else {
             if (currentGame.getColorTeamB() == Color.WHITE) {
@@ -645,6 +650,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                     btnComm[i].setTextColor(Color.WHITE);
                 }
                 btnComm[i].setText(playingB[i]);
+                btnComm[i].setElevation(3);
 
             }
             for (int i = 0; i < playingA.length; i++) {
@@ -655,6 +661,8 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                     btnDis[i].setTextColor(Color.WHITE);
                 }
                 btnDis[i].setText(playingA[i]);
+                btnDis[i].setElevation(3);
+
             }
         }
 
@@ -970,9 +978,13 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                     if (foulVio) {
                         btnFoul.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
                         btnViolation.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_eval));
+                        btnFoul.setTextColor(Color.parseColor("#FFFFFF"));
+                        btnViolation.setTextColor(Color.parseColor("#E9841A"));
                     } else {
                         btnViolation.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
                         btnFoul.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_eval));
+                        btnViolation.setTextColor(Color.parseColor("#FFFFFF"));
+                        btnFoul.setTextColor(Color.parseColor("#E9841A"));
                     }
                 }
 
@@ -1007,8 +1019,10 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         for (int i = 0; i < buttons.length; i++) {
             if (i == pos) {
                 buttons[i].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
+                buttons[i].setTextColor(Color.parseColor("#FFFFFF"));
             } else {
                 buttons[i].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_eval));
+                buttons[i].setTextColor(Color.parseColor("#E9841A"));
             }
         }
         if (designation.equals("referee")) {
