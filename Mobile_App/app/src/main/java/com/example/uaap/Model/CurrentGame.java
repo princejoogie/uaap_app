@@ -21,6 +21,24 @@ public class CurrentGame {
     public String time;
     public int colorTeamA;
     public int colorTeamB;
+    public int scoreA;
+    public int scoreB;
+
+    public int getScoreA() {
+        return scoreA;
+    }
+
+    public void setScoreA(int scoreA) {
+        this.scoreA = scoreA;
+    }
+
+    public int getScoreB() {
+        return scoreB;
+    }
+
+    public void setScoreB(int scoreB) {
+        this.scoreB = scoreB;
+    }
 
     public CurrentGame(){
 

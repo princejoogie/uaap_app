@@ -1116,19 +1116,37 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
         });
         final RadioGroup rg = (RadioGroup) dialog.findViewById(R.id.radioGroup);
         Button btnSubmitStaff = (Button) dialog.findViewById(R.id.btnSubmitStaff);
-        if (!changed) {
-            for (int i = 0; i < currentGame.staffA.size(); i++) {
-                RadioButton rb = new RadioButton(EvaluatorDetailsEdit.this); // dynamically creating RadioButton and adding to RadioGroup.
-                rb.setText(currentGame.staffA.get(i).name + " (" + currentGame.getTeamA() + ")");
-                rb.setId(Integer.parseInt(currentGame.staffA.get(i).id));
-                rg.addView(rb);
+        if(commDis){
+            if (!changed) {
+                for (int i = 0; i < currentGame.staffA.size(); i++) {
+                    RadioButton rb = new RadioButton(EvaluatorDetailsEdit.this); // dynamically creating RadioButton and adding to RadioGroup.
+                    rb.setText(currentGame.staffA.get(i).name + " (" + currentGame.getTeamA() + ")");
+                    rb.setId(Integer.parseInt(currentGame.staffA.get(i).id));
+                    rg.addView(rb);
+                }
+            } else {
+                for (int i = 0; i < currentGame.staffB.size(); i++) {
+                    RadioButton rb = new RadioButton(EvaluatorDetailsEdit.this); // dynamically creating RadioButton and adding to RadioGroup.
+                    rb.setText(currentGame.staffB.get(i).name + " (" + currentGame.getTeamB() + ")");
+                    rb.setId(Integer.parseInt(currentGame.staffB.get(i).id));
+                    rg.addView(rb);
+                }
             }
-        } else {
-            for (int i = 0; i < currentGame.staffB.size(); i++) {
-                RadioButton rb = new RadioButton(EvaluatorDetailsEdit.this); // dynamically creating RadioButton and adding to RadioGroup.
-                rb.setText(currentGame.staffB.get(i).name + " (" + currentGame.getTeamB() + ")");
-                rb.setId(Integer.parseInt(currentGame.staffB.get(i).id));
-                rg.addView(rb);
+        }else{
+            if (!changed) {
+                for (int i = 0; i < currentGame.staffB.size(); i++) {
+                    RadioButton rb = new RadioButton(EvaluatorDetailsEdit.this); // dynamically creating RadioButton and adding to RadioGroup.
+                    rb.setText(currentGame.staffB.get(i).name + " (" + currentGame.getTeamB() + ")");
+                    rb.setId(Integer.parseInt(currentGame.staffB.get(i).id));
+                    rg.addView(rb);
+                }
+            } else {
+                for (int i = 0; i < currentGame.staffA.size(); i++) {
+                    RadioButton rb = new RadioButton(EvaluatorDetailsEdit.this); // dynamically creating RadioButton and adding to RadioGroup.
+                    rb.setText(currentGame.staffA.get(i).name + " (" + currentGame.getTeamA() + ")");
+                    rb.setId(Integer.parseInt(currentGame.staffA.get(i).id));
+                    rg.addView(rb);
+                }
             }
         }
 
