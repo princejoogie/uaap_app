@@ -33,6 +33,26 @@ public class CallToIssue {
     private int period;
     @SerializedName("time")
     private String time;
+    @SerializedName("scoreA")
+    private String scoreA;
+    @SerializedName("scoreB")
+    private String scoreB;
+
+    public String getScoreA() {
+        return scoreA;
+    }
+
+    public void setScoreA(String scoreA) {
+        this.scoreA = scoreA;
+    }
+
+    public String getScoreB() {
+        return scoreB;
+    }
+
+    public void setScoreB(String scoreB) {
+        this.scoreB = scoreB;
+    }
 
     public String getTime() {
         return time;

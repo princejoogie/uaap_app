@@ -1075,10 +1075,11 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
 
                     params.put("gameId", currentGame.getGameId());
                     params.put("period", String.valueOf(callToIssue.getPeriod()));
-                    String time = txtMinute1.getText().toString() + txtMinute2.getText().toString() + ":" +
+                    String timeText = txtMinute1.getText().toString() + txtMinute2.getText().toString() + ":" +
                             txtSecond1.getText().toString() + txtSecond2.getText().toString() + ":" +
                             txtMillis1.getText().toString() + txtMillis2.getText().toString();
-                    params.put("time", time);
+                    params.put("time", timeText);
+                    params.put("timeInMillis", String.valueOf(time));
                     params.put("callType", callToIssue.getCallType());
                     params.put("call", callToIssue.getCall());
                     params.put("committingType", callToIssue.getCommittingType());
@@ -1089,7 +1090,8 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                         params.put("disTeam", callToIssue.getDisTeam());
                         params.put("dis", callToIssue.getDis());
                     }
-                    currentGame.setTime(time);
+
+                    currentGame.setTime(timeText);
                     params.put("refereeId", callToIssue.getRefereeId());
                     params.put("area", callToIssue.getArea());
                     params.put("areaOfPlay", callToIssue.getAreaOfPlay());
@@ -1097,10 +1099,12 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                     if (!isEmpty(txtComment.getText().toString())) {
                         params.put("comment", txtComment.getText().toString());
                     }
+                    params.put("scoreA", String.valueOf(currentGame.getScoreA()));
+                    params.put("scoreB", String.valueOf(currentGame.getScoreB()));
                     Log.e("gameId", currentGame.getGameId());
                     Log.e("period", String.valueOf(callToIssue.getPeriod()));
 
-                    Log.e("time", time);
+                    Log.e("time", timeText);
                     Log.e("callType", callToIssue.getCallType());
                     Log.e("call", callToIssue.getCall());
                     Log.e("committingType", callToIssue.getCommittingType());

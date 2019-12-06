@@ -389,7 +389,7 @@
                                 android:id="@+id/txtScoreA"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="89"
+                                android:text="0"
                                 android:textAlignment="center"
                                 android:textSize="50sp" />
 
@@ -475,7 +475,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_columnWeight="2"
             android:layout_margin="10dp"
             android:background="#FFFFFF"
@@ -483,7 +483,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="5dp"
@@ -492,10 +492,11 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="PERIOD"
-                    android:textColor="#8A8A8A"
-                    android:paddingLeft="5dp"/>
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight=".5"
+                    android:paddingLeft="5dp"
+                    android:text="Q"
+                    android:textColor="#8A8A8A" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -552,10 +553,16 @@
                     android:layout_weight="1"
                     android:text="R.D."
                     android:textColor="#8A8A8A" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Score" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginVertical="5dp"
@@ -564,7 +571,7 @@
                 <ListView
                     android:id="@+id/evaluationList"
                     android:layout_width="match_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_height="match_parent"
                     android:background="#ECEBEA"></ListView>
             </LinearLayout>
         </LinearLayout>

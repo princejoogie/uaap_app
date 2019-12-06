@@ -55,7 +55,14 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
     private Button btnSecondDown;
     private Button btnMillisUp;
     private Button btnMillisDown;
-    private TextView txtTeams;
+    private TextView txtScoreA;
+    private TextView txtScoreB;
+    private TextView txtTeamA;
+    private TextView txtTeamB;
+    private Button btnAddScoreA;
+    private Button btnAddScoreB;
+    private Button btnSubScoreA;
+    private Button btnSubScoreB;
 
     private FloatingActionButton fab;
     private EvaluationListAdapter listAdapter;
@@ -97,6 +104,14 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         btnQ4 = findViewById(R.id.btnQ4);
         btnOT = findViewById(R.id.btnOT);
 
+        txtScoreA = findViewById(R.id.txtScoreA);
+        txtScoreB = findViewById(R.id.txtScoreB);
+        txtTeamA = findViewById(R.id.txtTeamA);
+        txtTeamB = findViewById(R.id.txtTeamB);
+        btnAddScoreA = findViewById(R.id.btnAddScoreA);
+        btnAddScoreB = findViewById(R.id.btnAddScoreB);
+        btnSubScoreA = findViewById(R.id.btnSubScoreA);
+        btnSubScoreB = findViewById(R.id.btnSubScoreB);
         final Button[] periodButtons = {btnQ1, btnQ2, btnQ3, btnQ4, btnOT};
 
         Bundle extras = getIntent().getExtras();
@@ -112,6 +127,8 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         evaluationList.setOnItemClickListener(this);
         evaluationList.setOnItemLongClickListener(this);
         enablePeriod(currentGame.getPeriod(), periodButtons);
+        txtTeamA.setText(currentGame.getTeamA());
+        txtTeamB.setText(currentGame.getTeamB());
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,9 +211,53 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
                 }
             });
         }
+        btnAddScoreA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentGame.setScoreA(currentGame.getScoreA()+1);
+                refreshScore();
+            }
+        });
+
+        btnAddScoreB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentGame.setScoreB(currentGame.getScoreB()+1);
+                refreshScore();
+
+            }
+        });
+
+        btnSubScoreA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentGame.setScoreA(currentGame.getScoreA()-1);
+                if (currentGame.getScoreA() < 0) {
+                    currentGame.setScoreA(0);
+                }
+                refreshScore();
+            }
+        });
+
+        btnSubScoreB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentGame.setScoreB(currentGame.getScoreB()-1);
+                if (currentGame.getScoreB() < 0) {
+                    currentGame.setScoreB(0);
+                }
+                refreshScore();
+            }
+        });
+
 
     }
-
+    private void refreshScore() {
+        currentGame.setScoreA(currentGame.getScoreA());
+        currentGame.setScoreB(currentGame.getScoreB());
+        txtScoreA.setText(String.valueOf(currentGame.getScoreA()));
+        txtScoreB.setText(String.valueOf(currentGame.getScoreB()));
+    }
     private void enablePeriod(int i, Button[] buttons){
         String[] periods = {"Q1", "Q2", "Q3", "Q4", "OT"};
         for (int x=0;x<5;x++){

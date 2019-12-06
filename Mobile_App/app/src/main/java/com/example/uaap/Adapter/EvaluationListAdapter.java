@@ -67,6 +67,7 @@ public class EvaluationListAdapter extends BaseAdapter {
             holder.reviewDecision = convertView.findViewById(R.id.reviewDecision);
             holder.comment = convertView.findViewById(R.id.comment);
             holder.areaOfPlay = convertView.findViewById(R.id.areaOfPlay);
+            holder.scores = convertView.findViewById(R.id.scores);
 
             convertView.setTag(holder);
         }else {
@@ -75,23 +76,28 @@ public class EvaluationListAdapter extends BaseAdapter {
         }
 //        protected TextView period,time,callType,committingTeam,committing,disadvantagedTeam,disadvantaged,referee,area,reviewDecision,comment;
 
-        holder.period.setText(dataModelArrayList.get(position).getPeriodName());
         holder.time.setText(dataModelArrayList.get(position).getTime());
         holder.callType.setText(dataModelArrayList.get(position).getCallType());
         holder.committing.setText(dataModelArrayList.get(position).getCommitting());
         holder.disadvantaged.setText(dataModelArrayList.get(position).getDisadvantaged());
-         holder.referee.setText(dataModelArrayList.get(position).getReferee());
+        holder.referee.setText(dataModelArrayList.get(position).getReferee());
         holder.area.setText(dataModelArrayList.get(position).getArea());
         holder.reviewDecision.setText(dataModelArrayList.get(position).getReviewDecision());
         if(isEmpty(dataModelArrayList.get(position).getComment())){
             holder.comment.setVisibility(View.GONE);
 
         }else{
-            holder.comment.setText(dataModelArrayList.get(position).getComment());
+            holder.comment.setText("Comment: "+dataModelArrayList.get(position).getComment());
         }
         holder.comment.setText(dataModelArrayList.get(position).getComment());
         holder.areaOfPlay.setText(dataModelArrayList.get(position).getAreaOfPlay());
-
+        if(dataModelArrayList.get(position).getPeriod()<4){
+            holder.period.setText((dataModelArrayList.get(position).getPeriod()+1)+"Q");
+        }
+        else{
+            holder.period.setText("OT");
+        }
+        holder.scores.setText(dataModelArrayList.get(position).getScores());
         return convertView;
     }
 
@@ -103,7 +109,7 @@ public class EvaluationListAdapter extends BaseAdapter {
 
     private class ViewHolder {
 
-        protected TextView period,time,callType,committing,disadvantaged,referee,area,reviewDecision,comment,areaOfPlay;
+        protected TextView period,time,callType,committing,disadvantaged,referee,area,reviewDecision,comment,areaOfPlay, scores;
     }
 
 }
