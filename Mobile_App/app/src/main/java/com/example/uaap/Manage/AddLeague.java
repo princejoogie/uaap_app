@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,18 +49,19 @@ public class AddLeague extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_league);
+
+//        new Timer().scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        }, 0, 1000);
+        getLeague();
+
         btnAddLeague = findViewById(R.id.btnAddLeague);
         final LinearLayout linearLayout = findViewById(R.id.addLeague);
         edtLeague = findViewById(R.id.edtLeague);
         leagueList = findViewById(R.id.leagueList);
-
-        new Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                getLeague();
-            }
-        }, 0, 1000);
-
 
 
         btnAddLeague.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +84,38 @@ public class AddLeague extends AppCompatActivity {
             }
         });
 
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest putRequest = new StringRequest(Request.Method.POST, GetLeagueURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("Here", response);
+                        Gson gson = new Gson();
+                        league = gson.fromJson(response, League.class);
+                        ArrayList<LeagueDetails> dataModelArrayList = league.result;
+                        Log.e("size", String.valueOf(league.result.size()));
+                        if(!dataModelArrayList.isEmpty()) {
+                            leagueListAdapter = new LeagueListAdapter(getApplicationContext(), dataModelArrayList);
+                            leagueList.setAdapter(leagueListAdapter);
+                            leagueListAdapter.notifyDataSetChanged();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.e("Error.Response", String.valueOf(error));
+                    }
+                }
+        );
+        queue.add(putRequest);
+
+
+
+
+
     }
 
 
@@ -103,6 +137,7 @@ public class AddLeague extends AppCompatActivity {
                             if(!dataModelArrayList.isEmpty()) {
                                 leagueListAdapter = new LeagueListAdapter(getApplicationContext(), dataModelArrayList);
                                 leagueList.setAdapter(leagueListAdapter);
+                                leagueListAdapter.notifyDataSetChanged();
                             }
 
                         }

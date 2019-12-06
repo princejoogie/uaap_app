@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.uaap.Manage.AddLeague;
 import com.example.uaap.Model.Delete;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.uaap.Model.EditLeague;
+import com.example.uaap.Model.League;
 import com.example.uaap.Model.LeagueDetails;
 import com.example.uaap.R;
 import com.google.gson.Gson;
@@ -30,6 +32,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.widget.Toast;
+
+import static com.example.uaap.Manage.AddLeague.*;
 
 public class LeagueListAdapter extends BaseAdapter {
     private Context context;
@@ -94,89 +98,13 @@ public class LeagueListAdapter extends BaseAdapter {
         }
 
         holder.txtLeagueName.setText(dataModelArrayList.get(position).name);
-
         final String League = holder.txtLeagueName.getText().toString();
-
+        final String id = dataModelArrayList.get(position).id;
         holder.btnDelLeague.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                final String id = dataModelArrayList.get(position).id;
+                btnDelete1(id, League, view);
 
-                RequestQueue queue = Volley.newRequestQueue(context);
-
-                StringRequest putRequest = new StringRequest(Request.Method.POST, deleteLeague1,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                Gson gson = new Gson();
-                                delete = gson.fromJson(response, Delete.class);
-                                String status = delete.status;
-                                final String message = delete.message;
-                                if (status.equals("true")) {
-                                    Toast.makeText(context, League + " Successfully deleted.", Toast.LENGTH_SHORT).show();
-                                } else {
-                                    final AlertDialog.Builder alertbox = new AlertDialog.Builder(view.getRootView().getContext());
-                                    alertbox.setMessage(message);
-                                    alertbox.setTitle("Warning");
-
-                                    alertbox.setPositiveButton("OK",
-                                            new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    RequestQueue queue = Volley.newRequestQueue(context);
-
-                                                    StringRequest putRequest = new StringRequest(Request.Method.POST, deleteLeague2,
-                                                            new Response.Listener<String>() {
-                                                                @Override
-                                                                public void onResponse(String response) {
-                                                                    Toast.makeText(context, "Successfully deleted.", Toast.LENGTH_SHORT).show();
-                                                                    dialog.dismiss();
-                                                                }
-                                                            },
-                                                            new Response.ErrorListener() {
-                                                                @Override
-                                                                public void onErrorResponse(VolleyError error) {
-                                                                    // error
-                                                                    Log.d("Error.Response", String.valueOf(error));
-                                                                }
-                                                            }
-                                                    ) {
-
-                                                        @Override
-                                                        protected Map<String, String> getParams() {
-                                                            Map<String, String> params = new HashMap<String, String>();
-                                                            params.put("id", id);
-                                                            return params;
-                                                        }
-
-                                                    };
-
-                                                    queue.add(putRequest);
-                                                }
-                                            });
-                                    dialog = alertbox.show();
-                                }
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                // error
-                                Log.d("Error.Response", String.valueOf(error));
-                            }
-                        }
-                ) {
-
-                    @Override
-                    protected Map<String, String> getParams() {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("id", id);
-                        return params;
-                    }
-
-                };
-
-                queue.add(putRequest);
             }
         });
         final EditText edittext = new EditText(context);
@@ -249,5 +177,99 @@ public class LeagueListAdapter extends BaseAdapter {
         protected Button btnEdit;
         protected TextView txtLeagueName;
         protected Button btnDelLeague;
+    }
+    public void alertDialog(){
+
+    }
+
+    public void btnDelete1(final String id, final String League, final View view){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        StringRequest putRequest = new StringRequest(Request.Method.POST, deleteLeague1,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Gson gson = new Gson();
+                        delete = gson.fromJson(response, Delete.class);
+                        String status = delete.status;
+                        final String message = delete.message;
+                        if (status.equals("true")) {
+                            Toast.makeText(context, League + " Successfully deleted.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            btnDelete2(message,id, view);
+                            notifyDataSetChanged();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", String.valueOf(error));
+                    }
+                }
+        ) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", id);
+                return params;
+            }
+
+        };
+
+        queue.add(putRequest);
+
+    }
+
+    public void btnDelete2(final String message, final String id, View view){
+        final AlertDialog.Builder alertbox = new AlertDialog.Builder(view.getRootView().getContext());
+        alertbox.setMessage(message);
+        alertbox.setTitle("Warning");
+
+        alertbox.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        RequestQueue queue = Volley.newRequestQueue(context);
+
+                        StringRequest putRequest = new StringRequest(Request.Method.POST, deleteLeague2,
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        Toast.makeText(context, "Successfully deleted.", Toast.LENGTH_SHORT).show();
+                                        dialog.dismiss();
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        // error
+                                        Log.d("Error.Response", String.valueOf(error));
+                                    }
+                                }
+                        ) {
+
+                            @Override
+                            protected Map<String, String> getParams() {
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put("id", id);
+                                return params;
+                            }
+
+                        };
+
+
+                        queue.add(putRequest);
+                    }
+                });
+        alertbox.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialog.dismiss();
+            }
+        });
+        dialog = alertbox.show();
+        dialog.setCanceledOnTouchOutside(false);
     }
 }
