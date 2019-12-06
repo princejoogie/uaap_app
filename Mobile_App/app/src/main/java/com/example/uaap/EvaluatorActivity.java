@@ -272,6 +272,7 @@ public class EvaluatorActivity extends AppCompatActivity {
                         currentGame.setTimeInMillis(600000);
                         currentGame.setColorTeamA(((ColorDrawable) btnColorTeamA.getBackground()).getColor());
                         currentGame.setColorTeamB(((ColorDrawable) btnColorTeamB.getBackground()).getColor());
+                        currentGame.setLeagueName(((LeagueDetails) spinLeague.getSelectedItem()).name);
                         prepareEval(gameId.gameId, gameId.gameCode);
 
 
@@ -333,13 +334,12 @@ public class EvaluatorActivity extends AppCompatActivity {
                                 Log.e("Response", response);
                                 currentGame.setTeamA(obj.getString("teamA"));
                                 currentGame.setTeamB(obj.getString("teamB"));
-                                String time = obj.getString("time");
-                                String[] timeSep = time.split(":");
-                                long timeInMillis = (Long.valueOf(timeSep[0])*60000)+(Long.valueOf(timeSep[1])*1000)+(Long.valueOf(timeSep[2])*10);
-                                currentGame.setTimeInMillis(timeInMillis);
-                                currentGame.setPeriod(obj.getInt("period"));
+
+                                currentGame.setTimeInMillis(Long.parseLong(obj.getString("timeInMillis")));
+                                currentGame.setPeriod(Integer.parseInt(obj.getString("period")));
                                 currentGame.setColorTeamA(obj.getInt("teamAColor"));
                                 currentGame.setColorTeamB(obj.getInt("teamBColor"));
+                                currentGame.setLeagueName(obj.getString("leagueName"));
                                 prepareEval(obj.getString("gameId"), obj.getString("gameCode"));
 
 

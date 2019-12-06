@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Manage.LeaguesTeamsActivity"></activity>
+        <activity android:name=".AfterGameSummary"
+            android:noHistory="true"
+            android:screenOrientation="landscape" />
+        <activity android:name=".Manage.LeaguesTeamsActivity" />
         <activity
             android:name=".Manage.EditLeagueActivity"
             android:screenOrientation="landscape" />
@@ -23,20 +26,20 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".Evaluation"
-            android:screenOrientation="landscape"
-            android:noHistory="true"/>
+            android:noHistory="true"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".EvaluatorDetails"
-            android:screenOrientation="landscape"
-            android:noHistory="true"/>
+            android:noHistory="true"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".EvaluatorDetailsEdit"
-            android:screenOrientation="landscape"
-            android:noHistory="true"/>
+            android:noHistory="true"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".EvaluatorActivity"
-            android:screenOrientation="landscape"
-            android:noHistory="true"/>
+            android:noHistory="true"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".Manage.TeamsDashboard"
             android:screenOrientation="landscape" />
@@ -48,8 +51,8 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="landscape"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -30,7 +30,9 @@ import com.example.uaap.Model.EvaluationModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,10 +62,12 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
     private TextView txtScoreB;
     private TextView txtTeamA;
     private TextView txtTeamB;
+    private TextView txtGameCode;
     private Button btnAddScoreA;
     private Button btnAddScoreB;
     private Button btnSubScoreA;
     private Button btnSubScoreB;
+    private Button btnEndGame;
 
     private FloatingActionButton fab;
     private EvaluationListAdapter listAdapter;
@@ -109,10 +113,12 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         txtScoreB = findViewById(R.id.txtScoreB);
         txtTeamA = findViewById(R.id.txtTeamA);
         txtTeamB = findViewById(R.id.txtTeamB);
+        txtGameCode = findViewById(R.id.txtGameCode);
         btnAddScoreA = findViewById(R.id.btnAddScoreA);
         btnAddScoreB = findViewById(R.id.btnAddScoreB);
         btnSubScoreA = findViewById(R.id.btnSubScoreA);
         btnSubScoreB = findViewById(R.id.btnSubScoreB);
+        btnEndGame = findViewById(R.id.btnEndGame);
         final Button[] periodButtons = {btnQ1, btnQ2, btnQ3, btnQ4, btnOT};
 
         Bundle extras = getIntent().getExtras();
@@ -130,6 +136,7 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         enablePeriod(currentGame.getPeriod(), periodButtons);
         txtTeamA.setText(currentGame.getTeamA());
         txtTeamB.setText(currentGame.getTeamB());
+        txtGameCode.setText(currentGame.getGameCode());
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,6 +204,17 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), EvaluatorDetails.class);
                 currentGame.setTimeInMillis(time);
+                Gson gson = new Gson();
+                String json = gson.toJson(currentGame);
+                intent.putExtra("playing", json);
+                startActivity(intent);
+            }
+        });
+        btnEndGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentGame.setDate(new SimpleDateFormat("MMMM dd, yyyy").format(new Date()));
+                Intent intent = new Intent(Evaluation.this, AfterGameSummary.class);
                 Gson gson = new Gson();
                 String json = gson.toJson(currentGame);
                 intent.putExtra("playing", json);

@@ -22,6 +22,24 @@ public class CurrentGame {
     public int colorTeamB;
     public int scoreA;
     public int scoreB;
+    public String leagueName;
+    public String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getLeagueName() {
+        return leagueName;
+    }
+
+    public void setLeagueName(String leagueName) {
+        this.leagueName = leagueName;
+    }
 
     public int getScoreA() {
         return scoreA;
