@@ -20,6 +20,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_columnWeight="2"
         android:orientation="vertical">
 
         <LinearLayout
@@ -28,12 +29,13 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:background="#F2F2F2"
                 android:elevation="3dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <GridLayout
                     android:layout_width="match_parent"
@@ -246,120 +248,225 @@
 
                 </GridLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:background="#F2F2F2"
-                android:elevation="3dp"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:padding="5dp">
-
-                <TextView
-                    android:id="@+id/txtTeams"
+                <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="30dp"
-                    android:gravity="center"
-                    android:text="vs" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="10dp"
+                    android:columnCount="5">
 
                     <Button
                         android:id="@+id/btnQ1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
                         android:layout_marginHorizontal="5dp"
-                        android:layout_weight="1"
                         android:background="@drawable/button_eval"
-                        android:padding="10dp"
-                        android:text="1"
-                        android:textSize="20dp" />
+                        android:text="1" />
 
                     <Button
                         android:id="@+id/btnQ2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
                         android:layout_marginHorizontal="5dp"
-                        android:layout_weight="1"
                         android:background="@drawable/button_eval"
-                        android:padding="10dp"
-                        android:text="2"
-                        android:textSize="20dp" />
+                        android:text="2" />
 
                     <Button
                         android:id="@+id/btnQ3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
                         android:layout_marginHorizontal="5dp"
-                        android:layout_weight="1"
                         android:background="@drawable/button_eval"
-                        android:padding="10dp"
-                        android:text="3"
-                        android:textSize="20dp" />
+                        android:text="3" />
 
                     <Button
                         android:id="@+id/btnQ4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
                         android:layout_marginHorizontal="5dp"
-                        android:layout_weight="1"
                         android:background="@drawable/button_eval"
-                        android:padding="10dp"
-                        android:text="4"
-                        android:textSize="20dp" />
+                        android:text="4" />
 
                     <Button
                         android:id="@+id/btnOT"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
                         android:layout_marginHorizontal="5dp"
-                        android:layout_weight="1"
                         android:background="@drawable/button_eval"
-                        android:padding="10dp"
-                        android:text="OT"
-                        android:textSize="20dp" />
+                        android:text="OT" />
+
+                </GridLayout>
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="70dp"
+                    android:layout_marginVertical="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:columnCount="2">
 
                     <Button
                         android:id="@+id/btnStart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
+                        android:layout_columnWeight="1"
                         android:background="@drawable/button_eval"
+                        android:layout_marginHorizontal="10dp"
                         android:text="START" />
 
                     <Button
                         android:id="@+id/btnReset"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="10dp"
-                        android:layout_weight="1"
+                        android:layout_columnWeight="1"
                         android:background="@drawable/button_eval"
-                        android:padding="10dp"
+                        android:layout_marginHorizontal="10dp"
                         android:text="RESET" />
+                </GridLayout>
 
-                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="#F2F2F2"
+                android:elevation="3dp"
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="100dp"
-                    android:layout_marginTop="5dp"
-                    android:text="QUARTER"
-                    android:textSize="20dp" />
+                    android:text="SCORE"
+                    android:textAlignment="center"
+                    android:textSize="30sp" />
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:columnCount="3">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_columnWeight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/txtTeamA"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:maxLines="3"
+                                android:minLines="1"
+                                android:textSize="16sp" />
+
+                            <Button
+                                android:id="@+id/btnAddScoreA"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_columnWeight="1"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/btn_eval_selected"
+                                android:text="&#9650;"
+                                android:textColor="#FFFFFF" />
+
+                            <TextView
+                                android:id="@+id/txtScoreA"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="89"
+                                android:textAlignment="center"
+                                android:textSize="50sp" />
+
+                            <Button
+                                android:id="@+id/btnSubScoreA"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/btn_eval_selected"
+                                android:text="&#9660;"
+                                android:textColor="#FFFFFF" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_columnWeight=".1"
+                                android:text="VS"
+                                android:textAlignment="center"
+                                android:textSize="30sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:id="@+id/txtTeamB"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:maxLines="3"
+                                android:minLines="1"
+                                android:textSize="16sp" />
+
+                            <Button
+                                android:id="@+id/btnAddScoreB"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_columnWeight="1"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/btn_eval_selected"
+                                android:text="&#9650;"
+                                android:textColor="#FFFFFF" />
+
+                            <TextView
+                                android:id="@+id/txtScoreB"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textAlignment="center"
+                                android:textSize="50sp" />
+
+                            <Button
+                                android:id="@+id/btnSubScoreB"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/btn_eval_selected"
+                                android:text="&#9660;"
+                                android:textColor="#FFFFFF" />
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </GridLayout>
 
             </LinearLayout>
 
@@ -386,35 +493,35 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingLeft="5dp"
                     android:text="PERIOD"
-                    android:textColor="#8A8A8A" />
+                    android:textColor="#8A8A8A"
+                    android:paddingLeft="5dp"/>
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
+                    android:layout_weight="2"
                     android:text="TIME"
                     android:textColor="#8A8A8A" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="3"
+                    android:layout_weight="4"
                     android:text="CALL"
                     android:textColor="#8A8A8A" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4"
+                    android:layout_weight="3"
                     android:text="COMMITTING"
                     android:textColor="#8A8A8A" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4"
+                    android:layout_weight="3"
                     android:text="DISADVANTAGED"
                     android:textColor="#8A8A8A" />
 

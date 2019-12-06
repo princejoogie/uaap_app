@@ -77,7 +77,6 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
 
         evaluationList = findViewById(R.id.evaluationList);
         fab = findViewById(R.id.fab);
-        txtTeams = findViewById(R.id.txtTeams);
         txtMinute1 = findViewById(R.id.txtMinute1);
         txtSecond1 = findViewById(R.id.txtSecond1);
         txtMillis1 = findViewById(R.id.txtMillis1);
@@ -107,7 +106,6 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         Gson gson = new Gson();
         currentGame = gson.fromJson(playing, CurrentGame.class);
 
-        txtTeams.setText(currentGame.getTeamA() + " vs " +currentGame.getTeamB());
         getCalls();
         time = currentGame.getTimeInMillis();
         updateCountDownText();
@@ -204,7 +202,6 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         for (int x=0;x<5;x++){
             if(x==i){
                 buttons[x].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
-                currentGame.setPeriodName(periods[i]);
                 currentGame.setPeriod(i);
             }
             else{

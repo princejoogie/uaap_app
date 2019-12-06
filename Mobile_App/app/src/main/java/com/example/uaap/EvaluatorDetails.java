@@ -217,7 +217,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         final Button[] periodButtons = {btnQ1, btnQ2, btnQ3, btnQ4, btnOT};
 
         callToIssue = new CallToIssue();
-        setInfo(currentGame.getPeriodName(), currentGame.getPeriod(), "period", periodButtons);
+        setInfo(null, currentGame.getPeriod(), "period", periodButtons);
         playingA = new String[currentGame.playerA.size()];
         playingB = new String[currentGame.playerB.size()];
 
@@ -230,7 +230,6 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
 
         getThisGame();
         callToIssue.setPeriod(currentGame.getPeriod());
-        callToIssue.setPeriodName(currentGame.getPeriodName());
 
 
         for (int i = 0; i < 20; i++) {
@@ -1021,7 +1020,6 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         } else if (designation.equals("review")) {
             callToIssue.setReviewDecision(string);
         } else if (designation.equals("period")) {
-            callToIssue.setPeriodName(string);
             callToIssue.setPeriod(pos);
         }
     }
@@ -1039,9 +1037,6 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
 
         if (isEmpty(callToIssue.getReviewDecision())) {
             Toast.makeText(getApplicationContext(), "Please select a review decision", Toast.LENGTH_SHORT).show();
-        }
-        if (isEmpty(callToIssue.getPeriodName())) {
-            Toast.makeText(getApplicationContext(), "Please select a period", Toast.LENGTH_SHORT).show();
         }
         if (!isEmpty(callToIssue.getCommitting()) &&
                 !isEmpty(callToIssue.getCallType()) &&
@@ -1080,7 +1075,6 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
 
                     params.put("gameId", currentGame.getGameId());
                     params.put("period", String.valueOf(callToIssue.getPeriod()));
-                    params.put("periodName", callToIssue.getPeriodName());
                     String time = txtMinute1.getText().toString() + txtMinute2.getText().toString() + ":" +
                             txtSecond1.getText().toString() + txtSecond2.getText().toString() + ":" +
                             txtMillis1.getText().toString() + txtMillis2.getText().toString();
@@ -1105,7 +1099,6 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                     }
                     Log.e("gameId", currentGame.getGameId());
                     Log.e("period", String.valueOf(callToIssue.getPeriod()));
-                    Log.e("periodName", callToIssue.getPeriodName());
 
                     Log.e("time", time);
                     Log.e("callType", callToIssue.getCallType());

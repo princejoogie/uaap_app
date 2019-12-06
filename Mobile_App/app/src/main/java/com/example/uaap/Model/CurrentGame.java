@@ -12,7 +12,6 @@ public class CurrentGame {
     public String gameCode;
     public String gameId;
     public int period;
-    public String periodName;
     public String teamA;
     public String teamAId;
     public String teamBId;
@@ -106,14 +105,6 @@ public class CurrentGame {
 
     public void setPeriod(int period) {
         this.period = period;
-    }
-
-    public String getPeriodName() {
-        return periodName;
-    }
-
-    public void setPeriodName(String periodName) {
-        this.periodName = periodName;
     }
 
     public String getTeamA() {

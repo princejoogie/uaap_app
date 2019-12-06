@@ -268,7 +268,6 @@ public class EvaluatorActivity extends AppCompatActivity {
                         LeagueDetails teamB = (LeagueDetails) spinnerTeamB.getSelectedItem();
                         currentGame.setTeamA(teamA.name);
                         currentGame.setTeamB(teamB.name);
-                        currentGame.setPeriodName("Q1");
                         currentGame.setPeriod(0);
                         currentGame.setTimeInMillis(600000);
                         currentGame.setColorTeamA(((ColorDrawable) btnColorTeamA.getBackground()).getColor());
@@ -339,7 +338,6 @@ public class EvaluatorActivity extends AppCompatActivity {
                                 long timeInMillis = (Long.valueOf(timeSep[0])*60000)+(Long.valueOf(timeSep[1])*1000)+(Long.valueOf(timeSep[2])*10);
                                 currentGame.setTimeInMillis(timeInMillis);
                                 currentGame.setPeriod(obj.getInt("period"));
-                                currentGame.setPeriodName(obj.getString("periodName"));
                                 currentGame.setColorTeamA(obj.getInt("teamAColor"));
                                 currentGame.setColorTeamB(obj.getInt("teamBColor"));
                                 prepareEval(obj.getString("gameId"), obj.getString("gameCode"));

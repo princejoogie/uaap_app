@@ -31,8 +31,6 @@ public class CallToIssue {
     private String comment;
     @SerializedName("period")
     private int period;
-    @SerializedName("periodName")
-    private String periodName;
     @SerializedName("time")
     private String time;
 
@@ -48,13 +46,7 @@ public class CallToIssue {
 
     }
 
-    public String getPeriodName() {
-        return periodName;
-    }
 
-    public void setPeriodName(String periodName) {
-        this.periodName = periodName;
-    }
 
     public int getPeriod() {
         return period;

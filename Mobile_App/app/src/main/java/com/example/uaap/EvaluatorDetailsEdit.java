@@ -1317,7 +1317,6 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
         } else if (designation.equals("review")) {
             callToIssue.setReviewDecision(string);
         } else if (designation.equals("period")) {
-            callToIssue.setPeriodName(string);
             callToIssue.setPeriod(pos);
         }
     }
@@ -1336,9 +1335,7 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
         if (isEmpty(callToIssue.getReviewDecision())) {
             Toast.makeText(getApplicationContext(), "Please select a review decision", Toast.LENGTH_SHORT).show();
         }
-        if (isEmpty(callToIssue.getPeriodName())) {
-            Toast.makeText(getApplicationContext(), "Please select a period", Toast.LENGTH_SHORT).show();
-        }
+
         if (!isEmpty(callToIssue.getCommitting()) &&
                 !isEmpty(callToIssue.getCallType()) &&
                 !isEmpty(callToIssue.getCall()) &&
@@ -1376,7 +1373,6 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
 
                     params.put("gameId", currentGame.getGameId());
                     params.put("period", String.valueOf(callToIssue.getPeriod()));
-                    params.put("periodName", callToIssue.getPeriodName());
                     String time = txtMinute1.getText().toString() + txtMinute2.getText().toString() + ":" +
                             txtSecond1.getText().toString() + txtSecond2.getText().toString() + ":" +
                             txtMillis1.getText().toString() + txtMillis2.getText().toString();
@@ -1401,7 +1397,6 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                     }
                      Log.e("gameId", currentGame.getGameId());
                     Log.e("period", String.valueOf(callToIssue.getPeriod()));
-                    Log.e("periodName", callToIssue.getPeriodName());
 
                     Log.e("time", time);
                     Log.e("callType", callToIssue.getCallType());
