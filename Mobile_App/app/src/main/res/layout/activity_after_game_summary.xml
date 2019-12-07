@@ -17,15 +17,40 @@
         android:background="#FFFFFF"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
-            android:text="GAME SUMMARY"
-            android:textColor="@android:color/black"
-            android:textSize="20dp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:columnCount="2"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:text="GAME SUMMARY"
+                    android:textColor="@android:color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnAfterRefSum"
+                    android:layout_width="50dp"
+                    android:layout_height="36dp"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/btn_eval_selected"
+                    android:text=">"
+                    android:textColor="@android:color/white" />
+            </GridLayout>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -125,7 +150,8 @@
                                 android:background="@drawable/btn_eval_selected"
                                 android:minHeight="20dp"
                                 android:padding="5dp"
-                                android:text="Select" />
+                                android:text="Select"
+                                android:textColor="@android:color/white" />
 
                         </LinearLayout>
 
@@ -150,7 +176,8 @@
                                 android:background="@drawable/btn_eval_selected"
                                 android:minHeight="20dp"
                                 android:padding="5dp"
-                                android:text="Select" />
+                                android:text="Select"
+                                android:textColor="@android:color/white" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -168,7 +195,8 @@
                                 android:background="@drawable/btn_eval_selected"
                                 android:minHeight="20dp"
                                 android:padding="5dp"
-                                android:text="FILTER" />
+                                android:text="FILTER"
+                                android:textColor="@android:color/white" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -203,7 +231,8 @@
                             android:background="@drawable/btn_eval_selected"
                             android:minHeight="20dp"
                             android:padding="5dp"
-                            android:text="Select" />
+                            android:text="Select"
+                            android:textColor="@android:color/white" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -228,7 +257,8 @@
                             android:background="@drawable/btn_eval_selected"
                             android:minHeight="20dp"
                             android:padding="5dp"
-                            android:text="Select" />
+                            android:text="Select"
+                            android:textColor="@android:color/white" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -254,7 +284,8 @@
                             android:background="@drawable/btn_eval_selected"
                             android:minHeight="20dp"
                             android:padding="5dp"
-                            android:text="Select" />
+                            android:text="Select"
+                            android:textColor="@android:color/white" />
                     </LinearLayout>
                 </LinearLayout>
 

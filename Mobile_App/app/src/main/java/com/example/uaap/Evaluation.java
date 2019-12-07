@@ -62,7 +62,6 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
     private TextView txtScoreB;
     private TextView txtTeamA;
     private TextView txtTeamB;
-    private TextView txtGameCode;
     private Button btnAddScoreA;
     private Button btnAddScoreB;
     private Button btnSubScoreA;
@@ -78,7 +77,7 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
     private long time;
 
     private CurrentGame currentGame;
-
+    private String SaveScoreURL = "http://68.183.49.18/uaap/public/saveScore";
     private String GetCallURL = "http://68.183.49.18/uaap/public/getAll";
     private String DeleteEvaluationURL = "http://68.183.49.18/uaap/public/deleteEvaluation";
 
@@ -113,7 +112,6 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         txtScoreB = findViewById(R.id.txtScoreB);
         txtTeamA = findViewById(R.id.txtTeamA);
         txtTeamB = findViewById(R.id.txtTeamB);
-        txtGameCode = findViewById(R.id.txtGameCode);
         btnAddScoreA = findViewById(R.id.btnAddScoreA);
         btnAddScoreB = findViewById(R.id.btnAddScoreB);
         btnSubScoreA = findViewById(R.id.btnSubScoreA);
@@ -136,7 +134,8 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         enablePeriod(currentGame.getPeriod(), periodButtons);
         txtTeamA.setText(currentGame.getTeamA());
         txtTeamB.setText(currentGame.getTeamB());
-        txtGameCode.setText(currentGame.getGameCode());
+        txtScoreA.setText(String.valueOf(currentGame.getScoreA()));
+        txtScoreB.setText(String.valueOf(currentGame.getScoreB()));
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -529,6 +528,37 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        RequestQueue queue = Volley.newRequestQueue(Evaluation.this);
+
+                        StringRequest putRequest = new StringRequest(Request.Method.POST, SaveScoreURL,
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+
+
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        // error
+                                        Log.d("Error.Response", String.valueOf(error));
+                                    }
+                                }
+                        ) {
+
+                            @Override
+                            protected Map<String, String> getParams() {
+                                Map<String, String> params = new HashMap<String, String>();
+                                params.put("gameId", currentGame.getGameId());
+                                params.put("scoreA", String.valueOf(currentGame.getScoreA()));
+                                params.put("scoreB", String.valueOf(currentGame.getScoreB()));
+                                return params;
+                            }
+
+                        };
+
+                        queue.add(putRequest);
                         Intent intent = new Intent(getApplicationContext(), EvaluatorActivity.class);
                         startActivity(intent);
                     }

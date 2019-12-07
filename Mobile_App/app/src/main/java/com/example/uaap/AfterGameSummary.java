@@ -50,6 +50,7 @@ public class AfterGameSummary extends AppCompatActivity {
     private Button btnCommittingSelect;
     private Button btnDisadvantagedSelect;
     private Button btnAfterFilter;
+    private Button btnAfterRefSum;
 
     private AfterGameFilter filter;
     private String[] foul;
@@ -98,6 +99,7 @@ public class AfterGameSummary extends AppCompatActivity {
         btnDisadvantagedSelect = findViewById(R.id.btnDisadvantagedSelect);
         evaluationList = findViewById(R.id.evaluationList);
         btnAfterFilter = findViewById(R.id.btnAfterFilter);
+        btnAfterRefSum = findViewById(R.id.btnAfterRefSum);
 
         txtLeagueName.setText(currentGame.getLeagueName());
         txtAfterTeamA.setText(currentGame.getTeamA());
@@ -131,13 +133,26 @@ public class AfterGameSummary extends AppCompatActivity {
                 setFilter("comm");
             }
         });
+        btnDisadvantagedSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFilter("dis");
+            }
+        });
         btnAfterFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 filterEval();
             }
         });
-
+        btnAfterRefSum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AfterGameSummary.this, AfterRefereeSummary.class);
+                intent.putExtra("playing", playing);
+                startActivity(intent);
+            }
+        });
     }
 
     private void getCalls() {
@@ -617,20 +632,11 @@ public class AfterGameSummary extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            Intent intent = new Intent(AfterGameSummary.this, EvaluatorActivity.class);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(AfterGameSummary.this, Evaluation.class);
+        Gson gson = new Gson();
+        String json = gson.toJson(currentGame);
+        intent.putExtra("playing", json);
+        startActivity(intent);
 
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Press Back again to return to Home", Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce = false;
-            }
-        }, 2000);
     }
 }

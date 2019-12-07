@@ -160,14 +160,29 @@ public class EvaluatorActivity extends AppCompatActivity {
     private void setTeamColor(final Button btnColorTeam) {
         final ColorPicker colorPicker = new ColorPicker(this);
         ArrayList<String> colors = new ArrayList<>();
-        colors.add("#DC143C");
-        colors.add("#FF69B4");
-        colors.add("#FF6347");
-        colors.add("#BDB76B");
-        colors.add("#BA55D3");
-        colors.add("#008000");
-        colors.add("#4169E1");
         colors.add("#FFFFFF");
+        colors.add("#000000");
+        colors.add("#696969");
+        colors.add("#DC143C");
+        colors.add("#8B0000");
+        colors.add("#FF1493");
+        colors.add("#DB7093");
+        colors.add("#FF6347");
+        colors.add("#FFA500");
+        colors.add("#BDB76B");
+        colors.add("#FF00FF");
+        colors.add("#9932CC");
+        colors.add("#4B0082");
+        colors.add("#483D8B");
+        colors.add("#228B22");
+        colors.add("#9ACD32");
+        colors.add("#556B2F");
+        colors.add("#20B2AA");
+        colors.add("#008080");
+        colors.add("#4682B4");
+        colors.add("#0000CD");
+        colors.add("#191970");
+        colors.add("#8B4513");
         colorPicker.setColors(colors)
                 .setColumns(5)
                 .setRoundColorButton(false)
@@ -270,6 +285,8 @@ public class EvaluatorActivity extends AppCompatActivity {
                         currentGame.setTeamB(teamB.name);
                         currentGame.setPeriod(0);
                         currentGame.setTimeInMillis(600000);
+                        currentGame.setScoreB(0);
+                        currentGame.setScoreA(0);
                         currentGame.setColorTeamA(((ColorDrawable) btnColorTeamA.getBackground()).getColor());
                         currentGame.setColorTeamB(((ColorDrawable) btnColorTeamB.getBackground()).getColor());
                         currentGame.setLeagueName(((LeagueDetails) spinLeague.getSelectedItem()).name);
@@ -334,7 +351,8 @@ public class EvaluatorActivity extends AppCompatActivity {
                                 Log.e("Response", response);
                                 currentGame.setTeamA(obj.getString("teamA"));
                                 currentGame.setTeamB(obj.getString("teamB"));
-
+                                currentGame.setScoreA(obj.getInt("scoreA"));
+                                currentGame.setScoreB(obj.getInt("scoreB"));
                                 currentGame.setTimeInMillis(Long.parseLong(obj.getString("timeInMillis")));
                                 currentGame.setPeriod(Integer.parseInt(obj.getString("period")));
                                 currentGame.setColorTeamA(obj.getInt("teamAColor"));
