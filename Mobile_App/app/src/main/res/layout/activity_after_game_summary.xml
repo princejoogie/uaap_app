@@ -38,16 +38,35 @@
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
-                <Button
-                    android:id="@+id/btnAfterRefSum"
-                    android:layout_width="50dp"
-                    android:layout_height="36dp"
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="right"
                     android:layout_marginTop="20dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/btn_eval_selected"
-                    android:text=">"
-                    android:textColor="@android:color/white" />
+                    android:gravity="right"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnExcel"
+                        android:layout_width="50dp"
+                        android:layout_height="36dp"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/btn_eval_selected"
+                        android:text=".xls"
+                        android:textColor="@android:color/white" />
+
+                    <Button
+                        android:id="@+id/btnAfterRefSum"
+                        android:layout_width="50dp"
+                        android:layout_height="36dp"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/btn_eval_selected"
+                        android:text=">"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+
             </GridLayout>
 
         </LinearLayout>

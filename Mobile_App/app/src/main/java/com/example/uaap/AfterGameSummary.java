@@ -74,6 +74,7 @@ public class AfterGameSummary extends AppCompatActivity {
 
     private ListView evaluationList;
 
+    private Button btnExcel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +102,7 @@ public class AfterGameSummary extends AppCompatActivity {
         btnAfterFilter = findViewById(R.id.btnAfterFilter);
         btnAfterRefSum = findViewById(R.id.btnAfterRefSum);
 
+        btnExcel = findViewById(R.id.btnExcel);
         txtLeagueName.setText(currentGame.getLeagueName());
         txtAfterTeamA.setText(currentGame.getTeamA());
         txtAfterTeamB.setText(currentGame.getTeamB());
@@ -151,6 +153,12 @@ public class AfterGameSummary extends AppCompatActivity {
                 Intent intent = new Intent(AfterGameSummary.this, AfterRefereeSummary.class);
                 intent.putExtra("playing", playing);
                 startActivity(intent);
+            }
+        });
+        btnExcel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
             }
         });
     }
