@@ -9,12 +9,12 @@ public class GetAll {
     public String status;
 
     @SerializedName("result")
-    public ArrayList<LeagueDetails> result;
+    public ArrayList<GetAllDetails> result;
 
     public GetAll(){
 
     }
-    public GetAll(String status, ArrayList<LeagueDetails> result){
+    public GetAll(String status, ArrayList<GetAllDetails> result){
         this.status = status;
         this.result = result;
 
@@ -28,11 +28,11 @@ public class GetAll {
         this.status = status;
     }
 
-    public ArrayList<LeagueDetails> getResult() {
+    public ArrayList<GetAllDetails> getResult() {
         return result;
     }
 
-    public void setResult(ArrayList<LeagueDetails> result) {
+    public void setResult(ArrayList<GetAllDetails> result) {
         this.result = result;
     }
 }

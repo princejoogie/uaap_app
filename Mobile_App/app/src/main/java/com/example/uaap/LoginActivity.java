@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(intent);
                             }
                             else{
-                               Intent intent = new Intent(getApplicationContext(), Admin.class);
+                               Intent intent = new Intent(getApplicationContext(), Excel.class);
                                startActivity(intent);
                             }
 
