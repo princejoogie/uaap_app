@@ -332,7 +332,7 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                             btnStaffDis.setBackgroundColor(currentGame.getColorTeamA());
                             btnStaffDis.setTextColor(Color.WHITE);
                         }
-                        if (finalI < currentGame.playerB.size()) {
+                        if (finalI < currentGame.playerA.size()) {
                             clearPlayer(false);
                             playerSelect(false, finalI);
                         }
@@ -1407,8 +1407,9 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                     if(!isEmpty(callToIssue.getAreaOfPlay())){
                         params.put("areaOfPlay", callToIssue.getAreaOfPlay());
                     }
-                    params.put("reviewDecision", callToIssue.getReviewDecision());
-                    if (!isEmpty(txtComment.getText().toString())) {
+                    if(!isEmpty(callToIssue.getReviewDecision())){
+                        params.put("reviewDecision", callToIssue.getReviewDecision());
+                    }                    if (!isEmpty(txtComment.getText().toString())) {
                         params.put("comment", txtComment.getText().toString());
                     }
                     params.put("scoreA", callToIssue.getScoreA());

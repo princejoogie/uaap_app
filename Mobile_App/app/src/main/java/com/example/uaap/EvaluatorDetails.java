@@ -101,7 +101,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
 
     private CurrentGame currentGame;
     private long time;
-    private boolean changed;
+    private boolean changed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -227,8 +227,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         for (int i = 0; i < currentGame.playerB.size(); i++) {
             playingB[i] = currentGame.playerB.get(i).jerseyNumber;
         }
-
-        getThisGame();
+        setPlayers();
         callToIssue.setPeriod(currentGame.getPeriod());
 
 
@@ -309,7 +308,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                             btnStaffDis.setBackgroundColor(currentGame.getColorTeamA());
                             btnStaffDis.setTextColor(Color.WHITE);
                         }
-                        if (finalI < currentGame.playerB.size()) {
+                        if (finalI < currentGame.playerA.size()) {
                             clearPlayer(false);
                             playerSelect(false, finalI);
                         }
@@ -557,7 +556,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                 callToIssue.setDisType(null);
                 callToIssue.setDis(null);
                 changed = !changed;
-                setPlayers(changed);
+                setPlayers();
             }
         });
 
@@ -569,11 +568,10 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         btnRefB.setText(currentGame.referee.get(1).name);
         btnRefC.setText(currentGame.referee.get(2).name);
         changed = false;
-        setPlayers(changed);
 
     }
 
-    private void setPlayers(boolean changed) {
+    private void setPlayers() {
         for (int i = 0; i < 20; i++) {
             btnComm[i].setBackgroundColor(Color.parseColor("#FFFFFF"));
             btnComm[i].setText("");
@@ -1109,7 +1107,9 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                     if(!isEmpty(callToIssue.getAreaOfPlay())){
                         params.put("areaOfPlay", callToIssue.getAreaOfPlay());
                     }
-                    params.put("reviewDecision", callToIssue.getReviewDecision());
+                    if(!isEmpty(callToIssue.getReviewDecision())){
+                        params.put("reviewDecision", callToIssue.getReviewDecision());
+                    }
                     if (!isEmpty(txtComment.getText().toString())) {
                         params.put("comment", txtComment.getText().toString());
                     }
