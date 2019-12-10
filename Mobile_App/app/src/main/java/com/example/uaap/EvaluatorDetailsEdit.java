@@ -102,6 +102,15 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
     private TextView txtTeamComm;
     private TextView txtTeamDis;
     private TextView txtFoul;
+    private TextView txtScoreA;
+    private TextView txtScoreB;
+    private TextView txtTeamA;
+    private TextView txtTeamB;
+    private Button btnAddScoreA;
+    private Button btnAddScoreB;
+    private Button btnSubScoreA;
+    private Button btnSubScoreB;
+    private Button btnEndGame;
     private String SubmitEvalURL = "http://68.183.49.18/uaap/public/editEvaluation";
     private String GetEvalURL = "http://68.183.49.18/uaap/public/getEval";
 
@@ -222,6 +231,14 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
         txtTeamDis = findViewById(R.id.txtTeamDis);
         txtTeamComm = findViewById(R.id.txtTeamComm);
         txtFoul = findViewById(R.id.txtFoul);
+        txtScoreA = findViewById(R.id.txtScoreA);
+        txtScoreB = findViewById(R.id.txtScoreB);
+        txtTeamA = findViewById(R.id.txtTeamA);
+        txtTeamB = findViewById(R.id.txtTeamB);
+        btnAddScoreA = findViewById(R.id.btnAddScoreA);
+        btnAddScoreB = findViewById(R.id.btnAddScoreB);
+        btnSubScoreA = findViewById(R.id.btnSubScoreA);
+        btnSubScoreB = findViewById(R.id.btnSubScoreB);
         initTime();
         refButtons[0] = btnRefA;
         refButtons[1] = btnRefB;
@@ -254,7 +271,47 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
         }
 
         getThisGame();
+        refreshScore();
+        txtTeamA.setText(currentGame.getTeamA());
+        txtTeamB.setText(currentGame.getTeamB());
+        btnAddScoreA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callToIssue.setScoreA(callToIssue.getScoreA() + 1);
+                refreshScore();
+            }
+        });
 
+        btnAddScoreB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callToIssue.setScoreB(callToIssue.getScoreB() + 1);
+                refreshScore();
+
+            }
+        });
+
+        btnSubScoreA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callToIssue.setScoreA(callToIssue.getScoreA() - 1);
+                if (callToIssue.getScoreA() < 0) {
+                    callToIssue.setScoreA(0);
+                }
+                refreshScore();
+            }
+        });
+
+        btnSubScoreB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callToIssue.setScoreB(callToIssue.getScoreB() - 1);
+                if (callToIssue.getScoreB() < 0) {
+                    callToIssue.setScoreB(0);
+                }
+                refreshScore();
+            }
+        });
         for (int i = 0; i < 20; i++) {
             final int finalI = i;
             btnComm[i].setOnClickListener(new View.OnClickListener() {
@@ -586,7 +643,12 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
 
 
     }
-
+    private void refreshScore() {
+        callToIssue.setScoreA(callToIssue.getScoreA());
+        callToIssue.setScoreB(callToIssue.getScoreB());
+        txtScoreA.setText(String.valueOf(callToIssue.getScoreA()));
+        txtScoreB.setText(String.valueOf(callToIssue.getScoreB()));
+    }
     private void getThisGame() {
         btnRefA.setText(currentGame.referee.get(0).name);
         btnRefB.setText(currentGame.referee.get(1).name);
@@ -1412,8 +1474,8 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                     }                    if (!isEmpty(txtComment.getText().toString())) {
                         params.put("comment", txtComment.getText().toString());
                     }
-                    params.put("scoreA", callToIssue.getScoreA());
-                    params.put("scoreB", callToIssue.getScoreB());
+                    params.put("scoreA", String.valueOf(callToIssue.getScoreA()));
+                    params.put("scoreB", String.valueOf(callToIssue.getScoreB()));
                     return params;
                 }
 

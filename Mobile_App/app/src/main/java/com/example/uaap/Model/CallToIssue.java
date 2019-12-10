@@ -34,23 +34,23 @@ public class CallToIssue {
     @SerializedName("time")
     private String time;
     @SerializedName("scoreA")
-    private String scoreA;
+    private int scoreA;
     @SerializedName("scoreB")
-    private String scoreB;
+    private int scoreB;
 
-    public String getScoreA() {
+    public int getScoreA() {
         return scoreA;
     }
 
-    public void setScoreA(String scoreA) {
+    public void setScoreA(int scoreA) {
         this.scoreA = scoreA;
     }
 
-    public String getScoreB() {
+    public int getScoreB() {
         return scoreB;
     }
 
-    public void setScoreB(String scoreB) {
+    public void setScoreB(int scoreB) {
         this.scoreB = scoreB;
     }
 

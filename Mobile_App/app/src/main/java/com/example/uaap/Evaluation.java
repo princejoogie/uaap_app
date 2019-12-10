@@ -163,13 +163,11 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         time = currentGame.getTimeInMillis();
         updateCountDownText();
         refreshScore();
+        txtTeamA.setText(currentGame.getTeamA());
+        txtTeamB.setText(currentGame.getTeamB());
         evaluationList.setOnItemClickListener(this);
         evaluationList.setOnItemLongClickListener(this);
         enablePeriod(currentGame.getPeriod(), periodButtons);
-        txtTeamA.setText(currentGame.getTeamA());
-        txtTeamB.setText(currentGame.getTeamB());
-        txtScoreA.setText(String.valueOf(currentGame.getScoreA()));
-        txtScoreB.setText(String.valueOf(currentGame.getScoreB()));
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -97,6 +97,15 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
     private TextView txtFoul;
     private String SubmitEvalURL = "http://68.183.49.18/uaap/public/createEvaluation";
 
+    private TextView txtScoreA;
+    private TextView txtScoreB;
+    private TextView txtTeamA;
+    private TextView txtTeamB;
+    private Button btnAddScoreA;
+    private Button btnAddScoreB;
+    private Button btnSubScoreA;
+    private Button btnSubScoreB;
+
     private CallToIssue callToIssue;
 
     private CurrentGame currentGame;
@@ -209,6 +218,15 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         txtTeamDis = findViewById(R.id.txtTeamDis);
         txtTeamComm = findViewById(R.id.txtTeamComm);
         txtFoul = findViewById(R.id.txtFoul);
+        txtScoreA = findViewById(R.id.txtScoreA);
+        txtScoreB = findViewById(R.id.txtScoreB);
+        txtTeamA = findViewById(R.id.txtTeamA);
+        txtTeamB = findViewById(R.id.txtTeamB);
+        btnAddScoreA = findViewById(R.id.btnAddScoreA);
+        btnAddScoreB = findViewById(R.id.btnAddScoreB);
+        btnSubScoreA = findViewById(R.id.btnSubScoreA);
+        btnSubScoreB = findViewById(R.id.btnSubScoreB);
+
         initTime();
         final Button[] refButtons = {btnRefA, btnRefB, btnRefC};
         final Button[] areaButtons = {btnAreaLead, btnAreaCenter, btnAreaTrail};
@@ -216,6 +234,9 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         final Button[] reviewButtons = {btnReviewCC, btnReviewIC, btnReviewCFR, btnReviewNCFR, btnReviewCNC, btnReviewINC};
         final Button[] periodButtons = {btnQ1, btnQ2, btnQ3, btnQ4, btnOT};
 
+        refreshScore();
+        txtTeamA.setText(currentGame.getTeamA());
+        txtTeamB.setText(currentGame.getTeamB());
         callToIssue = new CallToIssue();
         setInfo(null, currentGame.getPeriod(), "period", periodButtons);
         playingA = new String[currentGame.playerA.size()];
@@ -230,7 +251,44 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         setPlayers();
         callToIssue.setPeriod(currentGame.getPeriod());
 
+        btnAddScoreA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentGame.setScoreA(currentGame.getScoreA() + 1);
+                refreshScore();
+            }
+        });
 
+        btnAddScoreB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentGame.setScoreB(currentGame.getScoreB() + 1);
+                refreshScore();
+
+            }
+        });
+
+        btnSubScoreA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentGame.setScoreA(currentGame.getScoreA() - 1);
+                if (currentGame.getScoreA() < 0) {
+                    currentGame.setScoreA(0);
+                }
+                refreshScore();
+            }
+        });
+
+        btnSubScoreB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentGame.setScoreB(currentGame.getScoreB() - 1);
+                if (currentGame.getScoreB() < 0) {
+                    currentGame.setScoreB(0);
+                }
+                refreshScore();
+            }
+        });
         for (int i = 0; i < 20; i++) {
             final int finalI = i;
             btnComm[i].setOnClickListener(new View.OnClickListener() {
@@ -562,7 +620,12 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
 
 
     }
-
+    private void refreshScore() {
+        currentGame.setScoreA(currentGame.getScoreA());
+        currentGame.setScoreB(currentGame.getScoreB());
+        txtScoreA.setText(String.valueOf(currentGame.getScoreA()));
+        txtScoreB.setText(String.valueOf(currentGame.getScoreB()));
+    }
     private void getThisGame() {
         btnRefA.setText(currentGame.referee.get(0).name);
         btnRefB.setText(currentGame.referee.get(1).name);
