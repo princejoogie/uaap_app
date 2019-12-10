@@ -3,9 +3,11 @@ package com.example.uaap;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -25,20 +27,33 @@ import com.example.uaap.Model.AfterGameFilter;
 import com.example.uaap.Model.CurrentGame;
 import com.example.uaap.Model.EvaluationDetails;
 import com.example.uaap.Model.EvaluationModel;
+import com.example.uaap.Model.GetAll;
 import com.google.gson.Gson;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+
+import jxl.Workbook;
+import jxl.WorkbookSettings;
+import jxl.write.Label;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
+import jxl.write.WriteException;
+import jxl.write.biff.RowsExceededException;
 
 public class AfterGameSummary extends AppCompatActivity {
     boolean doubleBackToExitPressedOnce = false;
     private CurrentGame currentGame;
     private String playing;
-
+    private String getAll = "http://68.183.49.18/uaap/public/getAll";
+    private GetAll getResult;
     private TextView txtLeagueName;
     private TextView txtAfterTeamA;
     private TextView txtAfterTeamB;
@@ -158,7 +173,7 @@ public class AfterGameSummary extends AppCompatActivity {
         btnExcel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                createExcelSheet(getApplicationContext());
             }
         });
     }
@@ -602,8 +617,11 @@ public class AfterGameSummary extends AppCompatActivity {
                             calls = gson.fromJson(response, EvaluationModel.class);
                             ArrayList<EvaluationDetails> dataModelArrayList = calls.result;
                             if (!dataModelArrayList.isEmpty()) {
+                                evaluationList.setVisibility(View.VISIBLE   );
                                 listAdapter = new EvaluationListAdapter(getApplicationContext(), dataModelArrayList);
                                 evaluationList.setAdapter(listAdapter);
+                            }else{
+                                Toast.makeText(getApplicationContext(), "No Result!", Toast.LENGTH_LONG).show();
                             }
 
                         }
@@ -646,5 +664,92 @@ public class AfterGameSummary extends AppCompatActivity {
         intent.putExtra("playing", json);
         startActivity(intent);
 
+    }
+
+    private void createExcelSheet(Context context)
+    {
+        String Fnamexls="Uaap.xls";
+        File sdCard = Environment.getRootDirectory();
+        File directory = new File ( sdCard.getAbsolutePath()+ "/UAAP");
+        directory.mkdirs();
+        File file = new File(directory, Fnamexls);
+
+        WorkbookSettings wbSettings = new WorkbookSettings();
+
+        wbSettings.setLocale(new Locale("en", "EN"));
+
+        WritableWorkbook workbook;
+        try {
+            int a = 1;
+            workbook = Workbook.createWorkbook(file, wbSettings);
+            //workbook.createSheet("Report", 0);
+            WritableSheet sheet = workbook.createSheet("Reports", 0);
+            Label col1 = new Label(0,0,"ID");
+            Label col2 = new Label(1,0,"TIME");
+            Label col3 = new Label(1,0,"PERIOD");
+            try {
+                sheet.addCell(col1);
+                sheet.addCell(col2);
+                sheet.addCell(col3);
+            } catch (RowsExceededException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (WriteException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+
+            workbook.write();
+            Toast.makeText(context,"Excel File Created.", Toast.LENGTH_SHORT).show();
+            try {
+                workbook.close();
+            } catch (WriteException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            //createExcel(excelSheet);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    public void getAll(final Context context){
+        RequestQueue queue = Volley.newRequestQueue(context);
+        StringRequest putRequest = new StringRequest(Request.Method.POST, getAll,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Gson gson = new Gson();
+                        getResult = gson.fromJson(response, GetAll.class);
+                        String status = getResult.status;
+                        // Get Result Here
+                        if (status.equals("true")) {
+                            Toast.makeText(context, " Successfully deleted.", Toast.LENGTH_SHORT).show();
+                        } else {
+
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", String.valueOf(error));
+                    }
+                }
+        ) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", "34");
+                return params;
+            }
+
+        };
+
+        queue.add(putRequest);
     }
 }

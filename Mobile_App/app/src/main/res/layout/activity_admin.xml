@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    tools:context=".Admin">
+
+    <LinearLayout
+        android:layout_width="366dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <Button
+            android:id="@+id/btnLeagues"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Leagues" />
+
+        <Button
+            android:id="@+id/btnTeams"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Teams" />
+
+        <Button
+            android:id="@+id/btnReports"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Reports" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="366dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
+
+        <Button
+            android:id="@+id/btnReferees"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Referees" />
+
+        <Button
+            android:id="@+id/btnAccounts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Accounts" />
+
+        <Button
+            android:id="@+id/btnRealtime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Realtime" />
+    </LinearLayout>
+</LinearLayout>

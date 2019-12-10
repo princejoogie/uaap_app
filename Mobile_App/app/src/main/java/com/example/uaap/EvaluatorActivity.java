@@ -213,7 +213,6 @@ public class EvaluatorActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         Gson gson = new Gson();
                         details = gson.fromJson(response, League.class);
-
                         ArrayAdapter<LeagueDetails> adapter = new ArrayAdapter<LeagueDetails>(getApplicationContext(), R.layout.spinner_item, details.result);
                         spinner.setAdapter(adapter);
 
@@ -251,7 +250,6 @@ public class EvaluatorActivity extends AppCompatActivity {
                             Log.e("Here", response);
                             Gson gson = new Gson();
                             details = gson.fromJson(response, League.class);
-
                             ArrayAdapter<LeagueDetails> adapter = new ArrayAdapter<LeagueDetails>(getApplicationContext(), R.layout.spinner_item, details.result);
                             spinner.setAdapter(adapter);
 
@@ -352,6 +350,7 @@ public class EvaluatorActivity extends AppCompatActivity {
                                 currentGame.setTeamA(obj.getString("teamA"));
                                 currentGame.setTeamB(obj.getString("teamB"));
                                 currentGame.setScoreA(obj.getInt("scoreA"));
+                                Log.e("score", String.valueOf(obj.getInt("scoreA")));
                                 currentGame.setScoreB(obj.getInt("scoreB"));
                                 currentGame.setTimeInMillis(Long.parseLong(obj.getString("timeInMillis")));
                                 currentGame.setPeriod(Integer.parseInt(obj.getString("period")));

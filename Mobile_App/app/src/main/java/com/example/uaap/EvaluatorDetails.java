@@ -1049,15 +1049,10 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         if (isEmpty(callToIssue.getRefereeId())) {
             Toast.makeText(getApplicationContext(), "Please select a referee", Toast.LENGTH_SHORT).show();
         }
-
-        if (isEmpty(callToIssue.getReviewDecision())) {
-            Toast.makeText(getApplicationContext(), "Please select a review decision", Toast.LENGTH_SHORT).show();
-        }
         if (!isEmpty(callToIssue.getCommitting()) &&
                 !isEmpty(callToIssue.getCallType()) &&
                 !isEmpty(callToIssue.getCall()) &&
-                !isEmpty(callToIssue.getRefereeId()) &&
-                !isEmpty(callToIssue.getReviewDecision())) {
+                !isEmpty(callToIssue.getRefereeId())) {
 
             RequestQueue queue = Volley.newRequestQueue(this);
             StringRequest putRequest = new StringRequest(Request.Method.POST, SubmitEvalURL,

@@ -129,6 +129,7 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         getCalls();
         time = currentGame.getTimeInMillis();
         updateCountDownText();
+        refreshScore();
         evaluationList.setOnItemClickListener(this);
         evaluationList.setOnItemLongClickListener(this);
         enablePeriod(currentGame.getPeriod(), periodButtons);

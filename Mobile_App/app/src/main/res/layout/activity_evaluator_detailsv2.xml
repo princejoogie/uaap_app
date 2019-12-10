@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:background="@drawable/bg_admin"
     android:clipToPadding="false"
     android:gravity="center"
@@ -33,7 +33,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:duplicateParentState="true"
                     android:orientation="vertical"
@@ -51,6 +50,7 @@
                             android:layout_margin="10dp"
                             android:layout_weight="1"
                             android:background="@drawable/btn_eval_selected"
+                            android:minHeight="30dp"
                             android:text="&#9650;"
                             android:textColor="#FFFFFF">
 
@@ -63,6 +63,7 @@
                             android:layout_margin="10dp"
                             android:layout_weight="1"
                             android:background="@drawable/btn_eval_selected"
+                            android:minHeight="30dp"
                             android:text="&#9650;"
                             android:textColor="#FFFFFF">
 
@@ -75,6 +76,7 @@
                             android:layout_margin="10dp"
                             android:layout_weight="1"
                             android:background="@drawable/btn_eval_selected"
+                            android:minHeight="30dp"
                             android:text="&#9650;"
                             android:textColor="#FFFFFF">
 
@@ -105,7 +107,7 @@
                                 android:padding="10dp"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textSize="50dp" />
+                                android:textSize="40dp" />
 
                             <TextView
                                 android:id="@+id/txtMinute2"
@@ -117,7 +119,7 @@
                                 android:padding="10dp"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textSize="50dp" />
+                                android:textSize="40dp" />
 
 
                         </LinearLayout>
@@ -147,7 +149,7 @@
                                 android:padding="10dp"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textSize="50dp" />
+                                android:textSize="40dp" />
 
                             <TextView
                                 android:id="@+id/txtSecond2"
@@ -159,7 +161,7 @@
                                 android:padding="10dp"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textSize="50dp" />
+                                android:textSize="40dp" />
                         </LinearLayout>
 
                         <TextView
@@ -187,7 +189,7 @@
                                 android:padding="10dp"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textSize="50dp" />
+                                android:textSize="40dp" />
 
                             <TextView
                                 android:id="@+id/txtMillis2"
@@ -199,7 +201,7 @@
                                 android:padding="10dp"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textSize="50dp" />
+                                android:textSize="40dp" />
 
 
                         </LinearLayout>
@@ -218,6 +220,7 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="10dp"
                             android:background="@drawable/btn_eval_selected"
+                            android:minHeight="30dp"
                             android:text="&#9660;"
                             android:textColor="#FFFFFF">
 
@@ -230,6 +233,7 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="10dp"
                             android:background="@drawable/btn_eval_selected"
+                            android:minHeight="30dp"
                             android:text="&#9660;"
                             android:textColor="#FFFFFF">
 
@@ -242,6 +246,7 @@
                             android:layout_columnWeight="1"
                             android:layout_margin="10dp"
                             android:background="@drawable/btn_eval_selected"
+                            android:minHeight="30dp"
                             android:text="&#9660;"
                             android:textColor="#FFFFFF">
 
@@ -262,6 +267,7 @@
                             android:layout_columnWeight="1"
                             android:layout_marginHorizontal="5dp"
                             android:background="@drawable/button_eval"
+                            android:minHeight="36dp"
                             android:text="1"
                             android:textColor="#E9841A" />
 
@@ -272,6 +278,7 @@
                             android:layout_columnWeight="1"
                             android:layout_marginHorizontal="5dp"
                             android:background="@drawable/button_eval"
+                            android:minHeight="36dp"
                             android:text="2"
                             android:textColor="#E9841A" />
 
@@ -282,6 +289,7 @@
                             android:layout_columnWeight="1"
                             android:layout_marginHorizontal="5dp"
                             android:background="@drawable/button_eval"
+                            android:minHeight="36dp"
                             android:text="3"
                             android:textColor="#E9841A" />
 
@@ -292,6 +300,7 @@
                             android:layout_columnWeight="1"
                             android:layout_marginHorizontal="5dp"
                             android:background="@drawable/button_eval"
+                            android:minHeight="36dp"
                             android:text="4"
                             android:textColor="#E9841A" />
 
@@ -302,6 +311,7 @@
                             android:layout_columnWeight="1"
                             android:layout_marginHorizontal="5dp"
                             android:background="@drawable/button_eval"
+                            android:minHeight="36dp"
                             android:text="OT"
                             android:textColor="#E9841A" />
 
@@ -313,7 +323,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="5dp"
                     android:layout_weight="2"
                     android:gravity="center">
 
@@ -335,6 +344,8 @@
                                 android:layout_margin="5dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/button_eval"
+                                android:minWidth="100dp"
+                                android:minHeight="36dp"
                                 android:text="Foul"
                                 android:textColor="#E9841A" />
 
@@ -345,6 +356,8 @@
                                 android:layout_margin="5dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/button_eval"
+                                android:minWidth="70dp"
+                                android:minHeight="36dp"
                                 android:text="Violation"
                                 android:textColor="#E9841A" />
 
@@ -356,6 +369,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="15dp"
                             android:background="@drawable/button_eval"
+                            android:minHeight="36dp"
                             android:padding="10dp"
                             android:text="No Foul/Violation Selected"
                             android:textColor="#E9841A"
@@ -371,7 +385,6 @@
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:layout_weight="2"
                 android:paddingBottom="10dp">
 
@@ -860,7 +873,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp"
             android:layout_weight="5"
             android:orientation="vertical"
             android:padding="10dp">
@@ -873,6 +885,8 @@
                 android:layout_marginVertical="5dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/button_eval"
+                android:minWidth="70dp"
+                android:minHeight="36dp"
                 android:padding="10dp"
                 android:text="Referee 1"
                 android:textColor="#E9841A" />
@@ -885,6 +899,8 @@
                 android:layout_marginVertical="5dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/button_eval"
+                android:minWidth="70dp"
+                android:minHeight="36dp"
                 android:padding="10dp"
                 android:text="Referee 2"
                 android:textColor="#E9841A" />
@@ -897,6 +913,8 @@
                 android:layout_marginVertical="5dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/button_eval"
+                android:minWidth="70dp"
+                android:minHeight="36dp"
                 android:padding="10dp"
                 android:text="Referee 3"
                 android:textColor="#E9841A" />
@@ -919,6 +937,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/button_eval"
+                    android:minHeight="36dp"
                     android:padding="10dp"
                     android:text="Lead"
                     android:textColor="#E9841A" />
@@ -929,6 +948,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
                     android:background="@drawable/button_eval"
+                    android:minHeight="36dp"
                     android:padding="10dp"
                     android:text="Center"
                     android:textColor="#E9841A" />
@@ -939,6 +959,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/button_eval"
+                    android:minHeight="36dp"
                     android:padding="10dp"
                     android:text="Trail"
                     android:textColor="#E9841A" />
@@ -963,6 +984,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/button_eval"
+                    android:minHeight="36dp"
                     android:padding="10dp"
                     android:text="Lead"
                     android:textColor="#E9841A" />
@@ -973,6 +995,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
                     android:background="@drawable/button_eval"
+                    android:minHeight="36dp"
                     android:padding="10dp"
                     android:text="Center"
                     android:textColor="#E9841A" />
@@ -983,6 +1006,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/button_eval"
+                    android:minHeight="36dp"
                     android:padding="10dp"
                     android:text="Trail"
                     android:textColor="#E9841A" />
@@ -1009,6 +1033,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@drawable/button_eval"
+                    android:minHeight="36dp"
                     android:padding="10dp"
                     android:text="CC"
                     android:textColor="#E9841A" />
@@ -1019,6 +1044,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@drawable/button_eval"
+                    android:minHeight="36dp"
                     android:padding="10dp"
                     android:text="CFR"
                     android:textColor="#E9841A" />
@@ -1029,6 +1055,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@drawable/button_eval"
+                    android:minHeight="36dp"
                     android:padding="10dp"
                     android:text="CNC"
                     android:textColor="#E9841A" />
@@ -1039,6 +1066,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@drawable/button_eval"
+                    android:minHeight="36dp"
                     android:padding="10dp"
                     android:text="IC"
                     android:textColor="#E9841A" />
@@ -1049,6 +1077,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@drawable/button_eval"
+                    android:minHeight="36dp"
                     android:padding="10dp"
                     android:text="NCFR"
                     android:textColor="#E9841A" />
@@ -1059,6 +1088,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:background="@drawable/button_eval"
+                    android:minHeight="36dp"
                     android:padding="10dp"
                     android:text="INC"
                     android:textColor="#E9841A" />
@@ -1086,6 +1116,7 @@
                 android:layout_marginBottom="10dp"
                 android:background="#C6C6C6"
                 android:gravity=""
+                android:minWidth="70dp"
                 android:padding="5dp"
                 android:textSize="12sp" />
 
@@ -1095,6 +1126,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="#EC3D3D"
+                android:minWidth="70dp"
                 android:text="SUBMIT"
                 android:textColor="@android:color/white"
                 android:textSize="20dp" />
@@ -1103,4 +1135,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

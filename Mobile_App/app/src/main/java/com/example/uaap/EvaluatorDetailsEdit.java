@@ -699,14 +699,18 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                         if(callToIssue.getCallType().equals("Foul")){
                             btnFoul.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
                             btnViolation.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_eval));
+                            btnFoul.setTextColor(Color.parseColor("#FFFFFF"));
                         }else{
                             btnViolation.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
                             btnFoul.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_eval));
+                            btnViolation.setTextColor(Color.parseColor("#FFFFFF"));
+
                         }
 
                         //referee
                         int refIndex = getIndexOfReferee(callToIssue.getRefereeId(),currentGame.getReferee());
                         refButtons[refIndex].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
+                        refButtons[refIndex].setTextColor(Color.parseColor("#FFFFFF"));
 
                         String[] areas = {"Lead", "Center", "Trail"};
                         //area
@@ -719,6 +723,8 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                                 }
                             }
                             areaButtons[index].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
+                            areaButtons[index].setTextColor(Color.parseColor("#FFFFFF"));
+
                         }
                         //aop
                         if(callToIssue.getAreaOfPlay()!=null){
@@ -729,6 +735,8 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                                 }
                             }
                             aopButtons[index].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
+                            aopButtons[index].setTextColor(Color.parseColor("#FFFFFF"));
+
                         }
 
                         //review
@@ -740,13 +748,14 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                             }
                         }
                         reviewButtons[index].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
+                        reviewButtons[index].setTextColor(Color.parseColor("#FFFFFF"));
 
                         if(callToIssue.getComment()!=null){
                             txtComment.setText(callToIssue.getComment());
                         }
 
                         periodButtons[callToIssue.getPeriod()].setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
-
+                        periodButtons[callToIssue.getPeriod()].setTextColor(Color.parseColor("#FFFFFF"));
                     }
                 },
                 new Response.ErrorListener() {
@@ -1289,9 +1298,12 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                     if (foulVio) {
                         btnFoul.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
                         btnViolation.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_eval));
+                        btnFoul.setTextColor(Color.parseColor("#FFFFF"));
                     } else {
                         btnViolation.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
                         btnFoul.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_eval));
+                        btnViolation.setTextColor(Color.parseColor("#FFFFF"));
+
                     }
                 }
 
@@ -1337,17 +1349,10 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
         if (isEmpty(callToIssue.getRefereeId())) {
             Toast.makeText(getApplicationContext(), "Please select a referee", Toast.LENGTH_SHORT).show();
         }
-
-        if (isEmpty(callToIssue.getReviewDecision())) {
-            Toast.makeText(getApplicationContext(), "Please select a review decision", Toast.LENGTH_SHORT).show();
-        }
-
         if (!isEmpty(callToIssue.getCommitting()) &&
                 !isEmpty(callToIssue.getCallType()) &&
                 !isEmpty(callToIssue.getCall()) &&
-                !isEmpty(callToIssue.getRefereeId()) &&
-                !isEmpty(callToIssue.getReviewDecision())) {
-
+                !isEmpty(callToIssue.getRefereeId())) {
             RequestQueue queue = Volley.newRequestQueue(this);
             StringRequest putRequest = new StringRequest(Request.Method.POST, SubmitEvalURL,
                     new Response.Listener<String>() {
