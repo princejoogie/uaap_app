@@ -41,7 +41,7 @@
             <EditText
                 android:id="@+id/edtGameCode"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="80dp"
                 android:layout_marginRight="50dp"
                 android:background="#F2F2F2"
@@ -74,7 +74,7 @@
             <Spinner
                 android:id="@+id/spinLeague"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:layout_marginLeft="80dp"
                 android:layout_marginRight="50dp"
@@ -96,7 +96,7 @@
             <Spinner
                 android:id="@+id/spinnerTeamA"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:background="#F2F2F2"
                 android:padding="10sp" />
@@ -122,7 +122,7 @@
             <Spinner
                 android:id="@+id/spinnerTeamB"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="5"
                 android:background="#F2F2F2"
                 android:padding="10sp" />
@@ -151,7 +151,7 @@
             <Spinner
                 android:id="@+id/spinnerRefereeA"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
                 android:background="#F2F2F2"
@@ -160,7 +160,7 @@
             <Spinner
                 android:id="@+id/spinnerRefereeB"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
@@ -170,7 +170,7 @@
             <Spinner
                 android:id="@+id/spinnerRefereeC"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
                 android:background="#F2F2F2"
@@ -195,7 +195,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
+                android:padding="10dp"
                 android:text="START GAME"
                 android:textAlignment="center"
                 android:textColor="#F2F2F2"

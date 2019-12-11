@@ -1,22 +1,20 @@
 package com.example.uaap.Model;
 
-import com.example.uaap.Model.GetAllDetails;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-public class GetAll {
+public class Team {
     @SerializedName("status")
     public String status;
 
     @SerializedName("result")
-    public ArrayList<GetAllDetails> result;
+    public ArrayList<LeagueDetails> result;
 
-    public GetAll() {
+    public Team(){
 
     }
-
-    public GetAll(String status, ArrayList<GetAllDetails> result) {
+    public Team(String status, ArrayList<LeagueDetails> result){
         this.status = status;
         this.result = result;
 
@@ -30,11 +28,11 @@ public class GetAll {
         this.status = status;
     }
 
-    public ArrayList<GetAllDetails> getResult() {
+    public ArrayList<LeagueDetails> getResult() {
         return result;
     }
 
-    public void setResult(ArrayList<GetAllDetails> result) {
+    public void setResult(ArrayList<LeagueDetails> result) {
         this.result = result;
     }
 }

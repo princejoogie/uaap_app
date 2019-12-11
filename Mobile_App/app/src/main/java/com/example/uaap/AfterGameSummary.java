@@ -43,6 +43,8 @@ import java.util.Map;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
 import jxl.write.Label;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableFont;
 import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
@@ -667,51 +669,172 @@ public class AfterGameSummary extends AppCompatActivity {
 
     private void createExcelSheet(Context context)
     {
-        String Fnamexls="Uaap.xls";
-        File sdCard = Environment.getRootDirectory();
-        File directory = new File ( sdCard.getAbsolutePath()+ "/UAAP");
-        directory.mkdirs();
-        File file = new File(directory, Fnamexls);
+        final String gameid = currentGame.getGameId();
+        final String TeamA = currentGame.getTeamA();
+        final String TeamB = currentGame.getTeamB();
+        final String refA = currentGame.referee.get(0).name;
+        final String refB = currentGame.referee.get(1).name;
+        final String refC = currentGame.referee.get(2).name;
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest putRequest = new StringRequest(Request.Method.POST, getAll,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Gson gson = new Gson();
+                        getResult = gson.fromJson(response, GetAll.class);
+                        String status = getResult.status;
+                        String Fnamexls="Uaap.xls";
+                        File sdCard = Environment.getDataDirectory();
+                        File directory = new File ( getApplicationContext().getFilesDir().getAbsolutePath()+ "/UAAP");
+                        directory.mkdirs();
+                        File file = new File(directory, Fnamexls);
+                        int Size = getResult.result.size();
+                        int i = 0;
+                        WorkbookSettings wbSettings = new WorkbookSettings();
 
-        WorkbookSettings wbSettings = new WorkbookSettings();
+                        wbSettings.setLocale(new Locale("en", "EN"));
 
-        wbSettings.setLocale(new Locale("en", "EN"));
+                        WritableWorkbook workbook;
 
-        WritableWorkbook workbook;
-        try {
-            int a = 1;
-            workbook = Workbook.createWorkbook(file, wbSettings);
-            //workbook.createSheet("Report", 0);
-            WritableSheet sheet = workbook.createSheet("Reports", 0);
-            Label col1 = new Label(0,0,"ID");
-            Label col2 = new Label(1,0,"TIME");
-            Label col3 = new Label(1,0,"PERIOD");
-            try {
-                sheet.addCell(col1);
-                sheet.addCell(col2);
-                sheet.addCell(col3);
-            } catch (RowsExceededException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (WriteException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                        WritableFont cellFont = new WritableFont(WritableFont.COURIER, 16);
+                        try {
+                            cellFont.setBoldStyle(WritableFont.BOLD);
+                        } catch (WriteException e) {
+                            e.printStackTrace();
+                        }
+
+                        WritableCellFormat cellFormat = new WritableCellFormat(cellFont);
+
+                        try {
+
+                            workbook = Workbook.createWorkbook(file, wbSettings);
+                            WritableSheet sheet = workbook.createSheet("Reports", 0);
+
+                            for(int x=0; x<getResult.result.size();x++){
+                                String Id = Integer.toString(getResult.result.get(x).id);
+                                String time = getResult.result.get(x).time;
+                                int period = getResult.result.get(x).period;
+                                String finalPeriod;
+                                if(period >=4){
+                                    finalPeriod = "OT";
+                                }else{
+                                    finalPeriod = "Q" + Integer.toString(period + 1);
+                                }
+                                String disadvantage = getResult.result.get(x).disadvantaged;
+                                String callType = getResult.result.get(x).callType;
+                                String committing = getResult.result.get(x).committing;
+                                String referee = getResult.result.get(x).referee;
+                                String area = getResult.result.get(x).area;
+                                String areaOfPlay = getResult.result.get(x).areaOfPlay;
+                                String reviewDecision = getResult.result.get(x).reviewDecision;
+                                String comment = getResult.result.get(x).comment;
+                                String scores = getResult.result.get(x).scores;
+                                Label col6 = new Label(0, 6, "PERIOD", cellFormat);
+                                Label col7 = new Label(1, 6, "TIME", cellFormat);
+                                Label col8 = new Label(2, 6, "CALL TYPE", cellFormat);
+                                Label col9 = new Label(3, 6, "COMMITTING PLAYER", cellFormat);
+                                Label col10 = new Label(4, 6, "DISADVANTAGE PLAYER", cellFormat);
+                                Label game = new Label(5, 2, TeamA + " VS " + TeamB, cellFormat);
+                                Label refA1 = new Label(7, 2, refA);
+                                Label refB1 = new Label(7, 3, refB);
+                                Label refC1 = new Label(7, 4, refC);
+                                Label col11 = new Label(5, 6, "AREA OF PLAY", cellFormat);
+                                Label col12 = new Label(6, 6, "REFEREE", cellFormat);
+                                Label col13 = new Label(7, 6, "AREA", cellFormat);
+                                Label col14 = new Label(8, 6, "REVIEW DECISION", cellFormat);
+                                Label col15 = new Label(9, 6, "COMMENTS", cellFormat);
+                                Label col16 = new Label(10, 6, "SCORE", cellFormat);
+                                // Rows
+                                Label row6 = new Label(0, x+7, finalPeriod);
+                                Label row7 = new Label(1, x+7, time);
+                                Label row8 = new Label(2, x+7, callType);
+                                Label row9 = new Label(3, x+7, committing);
+                                Label row10 = new Label(4, x+7, disadvantage);
+                                Label row11 = new Label(5, x+7, areaOfPlay);
+                                Label row12 = new Label(6, x+7, referee);
+                                Label row13 = new Label(7, x+7, area);
+                                Label row14 = new Label(8, x+7, reviewDecision);
+                                Label row15 = new Label(9, x+7, comment);
+                                Label row16 = new Label(10, x+7, scores);
+
+                                Log.e("HGELLO", Id);
+                                try {
+                                    sheet.addCell(col6);
+                                    sheet.addCell(game);
+                                    sheet.addCell(col7);
+                                    sheet.addCell(col8);
+                                    sheet.addCell(col9);
+                                    sheet.addCell(col10);
+                                    sheet.addCell(col11);
+                                    sheet.addCell(col12);
+                                    sheet.addCell(col13);
+                                    sheet.addCell(col14);
+                                    sheet.addCell(col15);
+                                    sheet.addCell(col16);
+                                    //add row
+                                    sheet.addCell(row6);
+                                    sheet.addCell(row7);
+                                    sheet.addCell(row8);
+                                    sheet.addCell(row9);
+                                    sheet.addCell(row10);
+                                    sheet.addCell(row11);
+                                    sheet.addCell(row12);
+                                    sheet.addCell(row13);
+                                    sheet.addCell(row14);
+                                    sheet.addCell(row15);
+                                    sheet.addCell(row16);
+                                    sheet.addCell(refA1);
+                                    sheet.addCell(refB1);
+                                    sheet.addCell(refC1);
+
+
+                                } catch (RowsExceededException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                } catch (WriteException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            workbook.write();
+                            Toast.makeText(getApplicationContext(), "Excel Sucessfully Created.", Toast.LENGTH_SHORT).show();
+                            try {
+                                workbook.close();
+                            } catch (WriteException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                            //createExcel(excelSheet);
+
+
+                        } catch (IOException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", String.valueOf(error));
+                    }
+                }
+        ) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("gameId", gameid);
+                return params;
             }
 
+        };
 
-            workbook.write();
-            Toast.makeText(context,"Excel File Created.", Toast.LENGTH_SHORT).show();
-            try {
-                workbook.close();
-            } catch (WriteException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            //createExcel(excelSheet);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        queue.add(putRequest);
+
     }
-
 }

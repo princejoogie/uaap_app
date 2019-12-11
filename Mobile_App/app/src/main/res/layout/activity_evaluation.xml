@@ -82,7 +82,7 @@
                                 android:padding="10dp"
                                 android:text="1"
                                 android:textAlignment="center"
-                                android:textSize="40dp" />
+                                android:textSize="40sp" />
 
                             <TextView
                                 android:id="@+id/txtMinute2"
@@ -95,7 +95,7 @@
                                 android:padding="10dp"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textSize="40dp" />
+                                android:textSize="40sp" />
 
                         </LinearLayout>
 
@@ -121,7 +121,7 @@
                         android:text=":"
                         android:textAlignment="center"
                         android:textColor="@android:color/black"
-                        android:textSize="50dp" />
+                        android:textSize="50sp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -160,7 +160,7 @@
                                 android:padding="10dp"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textSize="40dp" />
+                                android:textSize="40sp" />
 
                             <TextView
                                 android:id="@+id/txtSecond2"
@@ -173,7 +173,7 @@
                                 android:padding="10dp"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textSize="40dp" />
+                                android:textSize="40sp" />
 
                         </LinearLayout>
 
@@ -200,7 +200,7 @@
                         android:text=":"
                         android:textAlignment="center"
                         android:textColor="@android:color/black"
-                        android:textSize="50dp" />
+                        android:textSize="50sp" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -239,7 +239,7 @@
                                 android:padding="10dp"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textSize="40dp" />
+                                android:textSize="40sp" />
 
                             <TextView
                                 android:id="@+id/txtMillis2"
@@ -252,7 +252,7 @@
                                 android:padding="10dp"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textSize="40dp" />
+                                android:textSize="40sp" />
                         </LinearLayout>
 
                         <Button
@@ -379,10 +379,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="5dp"
-                        android:layout_weight="2"
+                        android:layout_weight="1"
                         android:background="@drawable/button_eval"
                         android:minHeight="36dp"
-                        android:text="Team Timeout"
+                        android:text="Team"
                         android:textColor="#E9841A" />
 
                     <Button
@@ -390,10 +390,10 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="5dp"
-                        android:layout_weight="2"
+                        android:layout_weight="1"
                         android:background="@drawable/button_eval"
                         android:minHeight="36dp"
-                        android:text="TV Timeout"
+                        android:text="TV"
                         android:textColor="#E9841A" />
 
                 </LinearLayout>
@@ -406,7 +406,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
-                android:layout_weight="1"
+                android:layout_weight="1.5"
                 android:background="@android:color/white"
                 android:elevation="3dp"
                 android:orientation="vertical">
@@ -433,7 +433,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_weight="2"
+                            android:layout_weight="4"
                             android:gravity="center"
                             android:orientation="vertical">
 
@@ -443,7 +443,7 @@
                                 android:layout_height="wrap_content"
                                 android:maxLines="3"
                                 android:minLines="1"
-                                android:textSize="16sp" />
+                                android:textSize="14sp" />
 
                             <Button
                                 android:id="@+id/btnAddScoreA"
@@ -466,7 +466,7 @@
                                 android:padding="5dp"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textSize="40dp" />
+                                android:textSize="40sp" />
 
                             <Button
                                 android:id="@+id/btnSubScoreA"
@@ -496,13 +496,13 @@
                                 android:layout_columnWeight=".1"
                                 android:text="VS"
                                 android:textAlignment="center"
-                                android:textSize="16dp" />
+                                android:textSize="16sp" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
+                            android:layout_weight="4"
                             android:gravity="center"
                             android:orientation="vertical">
 
@@ -513,7 +513,7 @@
                                 android:layout_height="wrap_content"
                                 android:maxLines="3"
                                 android:minLines="1"
-                                android:textSize="16sp" />
+                                android:textSize="14sp" />
 
                             <Button
                                 android:id="@+id/btnAddScoreB"
@@ -536,7 +536,7 @@
                                 android:padding="5dp"
                                 android:text="0"
                                 android:textAlignment="center"
-                                android:textSize="40dp" />
+                                android:textSize="40sp" />
 
                             <Button
                                 android:id="@+id/btnSubScoreB"
@@ -681,7 +681,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_columnWeight="2"
             android:layout_margin="10dp"
             android:background="@android:color/white"

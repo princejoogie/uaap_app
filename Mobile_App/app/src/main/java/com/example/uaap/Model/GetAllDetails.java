@@ -1,18 +1,25 @@
 package com.example.uaap.Model;
-
 public class GetAllDetails {
     public int id;
     public String time;
-    public String period;
+    public int period;
     public String callType;
     public String committing;
-    public String disadvantage;
+    public String disadvantaged;
     public String referee;
     public String area;
     public String areaOfPlay;
     public String reviewDecision;
     public String comment;
     public String scores;
+
+    public String getDisadvantaged() {
+        return disadvantaged;
+    }
+
+    public void setDisadvantaged(String disadvantaged) {
+        this.disadvantaged = disadvantaged;
+    }
 
     public int getId() {
         return id;
@@ -30,11 +37,11 @@ public class GetAllDetails {
         this.time = time;
     }
 
-    public String getPeriod() {
+    public int getPeriod() {
         return period;
     }
 
-    public void setPeriod(String period) {
+    public void setPeriod(int period) {
         this.period = period;
     }
 
@@ -52,14 +59,6 @@ public class GetAllDetails {
 
     public void setCommitting(String committing) {
         this.committing = committing;
-    }
-
-    public String getDisadvantage() {
-        return disadvantage;
-    }
-
-    public void setDisadvantage(String disadvantage) {
-        this.disadvantage = disadvantage;
     }
 
     public String getReferee() {

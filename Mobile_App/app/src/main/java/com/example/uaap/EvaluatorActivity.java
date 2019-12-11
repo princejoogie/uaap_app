@@ -28,8 +28,9 @@ import com.android.volley.toolbox.Volley;
 import com.example.uaap.Model.CurrentGame;
 import com.example.uaap.Model.Game;
 import com.example.uaap.Model.GameId;
-import com.example.uaap.Model.League;
 import com.example.uaap.Model.LeagueDetails;
+import com.example.uaap.Model.LeagueRef;
+import com.example.uaap.Model.Team;
 import com.example.uaap.Model.User;
 import com.google.gson.Gson;
 
@@ -53,16 +54,17 @@ public class EvaluatorActivity extends AppCompatActivity {
     private CardView btnStartGame;
     private EditText edtGameCode;
 
-    private String LeagueURL = "http://68.183.49.18/uaap/public/getLeague";
+    private String LeagueURL = "http://68.183.49.18/uaap/public/getLeagueRef";
     private String TeamURL = "http://68.183.49.18/uaap/public/getTeam";
-    private String RefereeURL = "http://68.183.49.18/uaap/public/getReferee";
     private String CreateGameURL = "http://68.183.49.18/uaap/public/createGame";
     private String CheckGameCodeURL = "http://68.183.49.18/uaap/public/checkGameCode";
     private String GetGameDetailsURL = "http://68.183.49.18/uaap/public/getGameDetails";
 
     private Button btnColorTeamA;
     private Button btnColorTeamB;
-    private League details;
+    private Team teamDetails;
+    private LeagueRef leagueRef;
+
     private CurrentGame currentGame;
 
     @Override
@@ -85,10 +87,7 @@ public class EvaluatorActivity extends AppCompatActivity {
 
         currentGame = new CurrentGame();
 
-        get(RefereeURL, spinnerRefereeA);
-        get(RefereeURL, spinnerRefereeB);
-        get(RefereeURL, spinnerRefereeC);
-        get(LeagueURL, spinLeague);
+        get();
         // String teamA = spinnerTeamA.getSelectedItem().toString();
         //String teamB = spinnerTeamB.getSelectedItem().toString();
 
@@ -97,8 +96,7 @@ public class EvaluatorActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 LeagueDetails leagueDetails = (LeagueDetails) parent.getSelectedItem();
-                getTeam(TeamURL, spinnerTeamA, leagueDetails.id);
-                getTeam(TeamURL, spinnerTeamB, leagueDetails.id);
+                getTeam(TeamURL, leagueDetails.id);
             }
 
             @Override
@@ -122,11 +120,9 @@ public class EvaluatorActivity extends AppCompatActivity {
                         if (ref1.equals(null) || ref2.equals(null) || ref3.equals(null) || schoolA.equals(null) || schoolB.equals(null)) {
                             Toast.makeText(EvaluatorActivity.this,
                                     "Empty items are not allowed", Toast.LENGTH_LONG).show();
-                        }
-                        else if (spinnerTeamA.getSelectedItem().toString().equals(spinnerTeamB.getSelectedItem().toString())) {
+                        } else if (spinnerTeamA.getSelectedItem().toString().equals(spinnerTeamB.getSelectedItem().toString())) {
                             Toast.makeText(getApplicationContext(), "Same teams are not allowed", Toast.LENGTH_SHORT).show();
-                        }
-                        else if (ref1.equals(ref2) || ref1.equals(ref3) || ref2.equals(ref3)) {
+                        } else if (ref1.equals(ref2) || ref1.equals(ref3) || ref2.equals(ref3)) {
                             Toast.makeText(getApplicationContext(), "Same referees are not allowed", Toast.LENGTH_SHORT).show();
                         } else {
                             createGame();
@@ -203,7 +199,7 @@ public class EvaluatorActivity extends AppCompatActivity {
 
     }
 
-    private void getTeam(final String URL, final Spinner spinner, final String id) {
+    private void getTeam(final String URL, final String id) {
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -212,9 +208,10 @@ public class EvaluatorActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Gson gson = new Gson();
-                        details = gson.fromJson(response, League.class);
-                        ArrayAdapter<LeagueDetails> adapter = new ArrayAdapter<LeagueDetails>(getApplicationContext(), R.layout.spinner_item, details.result);
-                        spinner.setAdapter(adapter);
+                        teamDetails = gson.fromJson(response, Team.class);
+                        ArrayAdapter<LeagueDetails> adapter = new ArrayAdapter<LeagueDetails>(getApplicationContext(), R.layout.spinner_item, teamDetails.result);
+                        spinnerTeamA.setAdapter(adapter);
+                        spinnerTeamB.setAdapter(adapter);
 
 
                     }
@@ -240,32 +237,40 @@ public class EvaluatorActivity extends AppCompatActivity {
         queue.add(putRequest);
     }
 
-    private void get(String URL, final Spinner spinner) {
-        {
-            RequestQueue queue = Volley.newRequestQueue(this);
-            StringRequest putRequest = new StringRequest(Request.Method.POST, URL,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Log.e("Here", response);
-                            Gson gson = new Gson();
-                            details = gson.fromJson(response, League.class);
-                            ArrayAdapter<LeagueDetails> adapter = new ArrayAdapter<LeagueDetails>(getApplicationContext(), R.layout.spinner_item, details.result);
-                            spinner.setAdapter(adapter);
+    private void get() {
 
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            // error
-                            Log.e("Error.Response", String.valueOf(error));
-                        }
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest putRequest = new StringRequest(Request.Method.POST, LeagueURL,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("Here", response);
+                        Gson gson = new Gson();
+                        leagueRef = gson.fromJson(response, LeagueRef.class);
+                        ArrayAdapter<LeagueDetails> adapter = new ArrayAdapter<LeagueDetails>(getApplicationContext(), R.layout.spinner_item, leagueRef.referees);
+                        spinnerRefereeA.setAdapter(adapter);
+                        spinnerRefereeB.setAdapter(adapter);
+                        spinnerRefereeC.setAdapter(adapter);
+                        adapter = new ArrayAdapter<LeagueDetails>(getApplicationContext(), R.layout.spinner_item, leagueRef.leagues);
+                        spinLeague.setAdapter(adapter);
+
+
+
                     }
-            );
-            queue.add(putRequest);
-        }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.e("Error.Response", String.valueOf(error));
+                    }
+                }
+        );
+        queue.add(putRequest);
+
+
     }
+
 
     private void createGame() {
 
