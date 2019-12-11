@@ -237,6 +237,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         refreshScore();
         txtTeamA.setText(currentGame.getTeamA());
         txtTeamB.setText(currentGame.getTeamB());
+
         callToIssue = new CallToIssue();
         setInfo(null, currentGame.getPeriod(), "period", periodButtons);
         playingA = new String[currentGame.playerA.size()];
@@ -247,6 +248,9 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
         }
         for (int i = 0; i < currentGame.playerB.size(); i++) {
             playingB[i] = currentGame.playerB.get(i).jerseyNumber;
+        }
+        for(int i=0;i<3;i++){
+            refButtons[i].setText(currentGame.getReferee().get(i).name);
         }
         setPlayers();
         callToIssue.setPeriod(currentGame.getPeriod());
@@ -486,14 +490,13 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                 }
             });
         }
+        final String[] areas = {"Lead", "Center", "Trail"};
         for (int i = 0; i < areaButtons.length; i++) {
             final int finalI = i;
             areaButtons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String aop = areaButtons[finalI].getText().toString();
-                    aop = aop.toLowerCase();
-                    aop = aop.substring(0, 1).toUpperCase() + aop.substring(1);
+                    String aop = areas[finalI];
                     setInfo(aop, finalI, "area", areaButtons);
 
                 }
@@ -512,9 +515,7 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
             aopButtons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String aop = aopButtons[finalI].getText().toString();
-                    aop = aop.toLowerCase();
-                    aop = aop.substring(0, 1).toUpperCase() + aop.substring(1);
+                    String aop = areas[finalI];
                     setInfo(aop, finalI, "aop", aopButtons);
 
                 }
@@ -1145,39 +1146,65 @@ public class EvaluatorDetails extends AppCompatActivity implements AdapterView.O
                     Gson gson = new Gson();
 
                     params.put("gameId", currentGame.getGameId());
+                    Log.e("gameId", currentGame.getGameId());
                     params.put("period", String.valueOf(callToIssue.getPeriod()));
+                    Log.e("period", String.valueOf(callToIssue.getPeriod()));
+
                     String timeText = txtMinute1.getText().toString() + txtMinute2.getText().toString() + ":" +
                             txtSecond1.getText().toString() + txtSecond2.getText().toString() + ":" +
                             txtMillis1.getText().toString() + txtMillis2.getText().toString();
                     params.put("time", timeText);
+                    Log.e("time", timeText);
                     params.put("timeInMillis", String.valueOf(time));
+                    Log.e("timeInMillis", String.valueOf(time));
                     params.put("callType", callToIssue.getCallType());
+                    Log.e("callType", callToIssue.getCallType());
                     params.put("call", callToIssue.getCall());
+                    Log.e("call", callToIssue.getCall());
                     params.put("committingType", callToIssue.getCommittingType());
+                    Log.e("committingType", callToIssue.getCommittingType());
                     params.put("committingTeam", callToIssue.getCommittingTeam());
+                    Log.e("committingTeam", callToIssue.getCommittingTeam());
+
                     params.put("committing", callToIssue.getCommitting());
+                    Log.e("committing", callToIssue.getCommitting());
+
                     if (!isEmpty(callToIssue.getDis())) {
                         params.put("disType", callToIssue.getDisType());
                         params.put("disTeam", callToIssue.getDisTeam());
                         params.put("dis", callToIssue.getDis());
+                        Log.e("disType", callToIssue.getDisType());
+                        Log.e("disTeam", callToIssue.getDisTeam());
+                        Log.e("dis", callToIssue.getDis());
                     }
 
                     currentGame.setTime(timeText);
                     params.put("refereeId", callToIssue.getRefereeId());
+                    Log.e("refereeId", callToIssue.getRefereeId());
                     if(!isEmpty(callToIssue.getArea())){
                         params.put("area", callToIssue.getArea());
+                        Log.e("area", callToIssue.getArea());
+
                     }
                     if(!isEmpty(callToIssue.getAreaOfPlay())){
                         params.put("areaOfPlay", callToIssue.getAreaOfPlay());
+                        Log.e("areaOfPlay", callToIssue.getAreaOfPlay());
+
                     }
                     if(!isEmpty(callToIssue.getReviewDecision())){
                         params.put("reviewDecision", callToIssue.getReviewDecision());
+                        Log.e("reviewDecision", callToIssue.getReviewDecision());
+
                     }
                     if (!isEmpty(txtComment.getText().toString())) {
                         params.put("comment", txtComment.getText().toString());
+                        Log.e("comment", txtComment.getText().toString());
+
                     }
                     params.put("scoreA", String.valueOf(currentGame.getScoreA()));
                     params.put("scoreB", String.valueOf(currentGame.getScoreB()));
+                    Log.e("scoreA", String.valueOf(currentGame.getScoreA()));
+                    Log.e("scoreB", String.valueOf(currentGame.getScoreB()));
                     return params;
                 }
 

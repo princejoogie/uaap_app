@@ -269,9 +269,11 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
         for (int i = 0; i < currentGame.playerB.size(); i++) {
             playingB[i] = currentGame.playerB.get(i).jerseyNumber;
         }
+        for(int i=0;i<3;i++){
+            refButtons[i].setText(currentGame.getReferee().get(i).name);
+        }
 
         getThisGame();
-        refreshScore();
         txtTeamA.setText(currentGame.getTeamA());
         txtTeamB.setText(currentGame.getTeamB());
         btnAddScoreA.setOnClickListener(new View.OnClickListener() {
@@ -509,14 +511,13 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                 }
             });
         }
+        final String[] areas = {"Lead", "Center", "Trail"};
         for (int i = 0; i < areaButtons.length; i++) {
             final int finalI = i;
             areaButtons[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String aop = areaButtons[finalI].getText().toString();
-                    aop = aop.toLowerCase();
-                    aop = aop.substring(0, 1).toUpperCase() + aop.substring(1);
+                    String aop = areas[finalI];
                     setInfo(aop, finalI, "area", areaButtons);
 
                 }
@@ -670,6 +671,7 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                             changed = true;
                         }
                         setInitPlayers();
+                        refreshScore();
                         if(callToIssue.getCommittingType().equals("player")){
                            if(!changed){
                                int index = getIndexOfPlayers(callToIssue.getCommitting(),currentGame.getPlayerA());

@@ -1090,97 +1090,109 @@
                 android:text="Referee 3"
                 android:textColor="#E9841A" />
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Area"
-                android:textAlignment="center" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="Area"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="Area of Play"
+                    android:textAlignment="center" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/btnAreaLead"
-                    android:layout_width="93dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:background="@drawable/button_eval"
+                    android:minWidth="40dp"
                     android:minHeight="36dp"
                     android:padding="10dp"
-                    android:text="Lead"
+                    android:text="L"
                     android:textColor="#E9841A" />
 
                 <Button
                     android:id="@+id/btnAreaCenter"
-                    android:layout_width="93dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
                     android:background="@drawable/button_eval"
+                    android:minWidth="40dp"
                     android:minHeight="36dp"
                     android:padding="10dp"
-                    android:text="Center"
+                    android:text="C"
                     android:textColor="#E9841A" />
 
                 <Button
                     android:id="@+id/btnAreaTrail"
-                    android:layout_width="93dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
                     android:background="@drawable/button_eval"
+                    android:minWidth="40dp"
                     android:minHeight="36dp"
                     android:padding="10dp"
-                    android:text="Trail"
+                    android:text="T"
+                    android:textColor="#E9841A" />
+
+                <Button
+                    android:id="@+id/btnAoPLead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/button_eval"
+                    android:minWidth="40dp"
+                    android:minHeight="36dp"
+                    android:padding="10dp"
+                    android:text="L"
+                    android:textColor="#E9841A" />
+
+                <Button
+                    android:id="@+id/btnAoPCenter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/button_eval"
+                    android:minWidth="40dp"
+                    android:minHeight="36dp"
+                    android:padding="10dp"
+                    android:text="C"
+                    android:textColor="#E9841A" />
+
+                <Button
+                    android:id="@+id/btnAoPTrial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_eval"
+                    android:minWidth="40dp"
+                    android:minHeight="36dp"
+                    android:padding="10dp"
+                    android:text="T"
                     android:textColor="#E9841A" />
 
             </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Area of Play"
-                android:textAlignment="center" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btnAoPLead"
-                    android:layout_width="93dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/button_eval"
-                    android:minHeight="36dp"
-                    android:padding="10dp"
-                    android:text="Lead"
-                    android:textColor="#E9841A" />
-
-                <Button
-                    android:id="@+id/btnAoPCenter"
-                    android:layout_width="93dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:background="@drawable/button_eval"
-                    android:minHeight="36dp"
-                    android:padding="10dp"
-                    android:text="Center"
-                    android:textColor="#E9841A" />
-
-                <Button
-                    android:id="@+id/btnAoPTrial"
-                    android:layout_width="93dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/button_eval"
-                    android:minHeight="36dp"
-                    android:padding="10dp"
-                    android:text="Trail"
-                    android:textColor="#E9841A" />
 
             </LinearLayout>
 
@@ -1282,13 +1294,14 @@
             <EditText
                 android:id="@+id/txtComment"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="50dp"
                 android:layout_marginHorizontal="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="#C6C6C6"
                 android:gravity=""
                 android:minWidth="70dp"
                 android:padding="5dp"
+                android:scrollHorizontally="false"
                 android:textSize="12sp" />
 
             <Button

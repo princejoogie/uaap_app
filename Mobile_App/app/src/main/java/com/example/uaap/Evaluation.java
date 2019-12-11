@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -450,32 +451,37 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
     }
 
     public void onItemClick(AdapterView parent, View v, final int position, long id) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(Evaluation.this);
-        builder.setCancelable(true);
-        builder.setTitle("Edit Evaluation");
-        builder.setMessage("Do you want to edit this record?");
-        builder.setPositiveButton("Yes",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(getApplicationContext(), EvaluatorDetailsEdit.class);
-                        currentGame.setTimeInMillis(time);
-                        Gson gson = new Gson();
-                        String json = gson.toJson(currentGame);
-                        intent.putExtra("playing", json);
-                        intent.putExtra("id", String.valueOf(calls.evaluation.get(position).id));
-                        Log.e("id", String.valueOf(calls.evaluation.get(position).id));
-                        startActivity(intent);
-                    }
-                });
-        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
+        if(!calls.evaluation.get(position).callType.contains("Timeout")){
+            final AlertDialog.Builder builder = new AlertDialog.Builder(Evaluation.this);
+            builder.setCancelable(true);
+            builder.setTitle("Edit Evaluation");
+            builder.setMessage("Do you want to edit this record?");
+            builder.setPositiveButton("Yes",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(getApplicationContext(), EvaluatorDetailsEdit.class);
+                            currentGame.setTimeInMillis(time);
+                            Gson gson = new Gson();
+                            String json = gson.toJson(currentGame);
+                            intent.putExtra("playing", json);
+                            intent.putExtra("id", String.valueOf(calls.evaluation.get(position).id));
+                            Log.e("id", String.valueOf(calls.evaluation.get(position).id));
+                            startActivity(intent);
+                        }
+                    });
+            builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
 
-        AlertDialog dialog = builder.create();
-        dialog.show();
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }else{
+            Toast.makeText(getApplicationContext(), "Programmer's Note: You cannot edit timeout as of this moment!", Toast.LENGTH_LONG).show();
+        }
+
 
 
     }
@@ -614,19 +620,33 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
                 currentGame.setTimeInMillis(time);
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("gameId", currentGame.getGameId());
+                Log.e("gameId", currentGame.getGameId());
                 params.put("period", String.valueOf(currentGame.getPeriod()));
+               Log.e("period", String.valueOf(currentGame.getPeriod()));
+
                 String timeText = txtMinute1.getText().toString() + txtMinute2.getText().toString() + ":" +
                         txtSecond1.getText().toString() + txtSecond2.getText().toString() + ":" +
                         txtMillis1.getText().toString() + txtMillis2.getText().toString();
                 params.put("time", timeText);
+                Log.e("time", timeText);
+
                 params.put("timeInMillis", String.valueOf(currentGame.getTimeInMillis()));
+                Log.e("timeInMillis", String.valueOf(currentGame.getTimeInMillis()));
+
                 params.put("scoreA", String.valueOf(currentGame.getScoreA()));
                 params.put("scoreB", String.valueOf(currentGame.getScoreB()));
+
+                Log.e("scoreA", String.valueOf(currentGame.getScoreA()));
+               Log.e("scoreB", String.valueOf(currentGame.getScoreB()));
                 if(to){
                     params.put("call", "Team Timeout");
                     params.put("committingTeam", String.valueOf(id));
+                    Log.e("call", "Team Timeout");
+                    Log.e("committingTeam", String.valueOf(id));
                 }else{
                     params.put("call", "TV Timeout");
+                    Log.e("call", "TV Timeout");
+
                 }
                 return params;
             }
@@ -712,6 +732,10 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
     }
 
     private void resetTimer() {
+        btnTeamTO.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_eval));
+        btnTeamTO.setTextColor(Color.parseColor("#E9841A"));
+        btnTVTO.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_eval));
+        btnTVTO.setTextColor(Color.parseColor("#E9841A"));
         time = 600000;
         pauseTimer();
         updateCountDownText();
