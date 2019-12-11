@@ -49,7 +49,6 @@ import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
 
 public class AfterGameSummary extends AppCompatActivity {
-    boolean doubleBackToExitPressedOnce = false;
     private CurrentGame currentGame;
     private String playing;
     private String getAll = "http://68.183.49.18/uaap/public/getAll";
@@ -715,41 +714,4 @@ public class AfterGameSummary extends AppCompatActivity {
         }
     }
 
-    public void getAll(final Context context){
-        RequestQueue queue = Volley.newRequestQueue(context);
-        StringRequest putRequest = new StringRequest(Request.Method.POST, getAll,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Gson gson = new Gson();
-                        getResult = gson.fromJson(response, GetAll.class);
-                        String status = getResult.status;
-                        // Get Result Here
-                        if (status.equals("true")) {
-                            Toast.makeText(context, " Successfully deleted.", Toast.LENGTH_SHORT).show();
-                        } else {
-
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // error
-                        Log.d("Error.Response", String.valueOf(error));
-                    }
-                }
-        ) {
-
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("id", "34");
-                return params;
-            }
-
-        };
-
-        queue.add(putRequest);
-    }
 }
