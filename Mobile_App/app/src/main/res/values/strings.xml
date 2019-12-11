@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UAAP</string>
+    <string name="app_name">Referee Evaluation</string>
     <string-array name="foul">
         <item>Blocking</item>
         <item>Pushing</item>

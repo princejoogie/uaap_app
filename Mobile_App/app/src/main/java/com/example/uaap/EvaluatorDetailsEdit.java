@@ -1362,11 +1362,11 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                     if (foulVio) {
                         btnFoul.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
                         btnViolation.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_eval));
-                        btnFoul.setTextColor(Color.parseColor("#FFFFF"));
+                        btnFoul.setTextColor(Color.parseColor("#FFFFFF"));
                     } else {
                         btnViolation.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.btn_eval_selected));
                         btnFoul.setBackgroundDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.button_eval));
-                        btnViolation.setTextColor(Color.parseColor("#FFFFF"));
+                        btnViolation.setTextColor(Color.parseColor("#FFFFFF"));
 
                     }
                 }

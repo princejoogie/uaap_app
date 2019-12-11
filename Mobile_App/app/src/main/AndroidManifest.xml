@@ -47,7 +47,13 @@
         <activity
             android:name=".EvaluatorActivity"
             android:noHistory="true"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".Manage.TeamsDashboard"
             android:screenOrientation="landscape" />
@@ -61,11 +67,7 @@
             android:name=".LoginActivity"
             android:noHistory="true"
             android:screenOrientation="landscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <uses-library
