@@ -639,7 +639,7 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="50dp"
                     android:layout_columnWeight="1"
                     android:layout_marginTop="30dp"
                     android:background="@drawable/btn_eval_selected"

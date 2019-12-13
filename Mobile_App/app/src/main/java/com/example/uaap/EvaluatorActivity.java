@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.LayoutDirection;
 import android.util.Log;
 import android.view.View;
@@ -66,9 +67,11 @@ public class EvaluatorActivity extends AppCompatActivity {
     private LeagueRef leagueRef;
 
     private CurrentGame currentGame;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evaluator);
 
@@ -446,7 +449,22 @@ public class EvaluatorActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(EvaluatorActivity.this, LoginActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(EvaluatorActivity.this, LoginActivity.class);
+//        startActivity(intent);
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Press Back again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }
