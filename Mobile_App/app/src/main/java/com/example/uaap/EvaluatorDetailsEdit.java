@@ -353,7 +353,6 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                 public boolean onLongClick(View v) {
                     callToIssue.setCommittingType(null);
                     callToIssue.setCommitting(null);
-                    callToIssue.setCommittingTeam(null);
                     if (!changed) {
                         if (finalI < currentGame.playerA.size()) {
                             clearPlayer(true);
@@ -403,7 +402,6 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                 public boolean onLongClick(View v) {
                     callToIssue.setDisType(null);
                     callToIssue.setDis(null);
-                    callToIssue.setDisTeam(null);
                     if (!changed) {
                         if (finalI < currentGame.playerB.size()) {
                             clearPlayer(false);
@@ -449,7 +447,6 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
         btnStaffComm.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                callToIssue.setCommittingTeam(null);
                 callToIssue.setCommittingType(null);
                 callToIssue.setCommitting(null);
                 if (!changed) {
@@ -473,7 +470,6 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
         btnStaffDis.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                callToIssue.setDisTeam(null);
                 callToIssue.setDisType(null);
                 callToIssue.setDis(null);
                 if (!changed) {
@@ -631,13 +627,18 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
         btnChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callToIssue.setCommittingTeam(null);
                 callToIssue.setCommittingType(null);
                 callToIssue.setCommitting(null);
-                callToIssue.setDisTeam(null);
                 callToIssue.setDisType(null);
                 callToIssue.setDis(null);
                 changed = !changed;
+                if (!changed) {
+                    callToIssue.setCommittingTeam(currentGame.getTeamAId());
+                    callToIssue.setDisTeam(currentGame.getTeamBId());
+                } else {
+                    callToIssue.setCommittingTeam(currentGame.getTeamBId());
+                    callToIssue.setDisTeam(currentGame.getTeamAId());
+                }
                 setPlayers();
             }
         });
@@ -664,7 +665,6 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                         Gson gson = new Gson();
                         Call call = gson.fromJson(response, Call.class);
                         callToIssue = call.result.get(0);
-                        Log.e("type", callToIssue.getCommittingType());
                         if(callToIssue.getCommittingTeam().equals(currentGame.getTeamAId())){
                            changed = false;
                         }else{
@@ -672,45 +672,49 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                         }
                         setInitPlayers();
                         refreshScore();
-                        if(callToIssue.getCommittingType().equals("player")){
-                           if(!changed){
-                               int index = getIndexOfPlayers(callToIssue.getCommitting(),currentGame.getPlayerA());
-                               if(currentGame.getColorTeamA()==Color.WHITE){
-                                   btnComm[index].setBackgroundColor(Color.BLACK);
-                                   btnComm[index].setTextColor(Color.WHITE);
-                               }else{
-                                   btnComm[index].setBackgroundColor(Color.WHITE);
-                                   btnComm[index].setTextColor(currentGame.getColorTeamA());
-                               }
-                           }else{
-                               int index = getIndexOfPlayers(callToIssue.getCommitting(),currentGame.getPlayerB());
-                               if(currentGame.getColorTeamB()==Color.WHITE){
-                                   btnComm[index].setBackgroundColor(Color.BLACK);
-                                   btnComm[index].setTextColor(Color.WHITE);
-                               }else{
-                                   btnComm[index].setBackgroundColor(Color.WHITE);
-                                   btnComm[index].setTextColor(currentGame.getColorTeamB());
-                               }
-                           }
-                        }else{
-                            if(!changed){
-                                if(currentGame.getColorTeamA()==Color.WHITE){
-                                    btnStaffComm.setBackgroundColor(Color.BLACK);
-                                    btnStaffComm.setTextColor(Color.WHITE);
+                        if(callToIssue.getCommitting()!=null){
+                            if(callToIssue.getCommittingType().equals("player")){
+                                if(!changed){
+                                    int index = getIndexOfPlayers(callToIssue.getCommitting(),currentGame.getPlayerA());
+                                    Log.e("index", String.valueOf(index));
+                                    if(currentGame.getColorTeamA()==Color.WHITE){
+                                        btnComm[index].setBackgroundColor(Color.BLACK);
+                                        btnComm[index].setTextColor(Color.WHITE);
+                                    }else{
+                                        btnComm[index].setBackgroundColor(Color.WHITE);
+                                        btnComm[index].setTextColor(currentGame.getColorTeamA());
+                                    }
                                 }else{
-                                    btnStaffComm.setBackgroundColor(Color.WHITE);
-                                    btnStaffComm.setTextColor(currentGame.getColorTeamA());
+                                    int index = getIndexOfPlayers(callToIssue.getCommitting(),currentGame.getPlayerB());
+                                    if(currentGame.getColorTeamB()==Color.WHITE){
+                                        btnComm[index].setBackgroundColor(Color.BLACK);
+                                        btnComm[index].setTextColor(Color.WHITE);
+                                    }else{
+                                        btnComm[index].setBackgroundColor(Color.WHITE);
+                                        btnComm[index].setTextColor(currentGame.getColorTeamB());
+                                    }
                                 }
                             }else{
-                                if(currentGame.getColorTeamB()==Color.WHITE){
-                                    btnStaffComm.setBackgroundColor(Color.BLACK);
-                                    btnStaffComm.setTextColor(Color.WHITE);
+                                if(!changed){
+                                    if(currentGame.getColorTeamA()==Color.WHITE){
+                                        btnStaffComm.setBackgroundColor(Color.BLACK);
+                                        btnStaffComm.setTextColor(Color.WHITE);
+                                    }else{
+                                        btnStaffComm.setBackgroundColor(Color.WHITE);
+                                        btnStaffComm.setTextColor(currentGame.getColorTeamA());
+                                    }
                                 }else{
-                                    btnStaffComm.setBackgroundColor(Color.WHITE);
-                                    btnStaffComm.setTextColor(currentGame.getColorTeamB());
+                                    if(currentGame.getColorTeamB()==Color.WHITE){
+                                        btnStaffComm.setBackgroundColor(Color.BLACK);
+                                        btnStaffComm.setTextColor(Color.WHITE);
+                                    }else{
+                                        btnStaffComm.setBackgroundColor(Color.WHITE);
+                                        btnStaffComm.setTextColor(currentGame.getColorTeamB());
+                                    }
                                 }
                             }
                         }
+
                         if(callToIssue.getDis()!=null){
                             if(callToIssue.getDisType().equals("player")){
                                 if(!changed){
@@ -950,10 +954,8 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
 
 
         callToIssue.setCommitting(null);
-        callToIssue.setCommittingTeam(null);
         callToIssue.setCommittingType(null);
         callToIssue.setDisType(null);
-        callToIssue.setDisTeam(null);
         callToIssue.setDis(null);
         if (!changed) {
             if (currentGame.getColorTeamA() == Color.WHITE) {
@@ -1163,7 +1165,6 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                 if(commDis){
                     callToIssue.setCommitting(null);
                     callToIssue.setCommittingType(null);
-                    callToIssue.setCommittingTeam(null);
                     if(!changed){
                         if(currentGame.getColorTeamA()==Color.WHITE){
                             btnStaffComm.setBackgroundColor(Color.WHITE);
@@ -1185,7 +1186,6 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
 
                     callToIssue.setDis(null);
                     callToIssue.setDisType(null);
-                    callToIssue.setDisTeam(null);
                     if(!changed){
                         if(currentGame.getColorTeamB()==Color.WHITE){
                             btnStaffDis.setBackgroundColor(Color.WHITE);
@@ -1404,17 +1404,14 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
     }
 
     private void submitEval() {
-        if (isEmpty(callToIssue.getCommitting())) {
-            Toast.makeText(getApplicationContext(), "Please select a committing player/staff", Toast.LENGTH_SHORT).show();
-        }
+
         if (isEmpty(callToIssue.getCallType()) || isEmpty(callToIssue.getCall())) {
             Toast.makeText(getApplicationContext(), "Please select a call", Toast.LENGTH_SHORT).show();
         }
         if (isEmpty(callToIssue.getRefereeId())) {
             Toast.makeText(getApplicationContext(), "Please select a referee", Toast.LENGTH_SHORT).show();
         }
-        if (!isEmpty(callToIssue.getCommitting()) &&
-                !isEmpty(callToIssue.getCallType()) &&
+        if (!isEmpty(callToIssue.getCallType()) &&
                 !isEmpty(callToIssue.getCall()) &&
                 !isEmpty(callToIssue.getRefereeId())) {
             RequestQueue queue = Volley.newRequestQueue(this);
@@ -1455,13 +1452,21 @@ public class EvaluatorDetailsEdit extends AppCompatActivity implements AdapterVi
                     params.put("timeInMillis", String.valueOf(time));
                     params.put("callType", callToIssue.getCallType());
                     params.put("call", callToIssue.getCall());
-                    params.put("committingType", callToIssue.getCommittingType());
                     params.put("committingTeam", callToIssue.getCommittingTeam());
-                    params.put("committing", callToIssue.getCommitting());
+                    Log.e("committingTeam", callToIssue.getCommittingTeam());
+                    if (!isEmpty(callToIssue.getCommitting())) {
+                        params.put("committingType", callToIssue.getCommittingType());
+                        Log.e("committingType", callToIssue.getCommittingType());
+                        params.put("committing", callToIssue.getCommitting());
+                        Log.e("committing", callToIssue.getCommitting());
+                    }
+                    params.put("disTeam", callToIssue.getDisTeam());
+                    Log.e("disTeam", callToIssue.getDisTeam());
                     if (!isEmpty(callToIssue.getDis())) {
                         params.put("disType", callToIssue.getDisType());
-                        params.put("disTeam", callToIssue.getDisTeam());
                         params.put("dis", callToIssue.getDis());
+                        Log.e("disType", callToIssue.getDisType());
+                        Log.e("dis", callToIssue.getDis());
                     }
                     currentGame.setTime(timeText);
                     params.put("refereeId", callToIssue.getRefereeId());

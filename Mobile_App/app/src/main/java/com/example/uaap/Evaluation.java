@@ -603,6 +603,7 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
                         if (!dataModelArrayList.isEmpty()) {
                             listAdapter = new EvaluationListAdapter(getApplicationContext(), dataModelArrayList);
                             evaluationList.setAdapter(listAdapter);
+                            Log.e("Count", String.valueOf(calls.evaluation.size()));
                         }
                     }
                 },
