@@ -42,6 +42,9 @@ import java.util.Map;
 
 import jxl.Workbook;
 import jxl.WorkbookSettings;
+import jxl.format.Alignment;
+import jxl.format.Border;
+import jxl.format.BorderLineStyle;
 import jxl.write.Label;
 import jxl.write.WritableCellFormat;
 import jxl.write.WritableFont;
@@ -49,6 +52,8 @@ import jxl.write.WritableSheet;
 import jxl.write.WritableWorkbook;
 import jxl.write.WriteException;
 import jxl.write.biff.RowsExceededException;
+
+import static android.os.Environment.DIRECTORY_DOWNLOADS;
 
 public class AfterGameSummary extends AppCompatActivity {
     private CurrentGame currentGame;
@@ -60,24 +65,30 @@ public class AfterGameSummary extends AppCompatActivity {
     private TextView txtAfterTeamB;
     private TextView txtDateToday;
 
-    private Button btnCallSelect;
+    private Button btnFoulSelect;
+    private Button btnVioSelect;
     private Button btnRefereeSelect;
     private Button btnReviewDecisionSelect;
     private Button btnCommittingSelect;
     private Button btnDisadvantagedSelect;
+    private Button btnAreaSelect;
+    private Button btnAopSelect;
     private Button btnAfterFilter;
     private Button btnAfterRefSum;
 
     private AfterGameFilter filter;
     private String[] foul;
     private String[] vio;
-    private String[] foulVioItems;
-    private boolean[] checkedCall;
+    private boolean[] checkedFoul;
+    private boolean[] checkedVio;
     private String[] refName;
     private String[] refId;
     private boolean[] checkedRef;
     private String[] rdItems;
     private boolean[] checkedRd;
+    private String[] areaIteams;
+    private boolean[] checkedArea;
+    private boolean[] checkedAop;
 
     private String[] teamId;
     private String[] teamName;
@@ -91,6 +102,7 @@ public class AfterGameSummary extends AppCompatActivity {
     private ListView evaluationList;
 
     private Button btnExcel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,7 +121,6 @@ public class AfterGameSummary extends AppCompatActivity {
         txtAfterTeamA = findViewById(R.id.txtAfterTeamA);
         txtAfterTeamB = findViewById(R.id.txtAfterTeamB);
         txtDateToday = findViewById(R.id.txtDateToday);
-        btnCallSelect = findViewById(R.id.btnCallSelect);
         btnRefereeSelect = findViewById(R.id.btnRefereeSelect);
         btnReviewDecisionSelect = findViewById(R.id.btnReviewDecisionSelect);
         btnCommittingSelect = findViewById(R.id.btnCommittingSelect);
@@ -117,7 +128,10 @@ public class AfterGameSummary extends AppCompatActivity {
         evaluationList = findViewById(R.id.evaluationList);
         btnAfterFilter = findViewById(R.id.btnAfterFilter);
         btnAfterRefSum = findViewById(R.id.btnAfterRefSum);
-
+        btnFoulSelect = findViewById(R.id.btnFoulSelect);
+        btnVioSelect = findViewById(R.id.btnVioSelect);
+        btnAreaSelect = findViewById(R.id.btnAreaSelect);
+        btnAopSelect = findViewById(R.id.btnAoPSelect);
         btnExcel = findViewById(R.id.btnExcel);
         txtLeagueName.setText(currentGame.getLeagueName());
         txtAfterTeamA.setText(currentGame.getTeamA());
@@ -127,10 +141,16 @@ public class AfterGameSummary extends AppCompatActivity {
 
         //
         getCalls();
-        btnCallSelect.setOnClickListener(new View.OnClickListener() {
+        btnVioSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setFilter("call");
+                setFilter("vio");
+            }
+        });
+        btnFoulSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFilter("foul");
             }
         });
         btnRefereeSelect.setOnClickListener(new View.OnClickListener() {
@@ -155,6 +175,18 @@ public class AfterGameSummary extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setFilter("dis");
+            }
+        });
+        btnAreaSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFilter("area");
+            }
+        });
+        btnAopSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setFilter("aop");
             }
         });
         btnAfterFilter.setOnClickListener(new View.OnClickListener() {
@@ -182,18 +214,23 @@ public class AfterGameSummary extends AppCompatActivity {
     private void getCalls() {
         filter.setReferees("");
         filter.setCalls("");
+        filter.setVio("");
+        filter.setFoul("");
         filter.setComm("");
         filter.setDis("");
         filter.setRds("");
+        filter.setArea("");
+        filter.setAop("");
         foul = getResources().getStringArray(R.array.foul);
         vio = getResources().getStringArray(R.array.violation);
-        foulVioItems = ArrayUtils.addAll(foul, vio);
-        checkedCall = new boolean[foulVioItems.length];
+        checkedFoul = new boolean[foul.length];
+        checkedVio = new boolean[vio.length];
 
-        checkedCall = new boolean[foulVioItems.length];
-
-        for (int i = 0; i < checkedCall.length; i++) {
-            checkedCall[i] = true;
+        for (int i = 0; i < checkedFoul.length; i++) {
+            checkedFoul[i] = true;
+        }
+        for (int i = 0; i < checkedVio.length; i++) {
+            checkedVio[i] = true;
         }
         refId = new String[currentGame.referee.size()];
         refName = new String[currentGame.referee.size()];
@@ -229,6 +266,16 @@ public class AfterGameSummary extends AppCompatActivity {
             checkedComm[i] = true;
             checkedDis[i] = true;
         }
+        areaIteams = new String[3];
+        areaIteams[0] = "Lead";
+        areaIteams[1] = "Center";
+        areaIteams[2] = "Trail";
+        checkedArea = new boolean[3];
+        checkedAop = new boolean[3];
+        for (int i = 0; i < 3; i++) {
+            checkedAop[i] = true;
+            checkedArea[i] = true;
+        }
         RequestQueue queue = Volley.newRequestQueue(this);
 
         StringRequest putRequest = new StringRequest(Request.Method.POST, GetCallURL,
@@ -242,6 +289,8 @@ public class AfterGameSummary extends AppCompatActivity {
                         if (!dataModelArrayList.isEmpty()) {
                             listAdapter = new EvaluationListAdapter(getApplicationContext(), dataModelArrayList);
                             evaluationList.setAdapter(listAdapter);
+                            evaluationList.setSelection(evaluationList.getAdapter().getCount() - 1);
+
                         }
 
                     }
@@ -278,13 +327,13 @@ public class AfterGameSummary extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-        if (type.equals("call")) {
+        if (type.equals("foul")) {
 
             builder.setNegativeButton("Select All", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    for (int i = 0; i < checkedCall.length; i++) {
-                        checkedCall[i] = true;
+                    for (int i = 0; i < checkedFoul.length; i++) {
+                        checkedFoul[i] = true;
                     }
                     AlertDialog dia = builder.create();
                     dia.show();
@@ -293,8 +342,8 @@ public class AfterGameSummary extends AppCompatActivity {
             builder.setNeutralButton("Clear", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    for (int i = 0; i < checkedCall.length; i++) {
-                        checkedCall[i] = false;
+                    for (int i = 0; i < checkedFoul.length; i++) {
+                        checkedFoul[i] = false;
                     }
                     AlertDialog dia = builder.create();
                     dia.show();
@@ -304,34 +353,97 @@ public class AfterGameSummary extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     int count = 0;
-                    filter.setCalls("");
-                    for (int i = 0; i < foulVioItems.length; i++) {
-                        if (checkedCall[i]) {
-                            if (filter.getCalls().length() > 0) {
-                                filter.setCalls(filter.getCalls() + ',');
+                    filter.setFoul("");
+                    for (int i = 0; i < foul.length; i++) {
+                        if (checkedFoul[i]) {
+
+                            if (filter.getFoul().length() > 0) {
+                                filter.setFoul(filter.getFoul() + ',');
                             }
-                            filter.setCalls(filter.getCalls() + foulVioItems[i]);
+                            filter.setFoul(filter.getFoul() + foul[i]);
                             count++;
 
                         }
 
                     }
-                    if (count == foulVioItems.length) {
-                        btnCallSelect.setText("ALL");
+                    if (count == foul.length) {
+                        btnFoulSelect.setText("ALL");
                     } else if (count == 0) {
-                        btnCallSelect.setText("Select");
+                        btnFoulSelect.setText("Select");
                     } else {
-                        if (filter.getCalls().length() > 6) {
-                            btnCallSelect.setText(filter.getCalls().substring(0, 6) + "..");
+                        if (filter.getFoul().length() > 6) {
+                            btnFoulSelect.setText(filter.getFoul().substring(0, 6) + "..");
                         } else {
-                            btnCallSelect.setText(filter.getCalls());
+                            btnFoulSelect.setText(filter.getFoul());
                         }
                     }
                     Log.e("item", filter.getCalls());
                 }
             });
             Log.e("type", "call");
-            builder.setMultiChoiceItems(foulVioItems, checkedCall, new DialogInterface.OnMultiChoiceClickListener() {
+            builder.setMultiChoiceItems(foul, checkedFoul, new DialogInterface.OnMultiChoiceClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        } else if (type.equals("vio")) {
+
+            builder.setNegativeButton("Select All", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    for (int i = 0; i < checkedVio.length; i++) {
+                        checkedVio[i] = true;
+                    }
+                    AlertDialog dia = builder.create();
+                    dia.show();
+                }
+            });
+            builder.setNeutralButton("Clear", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    for (int i = 0; i < checkedVio.length; i++) {
+                        checkedVio[i] = false;
+                    }
+                    AlertDialog dia = builder.create();
+                    dia.show();
+                }
+            });
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    int count = 0;
+                    filter.setVio("");
+                    for (int i = 0; i < vio.length; i++) {
+                        if (checkedVio[i]) {
+
+                            if (filter.getVio().length() > 0) {
+                                filter.setVio(filter.getVio() + ',');
+                            }
+                            filter.setVio(filter.getVio() + vio[i]);
+                            count++;
+
+                        }
+
+                    }
+                    if (count == vio.length) {
+                        btnVioSelect.setText("ALL");
+                    } else if (count == 0) {
+                        btnVioSelect.setText("Select");
+                    } else {
+                        if (filter.getVio().length() > 6) {
+                            btnVioSelect.setText(filter.getVio().substring(0, 6) + "..");
+                        } else {
+                            btnVioSelect.setText(filter.getVio());
+                        }
+                    }
+                    Log.e("item", filter.getCalls());
+                }
+            });
+            Log.e("type", "call");
+            builder.setMultiChoiceItems(vio, checkedVio, new DialogInterface.OnMultiChoiceClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 
@@ -436,11 +548,12 @@ public class AfterGameSummary extends AppCompatActivity {
                                 filter.setRds(filter.getRds() + ',');
                             }
                             filter.setRds(filter.getRds() + rdItems[i]);
+                            count++;
+
                         }
-                        count++;
 
                     }
-                    if (count == 6) {
+                    if (count == rdItems.length) {
                         btnReviewDecisionSelect.setText("ALL");
                     } else if (count == 0) {
                         btnReviewDecisionSelect.setText("Select");
@@ -456,6 +569,128 @@ public class AfterGameSummary extends AppCompatActivity {
             });
             Log.e("type", "call");
             builder.setMultiChoiceItems(rdItems, checkedRd, new DialogInterface.OnMultiChoiceClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        } else if (type.equals("area")) {
+
+            builder.setNegativeButton("Select All", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    for (int i = 0; i < checkedArea.length; i++) {
+                        checkedArea[i] = true;
+                    }
+                    AlertDialog dia = builder.create();
+                    dia.show();
+                }
+            });
+            builder.setNeutralButton("Clear", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    for (int i = 0; i < checkedArea.length; i++) {
+                        checkedArea[i] = false;
+                    }
+                    AlertDialog dia = builder.create();
+                    dia.show();
+                }
+            });
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    int count = 0;
+                    filter.setArea("");
+                    for (int i = 0; i < areaIteams.length; i++) {
+                        if (checkedArea[i]) {
+                            if (filter.getArea().length() > 0) {
+                                filter.setArea(filter.getArea() + ',');
+                            }
+                            filter.setArea(filter.getArea() + areaIteams[i]);
+                            count++;
+
+                        }
+
+                    }
+                    if (count == areaIteams.length) {
+                        btnAreaSelect.setText("ALL");
+                    } else if (count == 0) {
+                        btnAreaSelect.setText("Select");
+                    } else {
+                        if (filter.getArea().length() > 6) {
+                            btnAreaSelect.setText(filter.getArea().substring(0, 6) + "..");
+                        } else {
+                            btnAreaSelect.setText(filter.getArea());
+                        }
+                    }
+                    Log.e("item", filter.getArea());
+                }
+            });
+            Log.e("type", "call");
+            builder.setMultiChoiceItems(areaIteams, checkedArea, new DialogInterface.OnMultiChoiceClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        } else if (type.equals("aop")) {
+
+            builder.setNegativeButton("Select All", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    for (int i = 0; i < checkedAop.length; i++) {
+                        checkedAop[i] = true;
+                    }
+                    AlertDialog dia = builder.create();
+                    dia.show();
+                }
+            });
+            builder.setNeutralButton("Clear", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    for (int i = 0; i < checkedAop.length; i++) {
+                        checkedAop[i] = false;
+                    }
+                    AlertDialog dia = builder.create();
+                    dia.show();
+                }
+            });
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    int count = 0;
+                    filter.setAop("");
+                    for (int i = 0; i < areaIteams.length; i++) {
+                        if (checkedAop[i]) {
+                            if (filter.getAop().length() > 0) {
+                                filter.setAop(filter.getAop() + ',');
+                            }
+                            filter.setAop(filter.getAop() + areaIteams[i]);
+                            count++;
+
+                        }
+
+                    }
+                    if (count == areaIteams.length) {
+                        btnAopSelect.setText("ALL");
+                    } else if (count == 0) {
+                        btnAopSelect.setText("Select");
+                    } else {
+                        if (filter.getAop().length() > 6) {
+                            btnAopSelect.setText(filter.getAop().substring(0, 6) + "..");
+                        } else {
+                            btnAopSelect.setText(filter.getAop());
+                        }
+                    }
+                    Log.e("item", filter.getAop());
+                }
+            });
+            Log.e("type", "call");
+            builder.setMultiChoiceItems(areaIteams, checkedAop, new DialogInterface.OnMultiChoiceClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which, boolean isChecked) {
 
@@ -594,6 +829,15 @@ public class AfterGameSummary extends AppCompatActivity {
     }
 
     private void filterEval() {
+        if (filter.getVio().equals("") || filter.getVio().isEmpty()) {
+            filter.setCalls(filter.getFoul());
+        } else if (filter.getFoul().equals("") || filter.getFoul().isEmpty()) {
+            filter.setCalls(filter.getVio());
+        } else if (filter.getFoul().length() > 0 && filter.getVio().length() > 0) {
+            filter.setCalls(filter.getFoul() + "," + filter.getVio());
+        } else {
+            filter.setCalls("");
+        }
         if (filter.getComm().length() == 0) {
             Toast.makeText(AfterGameSummary.this, "Select committing team/s.", Toast.LENGTH_SHORT).show();
         }
@@ -606,7 +850,17 @@ public class AfterGameSummary extends AppCompatActivity {
         if (filter.getReferees().length() == 0) {
             Toast.makeText(AfterGameSummary.this, "Select referee/s.", Toast.LENGTH_SHORT).show();
         }
-        if (filter.getComm().length() != 0 && filter.getRds().length() != 0 && filter.getCalls().length() != 0 && filter.getReferees().length() != 0) {
+        if (filter.getArea().length() == 0) {
+            Toast.makeText(AfterGameSummary.this, "Select area/s.", Toast.LENGTH_SHORT).show();
+        }
+        if (filter.getAop().length() == 0) {
+            Toast.makeText(AfterGameSummary.this, "Select area/s of play.", Toast.LENGTH_SHORT).show();
+        }
+        if (filter.getComm().length() != 0 &&
+                filter.getRds().length() != 0 && filter.getCalls().length() != 0 &&
+                filter.getReferees().length() != 0 &&
+                filter.getAop().length() != 0 &&
+                filter.getArea().length() != 0) {
             RequestQueue queue = Volley.newRequestQueue(this);
 
             StringRequest putRequest = new StringRequest(Request.Method.POST, FilterEvalURL,
@@ -618,10 +872,12 @@ public class AfterGameSummary extends AppCompatActivity {
                             calls = gson.fromJson(response, EvaluationModel.class);
                             ArrayList<EvaluationDetails> dataModelArrayList = calls.result;
                             if (!dataModelArrayList.isEmpty()) {
-                                evaluationList.setVisibility(View.VISIBLE   );
+                                evaluationList.setVisibility(View.VISIBLE);
                                 listAdapter = new EvaluationListAdapter(getApplicationContext(), dataModelArrayList);
                                 evaluationList.setAdapter(listAdapter);
-                            }else{
+                                evaluationList.setSelection(evaluationList.getAdapter().getCount() - 1);
+
+                            } else {
                                 Toast.makeText(getApplicationContext(), "No Result!", Toast.LENGTH_LONG).show();
                             }
 
@@ -641,9 +897,12 @@ public class AfterGameSummary extends AppCompatActivity {
                     Map<String, String> params = new HashMap<String, String>();
                     params.put("gameId", currentGame.getGameId());
                     params.put("committingTeam", filter.getComm());
+
                     params.put("calls", filter.getCalls());
                     params.put("referees", filter.getReferees());
                     params.put("rd", filter.getRds());
+                    params.put("area", filter.getArea());
+                    params.put("aop", filter.getAop());
                     if (filter.getDis().length() != 0) {
                         params.put("disadvantaged", filter.getDis());
                     }
@@ -667,8 +926,7 @@ public class AfterGameSummary extends AppCompatActivity {
 
     }
 
-    private void createExcelSheet(Context context)
-    {
+    private void createExcelSheet(final Context context) {
         final String gameid = currentGame.getGameId();
         final String TeamA = currentGame.getTeamA();
         final String TeamB = currentGame.getTeamB();
@@ -683,10 +941,12 @@ public class AfterGameSummary extends AppCompatActivity {
                         Gson gson = new Gson();
                         getResult = gson.fromJson(response, GetAll.class);
                         String status = getResult.status;
-                        String Fnamexls="Uaap.xls";
+                        String Fnamexls = "Uaap.xls";
                         File sdCard = Environment.getDataDirectory();
-                        File directory = new File ( getApplicationContext().getFilesDir().getAbsolutePath()+ "/UAAP");
-                        directory.mkdirs();
+
+                        //   File directory = new File ( context.getFilesDir().getAbsolutePath()+ "/UAAP");
+                        File directory = new File(String.valueOf(Environment.getExternalStoragePublicDirectory(DIRECTORY_DOWNLOADS)));
+                        //directory.mkdirs();
                         File file = new File(directory, Fnamexls);
                         int Size = getResult.result.size();
                         int i = 0;
@@ -696,7 +956,7 @@ public class AfterGameSummary extends AppCompatActivity {
 
                         WritableWorkbook workbook;
 
-                        WritableFont cellFont = new WritableFont(WritableFont.COURIER, 16);
+                        WritableFont cellFont = new WritableFont(WritableFont.ARIAL, 10);
                         try {
                             cellFont.setBoldStyle(WritableFont.BOLD);
                         } catch (WriteException e) {
@@ -704,20 +964,62 @@ public class AfterGameSummary extends AppCompatActivity {
                         }
 
                         WritableCellFormat cellFormat = new WritableCellFormat(cellFont);
+                        try {
+                            cellFormat.setBorder(Border.BOTTOM, BorderLineStyle.DOUBLE);
+                            cellFormat.setAlignment(Alignment.CENTRE);
+                        } catch (WriteException e) {
+                            e.printStackTrace();
+                        }
+// Period
+                        WritableFont periodCell = new WritableFont(WritableFont.ARIAL, 10);
+                        try {
+                            periodCell.setBoldStyle(WritableFont.BOLD);
+                        } catch (WriteException e) {
+                            e.printStackTrace();
+                        }
 
+                        WritableCellFormat cellPeriod = new WritableCellFormat(periodCell);
+                        try {
+                            cellPeriod.setAlignment(Alignment.CENTRE);
+                        } catch (WriteException e) {
+                            e.printStackTrace();
+                        }
+
+//Center
+
+                        WritableFont center = new WritableFont(WritableFont.ARIAL, 10);
+                        WritableCellFormat centerCell = new WritableCellFormat(center);
+                        try {
+                            centerCell.setAlignment(Alignment.CENTRE);
+                        } catch (WriteException e) {
+                            e.printStackTrace();
+                        }
+// Header
+                        WritableFont header = new WritableFont(WritableFont.ARIAL, 14);
+                        try {
+                            header.setBoldStyle(WritableFont.BOLD);
+                        } catch (WriteException e) {
+                            e.printStackTrace();
+                        }
+                        WritableCellFormat headerCell = new WritableCellFormat(header);
+                        try {
+                            cellPeriod.setAlignment(Alignment.CENTRE);
+                        } catch (WriteException e) {
+                            e.printStackTrace();
+                        }
                         try {
 
                             workbook = Workbook.createWorkbook(file, wbSettings);
                             WritableSheet sheet = workbook.createSheet("Reports", 0);
 
-                            for(int x=0; x<getResult.result.size();x++){
+                            for (int x = 0; x < getResult.result.size(); x++) {
                                 String Id = Integer.toString(getResult.result.get(x).id);
                                 String time = getResult.result.get(x).time;
                                 int period = getResult.result.get(x).period;
                                 String finalPeriod;
-                                if(period >=4){
+                                if (period >= 4) {
                                     finalPeriod = "OT";
-                                }else{
+                                } else {
                                     finalPeriod = "Q" + Integer.toString(period + 1);
                                 }
                                 String disadvantage = getResult.result.get(x).disadvantaged;
@@ -729,33 +1031,33 @@ public class AfterGameSummary extends AppCompatActivity {
                                 String reviewDecision = getResult.result.get(x).reviewDecision;
                                 String comment = getResult.result.get(x).comment;
                                 String scores = getResult.result.get(x).scores;
-                                Label col6 = new Label(0, 6, "PERIOD", cellFormat);
-                                Label col7 = new Label(1, 6, "TIME", cellFormat);
-                                Label col8 = new Label(2, 6, "CALL TYPE", cellFormat);
-                                Label col9 = new Label(3, 6, "COMMITTING PLAYER", cellFormat);
-                                Label col10 = new Label(4, 6, "DISADVANTAGE PLAYER", cellFormat);
-                                Label game = new Label(5, 2, TeamA + " VS " + TeamB, cellFormat);
-                                Label refA1 = new Label(7, 2, refA);
-                                Label refB1 = new Label(7, 3, refB);
-                                Label refC1 = new Label(7, 4, refC);
-                                Label col11 = new Label(5, 6, "AREA OF PLAY", cellFormat);
-                                Label col12 = new Label(6, 6, "REFEREE", cellFormat);
-                                Label col13 = new Label(7, 6, "AREA", cellFormat);
-                                Label col14 = new Label(8, 6, "REVIEW DECISION", cellFormat);
-                                Label col15 = new Label(9, 6, "COMMENTS", cellFormat);
-                                Label col16 = new Label(10, 6, "SCORE", cellFormat);
+                                Label col6 = new Label(0, 6, "Period", cellFormat);
+                                Label col7 = new Label(1, 6, "Time", cellFormat);
+                                Label col8 = new Label(2, 6, "Call Type", cellFormat);
+                                Label col9 = new Label(3, 6, "Committing Player", cellFormat);
+                                Label col10 = new Label(4, 6, "Disadvantage Player", cellFormat);
+                                Label game = new Label(2, 2, TeamA + " VS " + TeamB, headerCell);
+                                Label refA1 = new Label(8, 2, refA);
+                                Label refB1 = new Label(8, 3, refB);
+                                Label refC1 = new Label(8, 4, refC);
+                                Label col11 = new Label(5, 6, "Area Of Play", cellFormat);
+                                Label col12 = new Label(6, 6, "Referee", cellFormat);
+                                Label col13 = new Label(7, 6, "Area", cellFormat);
+                                Label col14 = new Label(8, 6, "Review Decision", cellFormat);
+                                Label col15 = new Label(9, 6, "Comments", cellFormat);
+                                Label col16 = new Label(10, 6, "Score", cellFormat);
                                 // Rows
-                                Label row6 = new Label(0, x+7, finalPeriod);
-                                Label row7 = new Label(1, x+7, time);
-                                Label row8 = new Label(2, x+7, callType);
-                                Label row9 = new Label(3, x+7, committing);
-                                Label row10 = new Label(4, x+7, disadvantage);
-                                Label row11 = new Label(5, x+7, areaOfPlay);
-                                Label row12 = new Label(6, x+7, referee);
-                                Label row13 = new Label(7, x+7, area);
-                                Label row14 = new Label(8, x+7, reviewDecision);
-                                Label row15 = new Label(9, x+7, comment);
-                                Label row16 = new Label(10, x+7, scores);
+                                Label row6 = new Label(0, x + 7, finalPeriod, cellPeriod);
+                                Label row7 = new Label(1, x + 7, time, centerCell);
+                                Label row8 = new Label(2, x + 7, callType);
+                                Label row9 = new Label(3, x + 7, committing);
+                                Label row10 = new Label(4, x + 7, disadvantage);
+                                Label row11 = new Label(5, x + 7, areaOfPlay, centerCell);
+                                Label row12 = new Label(6, x + 7, referee);
+                                Label row13 = new Label(7, x + 7, area, centerCell);
+                                Label row14 = new Label(8, x + 7, reviewDecision, centerCell);
+                                Label row15 = new Label(9, x + 7, comment);
+                                Label row16 = new Label(10, x + 7, scores, centerCell);
 
                                 Log.e("HGELLO", Id);
                                 try {
@@ -798,7 +1100,9 @@ public class AfterGameSummary extends AppCompatActivity {
                             }
 
                             workbook.write();
+
                             Toast.makeText(getApplicationContext(), "Excel Sucessfully Created.", Toast.LENGTH_SHORT).show();
+
                             try {
                                 workbook.close();
                             } catch (WriteException e) {
@@ -837,4 +1141,5 @@ public class AfterGameSummary extends AppCompatActivity {
         queue.add(putRequest);
 
     }
+
 }

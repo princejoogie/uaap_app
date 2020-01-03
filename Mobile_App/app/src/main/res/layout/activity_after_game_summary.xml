@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,11 +7,12 @@
     android:background="@drawable/bg_admin"
     android:clipToPadding="false"
     android:gravity="center"
-    tools:context=".Manage.EvaluationSummary">
+    tools:context=".Manage.EvaluationSummary"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_columnWeight="2"
         android:layout_margin="10dp"
         android:background="#FFFFFF"
@@ -19,116 +20,88 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
             android:orientation="vertical">
 
-            <GridLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:columnCount="2"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
                     android:text="GAME SUMMARY"
                     android:textColor="@android:color/black"
                     android:textSize="20dp"
                     android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/txtLeagueName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="League"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtDateToday"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Date"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtAfterTeamA"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Team A"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txtAfterTeamB"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Team B"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/btnExcel"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="right"
-                    android:layout_marginTop="20dp"
-                    android:gravity="right"
-                    android:orientation="horizontal">
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.30"
+                    android:background="@drawable/btn_eval_selected"
+                    android:text=".xls"
+                    android:textColor="@android:color/white" />
 
-                    <Button
-                        android:id="@+id/btnExcel"
-                        android:layout_width="50dp"
-                        android:layout_height="36dp"
-                        android:layout_gravity="right"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/btn_eval_selected"
-                        android:text=".xls"
-                        android:textColor="@android:color/white" />
+                <Button
+                    android:id="@+id/btnAfterRefSum"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="0.30"
+                    android:background="@drawable/btn_eval_selected"
+                    android:text=">"
+                    android:textColor="@android:color/white" />
 
-                    <Button
-                        android:id="@+id/btnAfterRefSum"
-                        android:layout_width="50dp"
-                        android:layout_height="36dp"
-                        android:layout_gravity="right"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/btn_eval_selected"
-                        android:text=">"
-                        android:textColor="@android:color/white" />
-                </LinearLayout>
-
-            </GridLayout>
+            </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/layout_corner"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <GridLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:columnCount="2">
-
-                    <TextView
-                        android:id="@+id/txtLeagueName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="top"
-                        android:layout_margin="10dp"
-                        android:text="League"
-                        android:textSize="16dp" />
-
-                    <TextView
-                        android:id="@+id/txtDateToday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="top|end"
-                        android:layout_margin="10dp"
-                        android:gravity="right"
-                        android:text="Date"
-                        android:textSize="16dp" />
-
-                    <TextView
-                        android:id="@+id/txtAfterTeamA"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_margin="10dp"
-                        android:text="Team A"
-                        android:textSize="16dp" />
-
-                    <TextView
-                        android:id="@+id/txtAfterTeamB"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|end"
-                        android:layout_margin="10dp"
-                        android:text="Team B"
-                        android:textSize="16dp" />
-                </GridLayout>
-
-            </LinearLayout>
+            android:layout_height="0dp"
+            android:layout_weight="11">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -140,29 +113,98 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp">
+                            android:layout_marginBottom="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView9"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:text="Foul"
+                                android:textSize="16sp" />
+
+                            <Button
+                                android:id="@+id/btnFoulSelect"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/btn_eval_selected"
+                                android:minHeight="20dp"
+                                android:padding="5dp"
+                                android:text="Select"
+                                android:textColor="@android:color/white" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView8"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:text="Violation"
+                                android:textSize="16sp" />
+
+                            <Button
+                                android:id="@+id/btnVioSelect"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/btn_eval_selected"
+                                android:minHeight="20dp"
+                                android:padding="5dp"
+                                android:text="Select"
+                                android:textColor="@android:color/white" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="10dp"
                                 android:layout_weight="1"
-                                android:text="Call Type:"
-                                android:textSize="16dp" />
+                                android:text="Committing:"
+                                android:textSize="16sp" />
 
                             <Button
-                                android:id="@+id/btnCallSelect"
+                                android:id="@+id/btnCommittingSelect"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -172,6 +214,136 @@
                                 android:text="Select"
                                 android:textColor="@android:color/white" />
 
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:text="Disadvantaged:"
+                                android:textSize="16sp" />
+
+                            <Button
+                                android:id="@+id/btnDisadvantagedSelect"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/btn_eval_selected"
+                                android:minHeight="20dp"
+                                android:padding="5dp"
+                                android:text="Select"
+                                android:textColor="@android:color/white" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:text="Area"
+                                android:textSize="16sp" />
+
+                            <Button
+                                android:id="@+id/btnAreaSelect"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/btn_eval_selected"
+                                android:minHeight="20dp"
+                                android:padding="5dp"
+                                android:text="Select"
+                                android:textColor="@android:color/white" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView10"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:text="Area Of Play"
+                                android:textSize="16sp" />
+
+                            <Button
+                                android:id="@+id/btnAoPSelect"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/btn_eval_selected"
+                                android:minHeight="20dp"
+                                android:padding="5dp"
+                                android:text="Select"
+                                android:textColor="@android:color/white" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:layout_weight="1"
+                                android:text="Review Decision:"
+                                android:textSize="16sp" />
+
+                            <Button
+                                android:id="@+id/btnReviewDecisionSelect"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/btn_eval_selected"
+                                android:minHeight="20dp"
+                                android:padding="5dp"
+                                android:text="Select"
+                                android:textColor="@android:color/white" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -185,7 +357,7 @@
                                 android:layout_marginStart="10dp"
                                 android:layout_weight="1"
                                 android:text="Referee:"
-                                android:textSize="16dp" />
+                                android:textSize="16sp" />
 
                             <Button
                                 android:id="@+id/btnRefereeSelect"
@@ -199,113 +371,36 @@
                                 android:textColor="@android:color/white" />
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp">
-
-                            <Button
-                                android:id="@+id/btnAfterFilter"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginBottom="5dp"
-                                android:layout_weight="1"
-                                android:background="@drawable/btn_eval_selected"
-                                android:minHeight="20dp"
-                                android:padding="5dp"
-                                android:text="FILTER"
-                                android:textColor="@android:color/white" />
-                        </LinearLayout>
-
                     </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:gravity="center"
                     android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_weight="1"
-                            android:text="Review Decision:"
-                            android:textSize="16dp" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp">
 
                         <Button
-                            android:id="@+id/btnReviewDecisionSelect"
+                            android:id="@+id/btnAfterFilter"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="5dp"
                             android:layout_weight="1"
                             android:background="@drawable/btn_eval_selected"
                             android:minHeight="20dp"
                             android:padding="5dp"
-                            android:text="Select"
+                            android:text="FILTER"
                             android:textColor="@android:color/white" />
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_weight="1"
-                            android:text="Committing:"
-                            android:textSize="16dp" />
-
-                        <Button
-                            android:id="@+id/btnCommittingSelect"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/btn_eval_selected"
-                            android:minHeight="20dp"
-                            android:padding="5dp"
-                            android:text="Select"
-                            android:textColor="@android:color/white" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginBottom="5dp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_weight="1"
-                            android:text="Disadvantaged:"
-                            android:textSize="16dp" />
-
-                        <Button
-                            android:id="@+id/btnDisadvantagedSelect"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/btn_eval_selected"
-                            android:minHeight="20dp"
-                            android:padding="5dp"
-                            android:text="Select"
-                            android:textColor="@android:color/white" />
-                    </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>
@@ -315,9 +410,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="2"
-            android:layout_weight="7"
+            android:layout_height="0dp"
+            android:layout_weight="45"
             android:background="@android:color/white"
             android:elevation="3dp"
             android:orientation="vertical">
@@ -418,4 +512,4 @@
     </LinearLayout>
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

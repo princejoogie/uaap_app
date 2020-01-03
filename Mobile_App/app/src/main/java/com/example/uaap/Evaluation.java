@@ -245,7 +245,6 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
         btnEndGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentGame.setDate(new SimpleDateFormat("MMMM dd, yyyy").format(new Date()));
                 Intent intent = new Intent(Evaluation.this, AfterGameSummary.class);
                 Gson gson = new Gson();
                 String json = gson.toJson(currentGame);
@@ -425,6 +424,8 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
                         if (!dataModelArrayList.isEmpty()) {
                             listAdapter = new EvaluationListAdapter(getApplicationContext(), dataModelArrayList);
                             evaluationList.setAdapter(listAdapter);
+                            evaluationList.setSelection(evaluationList.getAdapter().getCount()-1);
+
                         }
 
                     }
@@ -502,10 +503,12 @@ public class Evaluation extends AppCompatActivity implements AdapterView.OnItemC
                                     @Override
                                     public void onResponse(String response) {
                                         Log.e("Response", response);
-                                        finish();
-                                        overridePendingTransition(0, 0);
-                                        startActivity(getIntent());
-                                        overridePendingTransition(0, 0);
+                                        Intent intent = new Intent(getApplicationContext(), Evaluation.class);
+                                        currentGame.setTimeInMillis(time);
+                                        Gson gson = new Gson();
+                                        String json = gson.toJson(currentGame);
+                                        intent.putExtra("playing", json);
+                                        startActivity(intent);
                                     }
                                 },
                                 new Response.ErrorListener() {

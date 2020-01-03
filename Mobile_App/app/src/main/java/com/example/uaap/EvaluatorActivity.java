@@ -38,7 +38,9 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -63,6 +65,7 @@ public class EvaluatorActivity extends AppCompatActivity {
 
     private Button btnColorTeamA;
     private Button btnColorTeamB;
+    private CardView btnLoadGame;
     private Team teamDetails;
     private LeagueRef leagueRef;
 
@@ -82,6 +85,7 @@ public class EvaluatorActivity extends AppCompatActivity {
         spinnerRefereeB = findViewById(R.id.spinnerRefereeB);
         spinnerRefereeC = findViewById(R.id.spinnerRefereeC);
         btnStartGame = findViewById(R.id.btnStartGame);
+        btnLoadGame = findViewById(R.id.btnLoadGame);
         edtGameCode = findViewById(R.id.edtGameCode);
         btnColorTeamA = findViewById(R.id.btnColorTeamA);
         btnColorTeamB = findViewById(R.id.btnColorTeamB);
@@ -107,7 +111,13 @@ public class EvaluatorActivity extends AppCompatActivity {
 
             }
         });
+        btnLoadGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkGameCode(edtGameCode.getText().toString().trim());////
 
+            }
+        });
         btnStartGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,24 +127,18 @@ public class EvaluatorActivity extends AppCompatActivity {
                     String ref3 = spinnerRefereeC.getSelectedItem().toString();
                     String schoolA = spinnerTeamA.getSelectedItem().toString();
                     String schoolB = spinnerTeamB.getSelectedItem().toString();
-                    String Erro1 = "";
-                    String Erro2 = "";
-                    if (edtGameCode.getText().toString().isEmpty()) {
-                        if (ref1.equals(null) || ref2.equals(null) || ref3.equals(null) || schoolA.equals(null) || schoolB.equals(null)) {
-                            Toast.makeText(EvaluatorActivity.this,
-                                    "Empty items are not allowed", Toast.LENGTH_LONG).show();
-                        } else if (spinnerTeamA.getSelectedItem().toString().equals(spinnerTeamB.getSelectedItem().toString())) {
-                            Toast.makeText(getApplicationContext(), "Same teams are not allowed", Toast.LENGTH_SHORT).show();
-                        } else if (ref1.equals(ref2) || ref1.equals(ref3) || ref2.equals(ref3)) {
-                            Toast.makeText(getApplicationContext(), "Same referees are not allowed", Toast.LENGTH_SHORT).show();
-                        } else {
-                            createGame();
-                        }
-
-
+                    if (edtGameCode.getText().toString().isEmpty() || ref1.equals(null) || ref2.equals(null) || ref3.equals(null) || schoolA.equals(null) || schoolB.equals(null)) {
+                        Toast.makeText(EvaluatorActivity.this,
+                                "Empty items are not allowed", Toast.LENGTH_LONG).show();
+                    } else if (spinnerTeamA.getSelectedItem().toString().equals(spinnerTeamB.getSelectedItem().toString())) {
+                        Toast.makeText(getApplicationContext(), "Same teams are not allowed", Toast.LENGTH_SHORT).show();
+                    } else if (ref1.equals(ref2) || ref1.equals(ref3) || ref2.equals(ref3)) {
+                        Toast.makeText(getApplicationContext(), "Same referees are not allowed", Toast.LENGTH_SHORT).show();
                     } else {
-                        checkGameCode(edtGameCode.getText().toString());////
+                        createGame(edtGameCode.getText().toString().trim());
                     }
+
+
                 } catch (Exception e) {
                     Toast.makeText(EvaluatorActivity.this,
                             "Empty items are not allowed", Toast.LENGTH_LONG).show();
@@ -258,7 +262,6 @@ public class EvaluatorActivity extends AppCompatActivity {
                         spinLeague.setAdapter(adapter);
 
 
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -275,7 +278,7 @@ public class EvaluatorActivity extends AppCompatActivity {
     }
 
 
-    private void createGame() {
+    private void createGame(final String gameCode) {
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -285,18 +288,26 @@ public class EvaluatorActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         Gson gson = new Gson();
                         GameId gameId = gson.fromJson(response, GameId.class);
-                        LeagueDetails teamA = (LeagueDetails) spinnerTeamA.getSelectedItem();
-                        LeagueDetails teamB = (LeagueDetails) spinnerTeamB.getSelectedItem();
-                        currentGame.setTeamA(teamA.name);
-                        currentGame.setTeamB(teamB.name);
-                        currentGame.setPeriod(0);
-                        currentGame.setTimeInMillis(600000);
-                        currentGame.setScoreB(0);
-                        currentGame.setScoreA(0);
-                        currentGame.setColorTeamA(((ColorDrawable) btnColorTeamA.getBackground()).getColor());
-                        currentGame.setColorTeamB(((ColorDrawable) btnColorTeamB.getBackground()).getColor());
-                        currentGame.setLeagueName(((LeagueDetails) spinLeague.getSelectedItem()).name);
-                        prepareEval(gameId.gameId, gameId.gameCode);
+                        Log.e("status", gameId.getStatus());
+                        if(gameId.getStatus().equals("true")){
+                            LeagueDetails teamA = (LeagueDetails) spinnerTeamA.getSelectedItem();
+                            LeagueDetails teamB = (LeagueDetails) spinnerTeamB.getSelectedItem();
+                            currentGame.setTeamA(teamA.name);
+                            currentGame.setTeamB(teamB.name);
+                            currentGame.setPeriod(0);
+                            currentGame.setTimeInMillis(600000);
+                            currentGame.setScoreB(0);
+                            currentGame.setScoreA(0);
+                            currentGame.setColorTeamA(((ColorDrawable) btnColorTeamA.getBackground()).getColor());
+                            currentGame.setColorTeamB(((ColorDrawable) btnColorTeamB.getBackground()).getColor());
+                            currentGame.setLeagueName(((LeagueDetails) spinLeague.getSelectedItem()).name);
+                            currentGame.setDate(new SimpleDateFormat("MMMM dd, yyyy").format(new Date()));
+
+                            prepareEval(gameId.getGameId(), gameId.getGameCode());
+                        }else{
+                            Toast.makeText(getApplicationContext(),"Game Code already exists!", Toast.LENGTH_SHORT).show();
+                        }
+
 
 
                     }
@@ -321,6 +332,8 @@ public class EvaluatorActivity extends AppCompatActivity {
 
 
                 Map<String, String> params = new HashMap<String, String>();
+                params.put("gameCode", gameCode);
+                Log.e("gameCode", gameCode);
                 params.put("leagueId", leagueId.id);
                 params.put("teamA", teamA.id);
                 params.put("teamB", teamB.id);
@@ -463,7 +476,7 @@ public class EvaluatorActivity extends AppCompatActivity {
 
             @Override
             public void run() {
-                doubleBackToExitPressedOnce=false;
+                doubleBackToExitPressedOnce = false;
             }
         }, 2000);
     }

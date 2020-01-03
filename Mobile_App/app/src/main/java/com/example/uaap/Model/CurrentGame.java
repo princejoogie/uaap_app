@@ -24,6 +24,24 @@ public class CurrentGame {
     public int scoreB;
     public String leagueName;
     public String date;
+    public String shortNameA;
+    public String shortNameB;
+
+    public String getShortNameA() {
+        return shortNameA;
+    }
+
+    public void setShortNameA(String shortNameA) {
+        this.shortNameA = shortNameA;
+    }
+
+    public String getShortNameB() {
+        return shortNameB;
+    }
+
+    public void setShortNameB(String shortNameB) {
+        this.shortNameB = shortNameB;
+    }
 
     public String getDate() {
         return date;
